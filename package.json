@@ -1,0 +1,26 @@
+{
+	"name": "simplicity",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"d": "vite",
+		"b": "vite build",
+		"p": "vite preview"
+	},
+	"dependencies": {
+		"lodash": "^4.17.21",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-lazy-load-image-component": "^1.5.6"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.26",
+		"@types/react-dom": "^18.0.9",
+		"@vitejs/plugin-react": "^3.0.0",
+		"autoprefixer": "^10.4.13",
+		"postcss": "^8.4.21",
+		"vite": "^4.0.0",
+		"vite-plugin-purgecss": "^0.2.12"
+	}
+}
