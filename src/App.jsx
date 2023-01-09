@@ -8,10 +8,7 @@ export default function Simplicity() {
 	const [data] = useState(inventory)
 	const [list] = useState(categories)
 	const [selected, setSelected] = useState('')
-	// const App = document.querySelector('.App')
-	// const top = document.querySelector('.top')
 
-	// const loading = document.querySelector('.loading')
 	const AppRef = useRef()
 	const topRef = useRef()
 	const loadingRef = useRef()
@@ -74,7 +71,7 @@ export default function Simplicity() {
 	const Item = ({ name, price, desc, type, pic }) => {
 		return (
 			<div className='item'>
-				<LazyLoadImage PlaceholderSrc={PlaceholderImage} className='img' src={pic} alt={name} loading='lazy' />
+				<LazyLoadImage placeholderSrc={PlaceholderImage} className='img' src={pic} alt={name} loading='lazy' />
 				{type.length > 0 && <p className='type'>{type}</p>}
 				<h3>{name}</h3>
 				{desc.length > 0 && <p className='desc'>{desc}</p>}

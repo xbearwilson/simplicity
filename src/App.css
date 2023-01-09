@@ -48,10 +48,13 @@
 
 .App {
 	position: relative;
+	top: 0;
+	left: 0;
 	width: 100%;
 	display: none;
 	flex-direction: column;
 	justify-content: center;
+	align-items: flex-start;
 }
 
 .logo {
@@ -59,8 +62,8 @@
 	margin: 1rem 0 0 0;
 }
 
-.topSelect {
-	position: relative;
+.topSelect select {
+	font-size: var(--normal-font-size);
 }
 
 .top {
@@ -99,6 +102,7 @@
 	justify-content: center;
 	max-width: 90%;
 	margin: 0 auto;
+	transition: all 0.3s;
 }
 
 .foot {
@@ -128,9 +132,10 @@
 }
 
 @media screen and (max-width: 400px) {
-	/* .main {
-		justify-content: center;
-	} */
+	.topSelect select {
+		margin-top: 1rem;
+		width: 100%;
+	}
 	.foot {
 		flex-direction: column;
 		align-items: flex-start;
@@ -180,8 +185,9 @@
 }
 
 .item {
-	/* display: inline-block; */
 	position: relative;
+	top: 0;
+	left: 0;
 	width: 30%;
 	min-width: 280px;
 	white-space: pre-wrap;
@@ -195,10 +201,12 @@
 }
 
 .img {
-	width: 100%;
+	width: 300px;
 	height: 239px;
 	object-fit: cover;
+	object-position: 50% 60%;
 	border-radius: 10px;
+	filter: contrast(101%) saturate(105%);
 }
 
 .item h3 {

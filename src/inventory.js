@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-01-02 04:31:36
- * @LastEditTime: 2023-01-07 21:19:32
+ * @LastEditTime: 2023-01-09 19:50:23
  * @Description:
  */
 /* eslint-disable indent */
@@ -86,11 +86,11 @@ const inventory = [
 	{
 		id: 9,
 		category: '(無糖)無內餡\n No Sugar Added',
-		name: '牛奶芋絲饅頭\n Milk Taro-Shreds Mantou',
+		name: '牛奶芋絲饅頭\n Taro Shreds Milk Mantou',
 		description: '',
 		price: '27',
 		type: '奶素 Lacto-Vegetarian',
-		pic: './milkTaroShredsMantou.jpg',
+		pic: './taroShredsMilkMantou.jpg',
 	},
 	{
 		id: 10,
@@ -554,7 +554,7 @@ const inventory = [
 	{
 		id: 61,
 		category: '(鹹)有內餡\n Mantou with Savory Fillings',
-		name: '乳酪燻雞\n Smoked Cheese Chicken-Filled Mantou',
+		name: '燻雞起司\n Smoked Cheese Chicken-Filled Mantou',
 		description: '正點',
 		price: '36',
 		type: '葷 Non Vegetarian',
