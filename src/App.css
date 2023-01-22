@@ -1,5 +1,5 @@
 #root {
-	display: flex;
+	/* display: flex; */
 	width: 100%;
 	max-width: 1280px;
 	margin: 0 auto;
@@ -51,7 +51,7 @@
 	top: 0;
 	left: 0;
 	width: 100%;
-	display: none;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;

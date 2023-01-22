@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './App.css'
 import PlaceholderImage from './img/logo.svg'
@@ -8,7 +8,6 @@ export default function Simplicity() {
 	const [data] = useState(inventory)
 	const [list] = useState(categories)
 	const [selected, setSelected] = useState('')
-
 	const AppRef = useRef()
 	const topRef = useRef()
 	const loadingRef = useRef()
@@ -16,11 +15,16 @@ export default function Simplicity() {
 	const AllMenuRef = useRef()
 	const ItemMenuRef = useRef()
 
-	useEffect(() => {
-		setTimeout(() => {
-			loadingRef.current.style.display = 'none'
-			AppRef.current.style.display = 'flex'
-		}, 9000)
+	const [loading, setloading] = useState(true)
+	const handleLoading = () => setloading(false)
+
+	useLayoutEffect(() => {
+		window.addEventListener('load', handleLoading)
+
+		// setTimeout(() => {
+		// 	loadingRef.current.style.display = 'none'
+		// 	AppRef.current.style.display = 'flex'
+		// }, 9000)
 
 		document.addEventListener('scroll', () => {
 			if (window.scrollY > 300) {
@@ -39,10 +43,13 @@ export default function Simplicity() {
 				topRef.current.classList.remove('sticky')
 			}
 		})
+
+		return () => window.removeEventListener('load', handleLoading)
 	}, [])
 
 	const scrollToTop = () => window.scroll({ top: 0, left: 0, behavior: 'smooth' })
 	const MakeSelect = X => <option key={X}>{X}</option>
+
 	const handleChange = e => {
 		setSelected(e.target.value)
 		if (e.target.value === '全部 All') {
@@ -55,7 +62,8 @@ export default function Simplicity() {
 			scrollToTop()
 		}
 	}
-	const temp = data.filter(i => i.category.replace('\n', '') === selected || i.type.replace('\n', '') === selected)
+
+	const temp = data.filter(i => i.category === selected || i.type === selected)
 
 	const Price = props => {
 		const { value } = props
@@ -82,67 +90,73 @@ export default function Simplicity() {
 
 	return (
 		<>
-			<div ref={loadingRef} className='loading'>
-				<img className='logo' src='./logo.svg' alt='' />
-				<span>載入中 Loading ...</span>
-			</div>
+			{!loading ? (
+				<div ref={AppRef} className='App'>
+					<div ref={topRef} className='top'>
+						<a href='#'>
+							<img className='logo' src='./logo.svg' alt='' />
+						</a>
+						<h3>{selected}</h3>
+						<div className='topSelect'>
+							<select defaultValue={'defaults'} onChange={handleChange}>
+								<option key='0' value='全部 All'>
+									========== 全部 All ==========
+								</option>
+								{list.map(MakeSelect)}
+							</select>
+						</div>
+					</div>
 
-			<div ref={AppRef} className='App'>
-				<div ref={topRef} className='top'>
+					<div className='main'>
+						<div className='flex' ref={AllMenuRef}>
+							{data.map(t => (
+								<Item key={t.id} name={t.name} price={t.price} desc={t.description} type={t.type} pic={t.pic} />
+							))}
+						</div>
+						<div className='flex' ref={ItemMenuRef}>
+							{temp.map(t => (
+								<Item key={t.id} name={t.name} price={t.price} desc={t.description} type={t.type} pic={t.pic} />
+							))}
+						</div>
+					</div>
+
+					<div className='foot'>
+						<div className='foot_logo'>
+							<a href='#'>
+								<img src='./logo.svg' alt='' />
+							</a>
+						</div>
+						<div>
+							<div>營業時間：Business Hours:</div>
+							<div>週一~週三，週五~週六：12am-19pm</div>
+							<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
+							<div>假日：11:30am-18pm</div>
+							<div>Holiday: 11:30am-18pm</div>
+						</div>
+						<div>
+							<div>地址：Address:</div>
+							<div>新北市新店區大豐路61號</div>
+							<div>No 61, Dafeng Rd, Xindian Dist, New Taipei City</div>
+						</div>
+						<div>
+							<div>訂購專線：TEL:</div>
+							<div>0963-593-096</div>
+							<div>(02) 2918-9345</div>
+							<div>(02) 2918-9148</div>
+						</div>
+					</div>
+					<button ref={scrollBtnRef} type='button' onClick={scrollToTop} className='scroll-top'>
+						<span role='img' aria-label='Hand'>
+							☝️
+						</span>
+					</button>
+				</div>
+			) : (
+				<div ref={loadingRef} className='loading'>
 					<img className='logo' src='./logo.svg' alt='' />
-					<h3>{selected}</h3>
-					<div className='topSelect'>
-						<select defaultValue={'defaults'} onChange={handleChange}>
-							<option key='0' value='全部 All'>
-								========== 全部 All ==========
-							</option>
-							{list.map(MakeSelect)}
-						</select>
-					</div>
+					<span>載入中 Loading ...</span>
 				</div>
-
-				<div className='main'>
-					<div className='flex' ref={AllMenuRef}>
-						{data.map(t => (
-							<Item key={t.id} name={t.name} price={t.price} desc={t.description} type={t.type} pic={t.pic} />
-						))}
-					</div>
-					<div className='flex' ref={ItemMenuRef}>
-						{temp.map(t => (
-							<Item key={t.id} name={t.name} price={t.price} desc={t.description} type={t.type} pic={t.pic} />
-						))}
-					</div>
-				</div>
-
-				<div className='foot'>
-					<div className='foot_logo'>
-						<img src='./logo.svg' alt='' />
-					</div>
-					<div>
-						<div>營業時間：Business Hours:</div>
-						<div>週一~週三，週五~週六：12am-19pm</div>
-						<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
-						<div>假日：11:30am-18pm</div>
-						<div>Holiday: 11:30am-18pm</div>
-					</div>
-					<div>
-						<div>地址：Address:</div>
-						<div>新北市新店區大豐路61號</div>
-						<div>No 61, Dafeng Rd, Xindian Dist, New Taipei City</div>
-					</div>
-					<div>
-						<div>訂購專線：TEL:</div>
-						<div>0963-593-096</div>
-						<div>(02) 2918-9345</div>
-						<div>(02) 2918-9148</div>
-					</div>
-				</div>
-				<button ref={scrollBtnRef} type='button' onClick={scrollToTop} className='scroll-top'>
-					<span role='img' aria-label='Hand'>
-						☝️
-					</span>
-				</button>
-			</div>
+			)}
 		</>
 	)
 }
