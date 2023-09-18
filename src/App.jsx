@@ -100,7 +100,7 @@ export default function Simplicity() {
 
 	return (
 		<>
-			{!loading ? (
+			{loading ? (
 				<div
 					ref={AppRef}
 					className='App'>
