@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './App.css'
 import PlaceholderImage from './img/logo.svg'
@@ -15,15 +15,22 @@ export default function Simplicity() {
 	const AllMenuRef = useRef()
 	const ItemMenuRef = useRef()
 
-	const [loading, setloading] = useState(false)
-	const handleLoading = () => {
+	const [loading, setLoading] = useState(0)
+	// const handleLoading = () => {
+	// 	setTimeout(() => {
+	// 		setloading(true)
+	// 	}, 5000)
+	// }
+
+	useEffect(() => {
+		setLoading(1)
 		setTimeout(() => {
-			setloading(true)
+			setLoading(0)
 		}, 5000)
-	}
+	}, [])
 
 	useLayoutEffect(() => {
-		window.addEventListener('load', handleLoading)
+		// window.addEventListener('load', handleLoading)
 
 		// setTimeout(() => {
 		// 	loadingRef.current.style.display = 'none'
@@ -48,7 +55,7 @@ export default function Simplicity() {
 			}
 		})
 
-		return () => window.removeEventListener('load', handleLoading)
+		// return () => window.removeEventListener('load', handleLoading)
 	}, [])
 
 	const scrollToTop = () => window.scroll({ top: 0, left: 0, behavior: 'smooth' })
@@ -101,6 +108,17 @@ export default function Simplicity() {
 	return (
 		<>
 			{loading ? (
+				<div
+					ref={loadingRef}
+					className='loading'>
+					<img
+						className='logo'
+						src='./logo.svg'
+						alt=''
+					/>
+					<span>載入中 Loading ...</span>
+				</div>
+			) : (
 				<div
 					ref={AppRef}
 					className='App'>
@@ -199,17 +217,6 @@ export default function Simplicity() {
 							☝️
 						</span>
 					</button>
-				</div>
-			) : (
-				<div
-					ref={loadingRef}
-					className='loading'>
-					<img
-						className='logo'
-						src='./logo.svg'
-						alt=''
-					/>
-					<span>載入中 Loading ...</span>
 				</div>
 			)}
 		</>
