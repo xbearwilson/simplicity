@@ -15,8 +15,12 @@ export default function Simplicity() {
 	const AllMenuRef = useRef()
 	const ItemMenuRef = useRef()
 
-	const [loading, setloading] = useState(true)
-	const handleLoading = () => setloading(false)
+	const [loading, setloading] = useState(false)
+	const handleLoading = () => {
+		setTimeout(() => {
+			setloading(true)
+		}, 5000)
+	}
 
 	useLayoutEffect(() => {
 		window.addEventListener('load', handleLoading)
@@ -79,7 +83,13 @@ export default function Simplicity() {
 	const Item = ({ name, price, desc, type, pic }) => {
 		return (
 			<div className='item'>
-				<LazyLoadImage placeholderSrc={PlaceholderImage} className='img' src={pic} alt={name} loading='lazy' />
+				<LazyLoadImage
+					placeholderSrc={PlaceholderImage}
+					className='img'
+					src={pic}
+					alt={name}
+					loading='lazy'
+				/>
 				{type.length > 0 && <p className='type'>{type}</p>}
 				<h3>{name}</h3>
 				{desc.length > 0 && <p className='desc'>{desc}</p>}
@@ -91,15 +101,27 @@ export default function Simplicity() {
 	return (
 		<>
 			{!loading ? (
-				<div ref={AppRef} className='App'>
-					<div ref={topRef} className='top'>
+				<div
+					ref={AppRef}
+					className='App'>
+					<div
+						ref={topRef}
+						className='top'>
 						<a href='#'>
-							<img className='logo' src='./logo.svg' alt='' />
+							<img
+								className='logo'
+								src='./logo.svg'
+								alt=''
+							/>
 						</a>
 						<h3>{selected}</h3>
 						<div className='topSelect'>
-							<select defaultValue={'defaults'} onChange={handleChange}>
-								<option key='0' value='全部 All'>
+							<select
+								defaultValue={'defaults'}
+								onChange={handleChange}>
+								<option
+									key='0'
+									value='全部 All'>
 									========== 全部 All ==========
 								</option>
 								{list.map(MakeSelect)}
@@ -108,14 +130,32 @@ export default function Simplicity() {
 					</div>
 
 					<div className='main'>
-						<div className='flex' ref={AllMenuRef}>
+						<div
+							className='flex'
+							ref={AllMenuRef}>
 							{data.map(t => (
-								<Item key={t.id} name={t.name} price={t.price} desc={t.description} type={t.type} pic={t.pic} />
+								<Item
+									key={t.id}
+									name={t.name}
+									price={t.price}
+									desc={t.description}
+									type={t.type}
+									pic={t.pic}
+								/>
 							))}
 						</div>
-						<div className='flex' ref={ItemMenuRef}>
+						<div
+							className='flex'
+							ref={ItemMenuRef}>
 							{temp.map(t => (
-								<Item key={t.id} name={t.name} price={t.price} desc={t.description} type={t.type} pic={t.pic} />
+								<Item
+									key={t.id}
+									name={t.name}
+									price={t.price}
+									desc={t.description}
+									type={t.type}
+									pic={t.pic}
+								/>
 							))}
 						</div>
 					</div>
@@ -123,7 +163,10 @@ export default function Simplicity() {
 					<div className='foot'>
 						<div className='foot_logo'>
 							<a href='#'>
-								<img src='./logo.svg' alt='' />
+								<img
+									src='./logo.svg'
+									alt=''
+								/>
 							</a>
 						</div>
 						<div>
@@ -145,15 +188,27 @@ export default function Simplicity() {
 							<div>(02) 2918-9148</div>
 						</div>
 					</div>
-					<button ref={scrollBtnRef} type='button' onClick={scrollToTop} className='scroll-top'>
-						<span role='img' aria-label='Hand'>
+					<button
+						ref={scrollBtnRef}
+						type='button'
+						onClick={scrollToTop}
+						className='scroll-top'>
+						<span
+							role='img'
+							aria-label='Hand'>
 							☝️
 						</span>
 					</button>
 				</div>
 			) : (
-				<div ref={loadingRef} className='loading'>
-					<img className='logo' src='./logo.svg' alt='' />
+				<div
+					ref={loadingRef}
+					className='loading'>
+					<img
+						className='logo'
+						src='./logo.svg'
+						alt=''
+					/>
 					<span>載入中 Loading ...</span>
 				</div>
 			)}
