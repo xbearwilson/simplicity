@@ -4,21 +4,22 @@
 	max-width: 1280px;
 	margin: 0 auto;
 }
-
 .loading {
-	width: 100%;
+	width: 50%;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: left;
 	flex-direction: column;
 	background: #fff;
 	transition: all 0.5s;
+	margin-right: 1rem;
 }
 
 .loading span {
 	color: var(--thi-color);
 	margin-top: 1rem;
+	font-size: var(--smaller-font-size);
 	animation: jump 1s ease 0s infinite normal;
 }
 

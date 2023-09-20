@@ -8,36 +8,16 @@ export default function Simplicity() {
 	const [data] = useState(inventory)
 	const [list] = useState(categories)
 	const [selected, setSelected] = useState('')
+	const loadingRef = useRef()
 	const AppRef = useRef()
 	const topRef = useRef()
-	const loadingRef = useRef()
 	const scrollBtnRef = useRef()
 	const AllMenuRef = useRef()
 	const ItemMenuRef = useRef()
-
 	const [loading, setLoading] = useState(0)
-	// const handleLoading = () => {
-	// 	setTimeout(() => {
-	// 		setloading(true)
-	// 	}, 5000)
-	// }
-
-	useEffect(() => {
-		setLoading(1)
-		setTimeout(() => {
-			setLoading(0)
-		}, 5000)
-	}, [])
 
 	useLayoutEffect(() => {
-		// window.addEventListener('load', handleLoading)
-
-		// setTimeout(() => {
-		// 	loadingRef.current.style.display = 'none'
-		// 	AppRef.current.style.display = 'flex'
-		// }, 9000)
-
-		document.addEventListener('scroll', () => {
+		const scrollY = () => {
 			if (window.scrollY > 300) {
 				scrollBtnRef.current.style.visibility = 'visible'
 				scrollBtnRef.current.style.bottom = '25px'
@@ -48,14 +28,12 @@ export default function Simplicity() {
 				scrollBtnRef.current.style.opacity = '0'
 			}
 
-			if (window.scrollY > 0) {
-				topRef.current.classList.add('sticky')
-			} else {
-				topRef.current.classList.remove('sticky')
-			}
-		})
+			topRef.current.classList.toggle('sticky', window.scrollY >= 10)
+		}
 
-		// return () => window.removeEventListener('load', handleLoading)
+		document.addEventListener('scroll', scrollY)
+
+		return () => window.removeEventListener('scroll', scrollY)
 	}, [])
 
 	const scrollToTop = () => window.scroll({ top: 0, left: 0, behavior: 'smooth' })
@@ -105,9 +83,43 @@ export default function Simplicity() {
 		)
 	}
 
-	return (
-		<>
-			{loading ? (
+	const Preloader = () => {
+		const [pct, setPct] = useState(0)
+
+		useEffect(() => {
+			let currProgress = 10
+			let step = 1
+
+			const interval = setInterval(() => {
+				currProgress += step
+				let progress = Math.round((Math.atan(currProgress) / (Math.PI / 2)) * 100 * 1000) / 1000
+				setPct(parseFloat(progress.toPrecision(3)))
+			}, 100)
+
+			return () => clearInterval(interval)
+		}, [])
+
+		return (
+			<div
+				className='preloader'
+				style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '.5rem' }}>
+				<div
+					className='progress-bar'
+					style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'right' }}>
+					<div
+						className='progress'
+						style={{
+							background: 'var(--first-color)',
+							color: 'var(--sec-color)',
+							width: pct ? `${pct}%` : '10%',
+							height: '3px',
+							textAlign: 'right',
+							fontSize: 'var(--smaller-font-size)',
+							transition: 'all 0.3s',
+						}}>
+						{Math.round(pct)}%
+					</div>
+				</div>
 				<div
 					ref={loadingRef}
 					className='loading'>
@@ -116,8 +128,23 @@ export default function Simplicity() {
 						src='./logo.svg'
 						alt=''
 					/>
-					<span>載入中 Loading ...</span>
+					<span>載入中 Loading</span>
 				</div>
+			</div>
+		)
+	}
+
+	useEffect(() => {
+		setLoading(1)
+		setTimeout(() => {
+			setLoading(0)
+		}, 5000)
+	}, [])
+
+	return (
+		<>
+			{loading ? (
+				<Preloader />
 			) : (
 				<div
 					ref={AppRef}
