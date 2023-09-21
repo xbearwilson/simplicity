@@ -1,3 +1,4 @@
+import Lenis from '@studio-freight/lenis'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './App.css'
@@ -83,6 +84,129 @@ export default function Simplicity() {
 		)
 	}
 
+	const Main = () => {
+		useLayoutEffect(() => {
+			const lenis = new Lenis({
+				// duration: 1.2,
+				// easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+				// direction: 'vertical',
+				// gestureDirection: 'vertical',
+				// smooth: true,
+				// smoothTouch: false,
+				// touchMultiplier: 2,
+			})
+			function raf(time) {
+				lenis.raf(time)
+				requestAnimationFrame(raf)
+			}
+			requestAnimationFrame(raf)
+			return () => lenis.destroy()
+		}, [])
+
+		return (
+			<div
+				id='top'
+				ref={AppRef}
+				className='App'>
+				<div
+					ref={topRef}
+					className='top'>
+					<a href='#'>
+						<img
+							className='logo'
+							src='./logo.svg'
+							alt=''
+						/>
+					</a>
+					<h3>{selected}</h3>
+					<div className='topSelect'>
+						<select
+							defaultValue={'defaults'}
+							onChange={handleChange}>
+							<option
+								key='0'
+								value='全部 All'>
+								========== 全部 All ==========
+							</option>
+							{list.map(MakeSelect)}
+						</select>
+					</div>
+				</div>
+
+				<div className='main'>
+					<div
+						className='flex'
+						ref={AllMenuRef}>
+						{data.map(t => (
+							<Item
+								key={t.id}
+								name={t.name}
+								price={t.price}
+								desc={t.description}
+								type={t.type}
+								pic={t.pic}
+							/>
+						))}
+					</div>
+					<div
+						className='flex'
+						ref={ItemMenuRef}>
+						{temp.map(t => (
+							<Item
+								key={t.id}
+								name={t.name}
+								price={t.price}
+								desc={t.description}
+								type={t.type}
+								pic={t.pic}
+							/>
+						))}
+					</div>
+				</div>
+
+				<div className='foot'>
+					<div className='foot_logo'>
+						<a href='#'>
+							<img
+								src='./logo.svg'
+								alt=''
+							/>
+						</a>
+					</div>
+					<div>
+						<div>營業時間：Business Hours:</div>
+						<div>週一~週三，週五~週六：12am-19pm</div>
+						<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
+						<div>假日：11:30am-18pm</div>
+						<div>Holiday: 11:30am-18pm</div>
+					</div>
+					<div>
+						<div>地址：Address:</div>
+						<div>新北市新店區大豐路61號</div>
+						<div>No 61, Dafeng Rd, Xindian Dist, New Taipei City</div>
+					</div>
+					<div>
+						<div>訂購專線：TEL:</div>
+						<div>0963-593-096</div>
+						<div>(02) 2918-9345</div>
+						<div>(02) 2918-9148</div>
+					</div>
+				</div>
+				<button
+					ref={scrollBtnRef}
+					type='button'
+					onClick={scrollToTop}
+					className='scroll-top'>
+					<span
+						role='img'
+						aria-label='Hand'>
+						☝️
+					</span>
+				</button>
+			</div>
+		)
+	}
+
 	const Preloader = () => {
 		const [pct, setPct] = useState(0)
 
@@ -99,39 +223,43 @@ export default function Simplicity() {
 			return () => clearInterval(interval)
 		}, [])
 
-		return (
-			<div
-				className='preloader'
-				style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '.5rem' }}>
+		const Loading = () => {
+			return (
 				<div
-					className='progress-bar'
-					style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'right' }}>
+					className='preloader'
+					style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '.5rem' }}>
 					<div
-						className='progress'
-						style={{
-							background: 'var(--first-color)',
-							color: 'var(--sec-color)',
-							width: pct ? `${pct}%` : '10%',
-							height: '3px',
-							textAlign: 'right',
-							fontSize: 'var(--smaller-font-size)',
-							transition: 'all 0.3s',
-						}}>
-						{Math.round(pct)}%
+						className='progress-bar'
+						style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'right' }}>
+						<div
+							className='progress'
+							style={{
+								background: 'var(--first-color)',
+								color: 'var(--sec-color)',
+								width: pct ? `${pct}%` : '10%',
+								height: '3px',
+								textAlign: 'right',
+								fontSize: 'var(--smaller-font-size)',
+								transition: 'all 0.3s',
+							}}>
+							{Math.round(pct)}%
+						</div>
+					</div>
+					<div
+						ref={loadingRef}
+						className='loading'>
+						<img
+							className='logo'
+							src='./logo.svg'
+							alt=''
+						/>
+						<span>載入中 Loading</span>
 					</div>
 				</div>
-				<div
-					ref={loadingRef}
-					className='loading'>
-					<img
-						className='logo'
-						src='./logo.svg'
-						alt=''
-					/>
-					<span>載入中 Loading</span>
-				</div>
-			</div>
-		)
+			)
+		}
+
+		return <Loading />
 	}
 
 	useEffect(() => {
@@ -141,111 +269,5 @@ export default function Simplicity() {
 		}, 5000)
 	}, [])
 
-	return (
-		<>
-			{loading ? (
-				<Preloader />
-			) : (
-				<div
-					ref={AppRef}
-					className='App'>
-					<div
-						ref={topRef}
-						className='top'>
-						<a href='#'>
-							<img
-								className='logo'
-								src='./logo.svg'
-								alt=''
-							/>
-						</a>
-						<h3>{selected}</h3>
-						<div className='topSelect'>
-							<select
-								defaultValue={'defaults'}
-								onChange={handleChange}>
-								<option
-									key='0'
-									value='全部 All'>
-									========== 全部 All ==========
-								</option>
-								{list.map(MakeSelect)}
-							</select>
-						</div>
-					</div>
-
-					<div className='main'>
-						<div
-							className='flex'
-							ref={AllMenuRef}>
-							{data.map(t => (
-								<Item
-									key={t.id}
-									name={t.name}
-									price={t.price}
-									desc={t.description}
-									type={t.type}
-									pic={t.pic}
-								/>
-							))}
-						</div>
-						<div
-							className='flex'
-							ref={ItemMenuRef}>
-							{temp.map(t => (
-								<Item
-									key={t.id}
-									name={t.name}
-									price={t.price}
-									desc={t.description}
-									type={t.type}
-									pic={t.pic}
-								/>
-							))}
-						</div>
-					</div>
-
-					<div className='foot'>
-						<div className='foot_logo'>
-							<a href='#'>
-								<img
-									src='./logo.svg'
-									alt=''
-								/>
-							</a>
-						</div>
-						<div>
-							<div>營業時間：Business Hours:</div>
-							<div>週一~週三，週五~週六：12am-19pm</div>
-							<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
-							<div>假日：11:30am-18pm</div>
-							<div>Holiday: 11:30am-18pm</div>
-						</div>
-						<div>
-							<div>地址：Address:</div>
-							<div>新北市新店區大豐路61號</div>
-							<div>No 61, Dafeng Rd, Xindian Dist, New Taipei City</div>
-						</div>
-						<div>
-							<div>訂購專線：TEL:</div>
-							<div>0963-593-096</div>
-							<div>(02) 2918-9345</div>
-							<div>(02) 2918-9148</div>
-						</div>
-					</div>
-					<button
-						ref={scrollBtnRef}
-						type='button'
-						onClick={scrollToTop}
-						className='scroll-top'>
-						<span
-							role='img'
-							aria-label='Hand'>
-							☝️
-						</span>
-					</button>
-				</div>
-			)}
-		</>
-	)
+	return <>{loading ? <Preloader /> : <Main />}</>
 }
