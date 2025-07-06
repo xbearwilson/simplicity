@@ -3,11 +3,11 @@
  * @LastEditTime: 2023-01-07 10:23:16
  * @Description:
  */
-import react from '@vitejs/plugin-react'
-import autoprefixer from 'autoprefixer'
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
-import htmlPurge from 'vite-plugin-purgecss'
+import react from '@vitejs/plugin-react';
+import autoprefixer from 'autoprefixer';
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import htmlPurge from 'vite-plugin-purgecss';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -43,5 +43,9 @@ export default defineConfig({
 		// host: '0.0.0.0',
 		// port: 3000,
 		open: true,
+		//! 20241026 add for fix pug’s not hot reload  https://tinyurl.com/24zssqcx
+		watch: {
+			usePolling: true,
+		},
 	},
-})
+});

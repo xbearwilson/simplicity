@@ -1,8 +1,7 @@
 #root {
-	/* display: flex; */
 	width: 100%;
-	max-width: 1280px;
 	margin: 0 auto;
+	user-select: none;
 }
 .loading {
 	width: 50%;
@@ -14,13 +13,20 @@
 	background: #fff;
 	transition: all 0.5s;
 	margin-right: 1rem;
-}
 
-.loading span {
-	color: var(--thi-color);
-	margin-top: 1rem;
-	font-size: var(--smaller-font-size);
-	animation: jump 1s ease 0s infinite normal;
+	span {
+		color: var(--thi-color);
+		margin-top: 1rem;
+		font-size: var(--smaller-font-size);
+		animation: jump 1s ease 0s infinite normal;
+	}
+
+	.logo {
+		position: relative;
+		margin-top: 3rem;
+		width: 80px;
+		height: 80px;
+	}
 }
 
 @keyframes jump {
@@ -58,18 +64,12 @@
 	align-items: flex-start;
 }
 
-.logo {
-	width: 5rem;
-	margin: 1rem 0 0 0;
-}
-
 .topSelect select {
 	font-size: var(--normal-font-size);
 }
 
 .top {
-	width: 100%;
-	max-width: 1200px;
+	width: 90%;
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
@@ -79,7 +79,12 @@
 	z-index: 999;
 	background: rgba(255, 255, 255, 0.8);
 	backdrop-filter: blur(10px);
-	transition: all 0.5s;
+	transition: background-color 0.5s;
+
+	.logo {
+		width: 5rem;
+		margin: 1rem 0 0 0;
+	}
 }
 
 .sticky {
@@ -93,22 +98,16 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	max-width: 90%;
 }
 
 .main {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	max-width: 90%;
+	position: relative;
+	width: 90%;
 	margin: 0 auto;
-	transition: all 0.3s;
 }
 
 .foot {
 	width: 100%;
-	max-width: 1400px;
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
@@ -120,28 +119,16 @@
 	margin: 2rem auto 4rem;
 	padding: 1rem 2rem;
 	line-height: 1.5;
+
+	.foot_logo {
+		width: 3rem;
+		opacity: 0.3;
+		filter: grayscale(1);
+	}
 }
 
 .foot > div {
 	margin: 0.3rem;
-}
-
-.foot_logo {
-	width: 3rem;
-	opacity: 0.3;
-	filter: grayscale(1);
-}
-
-@media screen and (max-width: 400px) {
-	.topSelect select {
-		margin-top: 1rem;
-		width: 100%;
-	}
-	.foot {
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.5rem;
-	}
 }
 
 .scroll-top {
@@ -189,56 +176,89 @@
 	position: relative;
 	top: 0;
 	left: 0;
-	width: 30%;
-	min-width: 280px;
-	white-space: pre-wrap;
-	border-radius: 5px;
-	margin: 10px;
-	padding: 5px;
-	box-shadow: 0.5px 0.5px 1px 0.5px rgb(209, 209, 209);
+	width: 360px;
 	animation-duration: 0.8s;
 	animation-name: enter;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
 	overflow: hidden;
+
+	h3 {
+		font-size: var(--h3-font-size);
+		margin: 0 0 4px 4px;
+		padding-bottom: 2rem;
+	}
+
+	.type {
+		font-size: var(--small-font-size);
+		font-weight: bold;
+		margin: 8px 4px 2px;
+	}
+
+	.img {
+		width: 100%;
+		max-width: 320px;
+		aspect-ratio: 16/9;
+		border-radius: 20px;
+		filter: contrast(101%) saturate(105%);
+		overflow: hidden;
+	}
+
+	.desc {
+		position: absolute;
+		font-size: var(--small-font-size);
+		padding: 4px;
+		bottom: 0;
+	}
+
+	.price {
+		position: absolute;
+		text-align: right;
+		color: var(--first-color);
+		font-size: var(--biggest-font-size);
+		font-weight: 900;
+		bottom: 0.2rem;
+		right: 1.5rem;
+
+		span {
+			color: rgb(121, 121, 121);
+			font-size: var(--smaller-font-size);
+			font-weight: bold;
+		}
+	}
 }
 
-.img {
-	width: 300px;
-	height: 239px;
-	object-fit: cover;
-	object-position: 50% 60%;
-	border-radius: 10px;
-	filter: contrast(101%) saturate(105%);
+@media screen and (max-width: 400px) {
+	.topSelect select {
+		margin-top: 1rem;
+		width: 100%;
+	}
+	.foot {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
 }
 
-.item h3 {
-	font-size: var(--h3-font-size);
-	margin: 8px 4px 1rem;
-}
-
-.price {
-	/* position: absolute; */
-	text-align: right;
-	color: var(--first-color);
-	font-size: var(--biggest-font-size);
-	font-weight: bold;
-	margin: 0;
-	/* bottom: 0.2rem;
-	right: 0.5rem; */
-}
-
-.price span {
-	color: rgb(121, 121, 121);
-	font-size: var(--smaller-font-size);
-	font-weight: bold;
-}
-
-.type {
-	font-size: var(--small-font-size);
-	font-weight: bold;
-	margin: 8px 4px 1rem;
-}
-
-.desc {
-	font-size: var(--small-font-size);
-	margin: 8px 4px 1rem;
+@media screen and (max-width: 799px) {
+	.item {
+		width: 50%;
+		.type {
+			transform-origin: left top;
+			transform: scale(0.8);
+		}
+		.img {
+			border-radius: 10px;
+		}
+		.desc {
+			transform-origin: left center;
+			transform: scale(0.5);
+		}
+		.price {
+			right: 1rem;
+		}
+	}
 }
