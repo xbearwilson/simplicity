@@ -296,7 +296,7 @@ export default function Simplicity() {
 		setLoading(1);
 		setTimeout(() => {
 			setLoading(0);
-		}, 0);
+		}, 3000);
 	}, []);
 
 	return <>{loading ? <Preloader /> : <Main />}</>;
