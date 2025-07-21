@@ -1,7 +1,7 @@
 #root {
 	width: 100%;
 	margin: 0 auto;
-	user-select: none;
+	/* user-select: none; */
 }
 .loading {
 	width: 50%;
@@ -205,6 +205,20 @@
 		border-radius: 20px;
 		filter: contrast(101%) saturate(105%);
 		overflow: hidden;
+	}
+
+	.does {
+		position: absolute;
+		color: #fff;
+		background: var(--first-color);
+		padding: 0.3rem 0.8rem;
+		top: 1.5rem;
+		left: 1.5rem;
+		border-radius: 20px;
+		border: 2px solid rgba(255, 255, 255, 0.8);
+		line-height: 1.2;
+		font-size: var(--smaller-font-size);
+		font-weight: 500;
 	}
 
 	.desc {
