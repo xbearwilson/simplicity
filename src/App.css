@@ -267,6 +267,11 @@
 		.img {
 			border-radius: 10px;
 		}
+		.does {
+			top: 1rem;
+			left: 0.5rem;
+			transform: scale(0.8);
+		}
 		.desc {
 			transform-origin: left center;
 			transform: scale(0.5);
