@@ -42,7 +42,7 @@ export default function Simplicity() {
 	const MakeSelect = X => <option key={X}>{X}</option>;
 
 	const handleChange = e => {
-		e.preventDefault();
+		// e.preventDefault();
 		setSelected(e.target.value);
 		if (e.target.value === '全部 All') {
 			AllMenuRef.current.style.display = 'flex';
@@ -123,15 +123,15 @@ export default function Simplicity() {
 							alt=''
 						/>
 					</a>
-					<h3>{selected}</h3>
+					{/* <h3>{selected}</h3> */}
 					<div className='topSelect'>
 						<select
-							autoFocus
-							defaultValue={'defaults'}
+							// autoFocus
+							// defaultValue={'defaults'}
 							onChange={handleChange}
 						>
 							<option
-								key='0'
+								// key='0'
 								value='全部 All'
 							>
 								========== 全部 All ==========
@@ -296,7 +296,7 @@ export default function Simplicity() {
 		setLoading(1);
 		setTimeout(() => {
 			setLoading(0);
-		}, 3000);
+		}, 2000);
 	}, []);
 
 	return <>{loading ? <Preloader /> : <Main />}</>;
