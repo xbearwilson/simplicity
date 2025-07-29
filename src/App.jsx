@@ -114,13 +114,14 @@ export default function Simplicity() {
 					ref={topRef}
 					className='top'
 				>
-					<a href='#'>
-						<img
-							className='logo'
-							src='./logo.svg'
-							alt=''
-						/>
-					</a>
+					{/* <a href='#'> */}
+					<img
+						onClick={scrollToTop}
+						className='logo'
+						src='./logo.svg'
+						alt='簡實新村|新店村 Simplicity & Honesty New Village Mantou Menu'
+					/>
+					{/* </a> */}
 					{/* <h3>{selected}</h3> */}
 					<div className='topSelect'>
 						<select
@@ -166,13 +167,16 @@ export default function Simplicity() {
 				</div>
 
 				<div className='foot'>
-					<div className='foot_logo'>
-						<a href='#'>
-							<img
-								src='./logo.svg'
-								alt=''
-							/>
-						</a>
+					<div
+						className='foot_logo'
+						onClick={scrollToTop}
+					>
+						{/* <a href='#'> */}
+						<img
+							src='./logo.svg'
+							alt='簡實新村|新店村 Simplicity & Honesty New Village Mantou Menu'
+						/>
+						{/* </a> */}
 					</div>
 					<div>
 						<div>營業時間：Business Hours:</div>
@@ -185,14 +189,56 @@ export default function Simplicity() {
 					</div>
 					<div>
 						<div>地址：Address:</div>
-						<div>新北市新店區大豐路61號</div>
-						<div>No 61, Dafeng Rd, Xindian Dist, New Taipei City</div>
+						<div
+							className='point'
+							onClick={(e) => {
+								e.preventDefault();
+								window.location.href = 'https://tinyurl.com/22ap3wxv';
+								// window.open('https://tinyurl.com/22ap3wxv', '_blank');
+							}}
+						>
+							新北市新店區大豐路61號
+						</div>
+						<div
+							className='point'
+							onClick={(e) => {
+								e.preventDefault();
+								window.location.href = 'https://tinyurl.com/22ap3wxv';
+								// window.open('https://tinyurl.com/22ap3wxv', '_blank');
+							}}
+						>
+							No 61, Dafeng Rd, Xindian Dist, New Taipei City
+						</div>
 					</div>
 					<div>
 						<div>訂購專線：TEL:</div>
-						<div>0963-593-096</div>
-						<div>(02) 2918-9345</div>
-						<div>(02) 2918-9148</div>
+						<div
+							className='point'
+							onClick={(e) => {
+								e.preventDefault();
+								window.location.href = 'tel:0963593096';
+							}}
+						>
+							0963-593-096
+						</div>
+						<div
+							className='point'
+							onClick={(e) => {
+								e.preventDefault();
+								window.location.href = 'tel:0229189345';
+							}}
+						>
+							(02) 2918-9345
+						</div>
+						<div
+							className='point'
+							onClick={(e) => {
+								e.preventDefault();
+								window.location.href = 'tel:0229189148';
+							}}
+						>
+							(02) 2918-9148
+						</div>
 					</div>
 				</div>
 				<button
