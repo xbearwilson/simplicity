@@ -237,7 +237,7 @@ const inventory = [
 		name: '芋頭紅豆\nTaro & Red Bean-Filled Mantou',
 		description: '',
 		price: 32,
-		type: '素 Vegan / 奶素 Lacto-Vegetarian',
+		type: '奶素 Lacto-Vegetarian',
 		pic: './taroRedBeanFilledMantou.jpg',
 		do: '',
 	},
@@ -725,8 +725,8 @@ const inventory = [
 
 // inventory = _.uniqBy(inventory, 'name')
 const sortedInventory = _.sortBy(inventory, 'category');
-const c = inventory.map(item => item.category);
-const t = inventory.map(item => item.type);
+const c = inventory.map((item) => item.category);
+const t = inventory.map((item) => item.type);
 const all = _.union(c, t);
 // console.log('🚀 ~ all', all)
 

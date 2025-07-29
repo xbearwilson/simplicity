@@ -8,13 +8,11 @@ import inventory, { categories } from './inventory.js';
 export default function Simplicity() {
 	const [data] = useState(inventory);
 	const [list] = useState(categories);
-	const [selected, setSelected] = useState('');
+	const [selected, setSelected] = useState('全部 All');
 	const loadingRef = useRef();
 	const AppRef = useRef();
 	const topRef = useRef();
 	const scrollBtnRef = useRef();
-	const AllMenuRef = useRef();
-	const ItemMenuRef = useRef();
 	const [loading, setLoading] = useState(0);
 
 	useLayoutEffect(() => {
@@ -39,25 +37,25 @@ export default function Simplicity() {
 
 	const scrollToTop = () =>
 		window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-	const MakeSelect = X => <option key={X}>{X}</option>;
+	const MakeSelect = (X) => (
+		<option
+			key={X}
+			value={X}
+		>
+			{X}
+		</option>
+	);
 
-	const handleChange = e => {
-		// e.preventDefault();
+	const handleChange = (e) => {
 		setSelected(e.target.value);
-		if (e.target.value === '全部 All') {
-			AllMenuRef.current.style.display = 'flex';
-			ItemMenuRef.current.style.display = 'none';
-			scrollToTop();
-		} else {
-			AllMenuRef.current.style.display = 'none';
-			ItemMenuRef.current.style.display = 'flex';
-			scrollToTop();
-		}
+		scrollToTop();
 	};
 
-	const temp = data.filter(i => i.category === selected || i.type === selected);
+	const temp = data.filter(
+		(i) => i.category === selected || i.type === selected
+	);
 
-	const Price = props => {
+	const Price = (props) => {
 		const { value } = props;
 
 		return (
@@ -126,54 +124,45 @@ export default function Simplicity() {
 					{/* <h3>{selected}</h3> */}
 					<div className='topSelect'>
 						<select
-							// autoFocus
-							// defaultValue={'defaults'}
+							value={selected}
 							onChange={handleChange}
 						>
-							<option
-								// key='0'
-								value='全部 All'
-							>
-								========== 全部 All ==========
-							</option>
+							<option value='全部 All'>========== 全部 All ==========</option>
 							{list.map(MakeSelect)}
 						</select>
 					</div>
 				</div>
 
 				<div className='main'>
-					<div
-						className='flex'
-						ref={AllMenuRef}
-					>
-						{data.map(t => (
-							<Item
-								key={t.id}
-								name={t.name}
-								price={t.price}
-								desc={t.description}
-								type={t.type}
-								pic={t.pic}
-								does={t.do}
-							/>
-						))}
-					</div>
-					<div
-						className='flex'
-						ref={ItemMenuRef}
-					>
-						{temp.map(t => (
-							<Item
-								key={t.id}
-								name={t.name}
-								price={t.price}
-								desc={t.description}
-								type={t.type}
-								pic={t.pic}
-								does={t.do}
-							/>
-						))}
-					</div>
+					{selected === '全部 All' ? (
+						<div className='flex'>
+							{data.map((t) => (
+								<Item
+									key={t.id}
+									name={t.name}
+									price={t.price}
+									desc={t.description}
+									type={t.type}
+									pic={t.pic}
+									does={t.do}
+								/>
+							))}
+						</div>
+					) : (
+						<div className='flex'>
+							{temp.map((t) => (
+								<Item
+									key={t.id}
+									name={t.name}
+									price={t.price}
+									desc={t.description}
+									type={t.type}
+									pic={t.pic}
+									does={t.do}
+								/>
+							))}
+						</div>
+					)}
 				</div>
 
 				<div className='foot'>
@@ -191,6 +180,8 @@ export default function Simplicity() {
 						<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
 						<div>假日：11:30am-18pm</div>
 						<div>Holiday: 11:30am-18pm</div>
+						<div>預約請於下午來電 (須提前 2 ~ 3 日)</div>
+						<div>固定店休日：每週 四、日 (如遇特別店休日將提前公告之)</div>
 					</div>
 					<div>
 						<div>地址：Address:</div>
@@ -296,7 +287,7 @@ export default function Simplicity() {
 		setLoading(1);
 		setTimeout(() => {
 			setLoading(0);
-		}, 2000);
+		}, 800);
 	}, []);
 
 	return <>{loading ? <Preloader /> : <Main />}</>;

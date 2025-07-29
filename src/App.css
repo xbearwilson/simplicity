@@ -94,16 +94,18 @@
 	transform: translateX(-50%);
 }
 
-.flex {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-}
-
 .main {
 	position: relative;
 	width: 90%;
 	margin: 0 auto;
+}
+
+.flex {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	/* 讓所有item齊左，外層main已居中 */
+	width: 100%;
 }
 
 .foot {
@@ -137,16 +139,18 @@
 	right: 25px;
 	z-index: 99;
 	outline: none;
-	background-color: rgb(239, 239, 239);
-	border: 1px solid #333;
+	/* background-color: rgb(239, 239, 239); */
+	background: #fff;
+	/* border: 1px solid #333; */
+	border: 1px solid var(--thi-color);
 	cursor: pointer;
-	padding: 15px;
+	padding: 1rem;
 	border-radius: 4px;
 	animation: movescrollTop 3s ease-in-out infinite;
 	transition: all 0.5s ease-in-out;
 	visibility: hidden;
 	opacity: 0;
-	box-shadow: 1px 1px 5px 1px var(--thi-color);
+	/* box-shadow: 1px 1px 1px 1px var(--thi-color); */
 }
 
 @keyframes movescrollTop {
@@ -176,7 +180,8 @@
 	position: relative;
 	top: 0;
 	left: 0;
-	width: 360px;
+	width: 373px;
+	/* width: 15%; */
 	animation-duration: 0.8s;
 	animation-name: enter;
 	padding: 1rem;
@@ -255,6 +260,10 @@
 		align-items: flex-start;
 		gap: 0.5rem;
 	}
+	.scroll-top {
+		right: 10px;
+		padding: 0.3rem;
+	}
 }
 
 @media screen and (max-width: 799px) {
@@ -280,4 +289,7 @@
 			right: 1rem;
 		}
 	}
+	/* .scroll-top {
+		padding: 0.5rem;
+	} */
 }
