@@ -119,7 +119,7 @@ export default function Simplicity() {
 						onClick={scrollToTop}
 						className='logo'
 						src='./logo.svg'
-						alt='簡實新村|新店村 Simplicity & Honesty New Village Mantou Menu'
+						alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 					/>
 					{/* </a> */}
 					{/* <h3>{selected}</h3> */}
@@ -174,11 +174,12 @@ export default function Simplicity() {
 						{/* <a href='#'> */}
 						<img
 							src='./logo.svg'
-							alt='簡實新村|新店村 Simplicity & Honesty New Village Mantou Menu'
+							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 						/>
 						{/* </a> */}
 					</div>
 					<div>
+						<div>簡實新村|新店村|Simplicity & Honesty Xindian Village</div>
 						<div>營業時間：Business Hours:</div>
 						<div>週一~週三，週五~週六：12am-19pm</div>
 						<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
@@ -197,7 +198,7 @@ export default function Simplicity() {
 								// window.open('https://tinyurl.com/22ap3wxv', '_blank');
 							}}
 						>
-							新北市新店區大豐路61號
+							23142 新北市新店區大豐路61號
 						</div>
 						<div
 							className='point'
