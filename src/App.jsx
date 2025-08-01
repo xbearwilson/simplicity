@@ -6,16 +6,33 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
-  const [data] = useState(inventory);
-  const [list] = useState(categories);
-  // 取得所有 do 欄位的唯一值（含空字串）
-  const doOptions = Array.from(new Set(data.map((item) => item.do)));
-  // 可擴充多條件
-  // do select 預設值設為空字串，對應 do: ''
+  const resetTimeout = useRef();
   const [filterState, setFilterState] = useState({
     category: "全部 All",
     do: "",
   });
+  const [data] = useState(inventory);
+  const [list] = useState(categories);
+  // 依據目前選擇的 category 動態取得 do 選項
+  const filteredByCategory = data.filter(
+    (item) =>
+      filterState.category === "全部 All" ||
+      item.category === filterState.category ||
+      item.type === filterState.category
+  );
+  const doOptions = Array.from(
+    new Set(filteredByCategory.map((item) => item.do))
+  );
+
+  // 自動選取<select>2第一個有資料的選項
+  useEffect(() => {
+    if (filterState.category !== "全部 All" && doOptions.length > 0) {
+      // 若目前do不在可選範圍，則自動選第一個
+      if (!doOptions.includes(filterState.do)) {
+        setFilterState((prev) => ({ ...prev, do: doOptions[0] }));
+      }
+    }
+  }, [filterState.category, doOptions]);
   const loadingRef = useRef();
   const AppRef = useRef();
   const topRef = useRef();
@@ -55,28 +72,30 @@ export default function Simplicity() {
     scrollToTop();
   };
 
-  const filteredData = data.filter((item) => {
-    // category 條件
+  // 依據 category 與 do 過濾
+  const itemsToShow = data.filter((item) => {
     const matchCategory =
       filterState.category === "全部 All" ||
       item.category === filterState.category ||
       item.type === filterState.category;
-    // do 條件
     const matchDo =
-      filterState.do === ""
-        ? item.do === ""
-        : filterState.do === undefined
-        ? true
-        : item.do === filterState.do;
+      filterState.do === "" ? item.do === "" : item.do === filterState.do;
     return matchCategory && matchDo;
   });
 
-  // 若預設為全部 All + 天天有 Every day 時，顯示所有 do 為空字串的 Item
-  const showAllEveryday =
-    filterState.category === "全部 All" && filterState.do === "";
-  const itemsToShow = showAllEveryday
-    ? data.filter((item) => item.do === "")
-    : filteredData;
+  // 無資料時自動重設select
+  useEffect(() => {
+    if (
+      itemsToShow.length === 0 &&
+      (filterState.category !== "全部 All" || filterState.do !== "")
+    ) {
+      resetTimeout.current = setTimeout(() => {
+        setFilterState({ category: "全部 All", do: "" });
+      }, 3500);
+    } else {
+      if (resetTimeout.current) clearTimeout(resetTimeout.current);
+    }
+  }, [itemsToShow, filterState.category, filterState.do]);
 
   const Price = (props) => {
     const { value } = props;
@@ -136,35 +155,62 @@ export default function Simplicity() {
               <option value="全部 All">========== 全部 All ==========</option>
               {list.map(MakeSelect)}
             </select>
-            <select
-              value={filterState.do}
-              onChange={(e) => handleSelectChange("do", e.target.value)}
-            >
-              <option value="">========== 天天有 Every day ==========</option>
-              {doOptions
-                .filter((opt) => opt !== "")
-                .map((opt) => (
+            {/* 只有在分類不是全部且有 do 選項時才顯示 select 2 */}
+            {filterState.category !== "全部 All" && doOptions.length > 0 && (
+              <select
+                value={filterState.do}
+                onChange={(e) => handleSelectChange("do", e.target.value)}
+              >
+                {doOptions.map((opt) => (
                   <option key={opt} value={opt}>
-                    {opt}
+                    {opt === ""
+                      ? "========== 天天有 Every day =========="
+                      : opt}
                   </option>
                 ))}
-            </select>
+              </select>
+            )}
+            {/* 若分類不是全部但無 do 選項，顯示提示 */}
+            {filterState.category !== "全部 All" && doOptions.length === 0 && (
+              <span style={{ color: "#888", marginLeft: "1rem" }}>
+                目前暫無品項
+              </span>
+            )}
+            {/* 若分類為全部，提示先選分類 */}
+            {filterState.category === "全部 All" && (
+              <span style={{ color: "#888", marginLeft: "1rem" }}>
+                請先選擇分類
+              </span>
+            )}
           </div>
         </div>
 
         <div className="main">
           <div className="flex">
-            {itemsToShow.map((t) => (
-              <Item
-                key={t.id}
-                name={t.name}
-                price={t.price}
-                desc={t.description}
-                type={t.type}
-                pic={t.pic}
-                does={t.do}
-              />
-            ))}
+            {itemsToShow.length === 0 ? (
+              <div
+                style={{
+                  color: "#888",
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "2rem",
+                }}
+              >
+                目前暫無品項，3秒後自動回到預設分類
+              </div>
+            ) : (
+              itemsToShow.map((t) => (
+                <Item
+                  key={t.id}
+                  name={t.name}
+                  price={t.price}
+                  desc={t.description}
+                  type={t.type}
+                  pic={t.pic}
+                  does={t.do}
+                />
+              ))
+            )}
           </div>
         </div>
 
