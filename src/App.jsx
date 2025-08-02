@@ -6,12 +6,23 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
+  // 頁面初始預設狀態
   const [showAll, setShowAll] = useState(false);
   const resetTimeout = useRef();
   const [filterState, setFilterState] = useState({
     category: "全部 All",
     do: "",
   });
+
+  // 強制初始狀態（component mount）
+  useEffect(() => {
+    setShowAll(false);
+    setFilterState({ category: "全部 All", do: "" });
+  }, []);
+
+  // 初始狀態下只顯示 do === "" 的品項
+  const isInitial =
+    filterState.category === "全部 All" && filterState.do === "" && !showAll;
   const [data] = useState(inventory);
   const [list] = useState(categories);
   // 依據目前選擇的 category 動態取得 do 選項
@@ -82,6 +93,8 @@ export default function Simplicity() {
   // 依據 category 與 do 過濾
   const itemsToShow = showAll
     ? data
+    : isInitial
+    ? data.filter((item) => item.do === "")
     : data.filter((item) => {
         const matchCategory =
           filterState.category === "全部 All" ||
@@ -174,20 +187,27 @@ export default function Simplicity() {
               <option value="全部 All">========== 全部 All ==========</option>
               {list.map(MakeSelect)}
             </select>
-            {/* 只有在分類不是全部且有 do 選項時才顯示 select 2 */}
-            {filterState.category !== "全部 All" && doOptions.length > 0 && (
-              <select
-                value={filterState.do}
-                onChange={(e) => handleSelectChange("do", e.target.value)}
-              >
-                {doOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt === ""
-                      ? "========== 天天有 Every day =========="
-                      : opt}
-                  </option>
-                ))}
+            {/* 初始狀態下 <select> 2 只顯示預設值 */}
+            {isInitial ? (
+              <select value="" disabled>
+                <option value="">天天有 Every day</option>
               </select>
+            ) : (
+              filterState.category !== "全部 All" &&
+              doOptions.length > 0 && (
+                <select
+                  value={filterState.do}
+                  onChange={(e) => handleSelectChange("do", e.target.value)}
+                >
+                  {doOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt === ""
+                        ? "========== 天天有 Every day =========="
+                        : opt}
+                    </option>
+                  ))}
+                </select>
+              )
             )}
             {/* 若分類不是全部但無 do 選項，顯示提示 */}
             {filterState.category !== "全部 All" && doOptions.length === 0 && (
