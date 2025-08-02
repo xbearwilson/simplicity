@@ -273,7 +273,8 @@
 
 @media screen and (max-width: 400px) {
   .main {
-    margin: 13rem auto 0 !important;
+    margin-top: 16rem !important;
+    /* margin: 13rem auto 0 !important; */
   }
   .top {
     width: 100%;
@@ -285,6 +286,7 @@
     }
   }
   .topSelect {
+    margin-top: unset !important;
     flex-direction: column;
     width: 100%;
     .view-all {
@@ -306,8 +308,11 @@
 }
 
 @media screen and (max-width: 799px) {
+  .topSelect {
+    margin-top: 0.5rem;
+  }
   .main {
-    margin: 8rem auto 0;
+    margin: 11rem auto 0;
   }
   .item {
     width: 50%;
