@@ -190,7 +190,7 @@ export default function Simplicity() {
             {/* 初始狀態下 <select> 2 只顯示預設值 */}
             {isInitial ? (
               <select value="" disabled>
-                <option value="">天天有 Every day</option>
+                <option value="">天天有 Every Day</option>
               </select>
             ) : (
               filterState.category !== "全部 All" &&
@@ -201,9 +201,7 @@ export default function Simplicity() {
                 >
                   {doOptions.map((opt) => (
                     <option key={opt} value={opt}>
-                      {opt === ""
-                        ? "========== 天天有 Every day =========="
-                        : opt}
+                      {opt === "" ? "天天有 Every Day" : opt}
                     </option>
                   ))}
                 </select>
