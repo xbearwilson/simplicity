@@ -6,6 +6,7 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
+  const [showAll, setShowAll] = useState(false);
   const resetTimeout = useRef();
   const [filterState, setFilterState] = useState({
     category: "全部 All",
@@ -51,7 +52,7 @@ export default function Simplicity() {
         scrollBtnRef.current.style.opacity = "0";
       }
 
-      topRef.current.classList.toggle("sticky", window.scrollY >= 10);
+      // topRef.current.classList.toggle("sticky", window.scrollY >= 10);
     };
 
     document.addEventListener("scroll", scrollY);
@@ -68,20 +69,28 @@ export default function Simplicity() {
   );
 
   const handleSelectChange = (key, value) => {
-    setFilterState((prev) => ({ ...prev, [key]: value }));
+    if (key === "category" && value === "全部 All") {
+      setFilterState({ category: "全部 All", do: "" });
+      setShowAll(false);
+    } else {
+      setFilterState((prev) => ({ ...prev, [key]: value }));
+      setShowAll(false);
+    }
     scrollToTop();
   };
 
   // 依據 category 與 do 過濾
-  const itemsToShow = data.filter((item) => {
-    const matchCategory =
-      filterState.category === "全部 All" ||
-      item.category === filterState.category ||
-      item.type === filterState.category;
-    const matchDo =
-      filterState.do === "" ? item.do === "" : item.do === filterState.do;
-    return matchCategory && matchDo;
-  });
+  const itemsToShow = showAll
+    ? data
+    : data.filter((item) => {
+        const matchCategory =
+          filterState.category === "全部 All" ||
+          item.category === filterState.category ||
+          item.type === filterState.category;
+        const matchDo =
+          filterState.do === "" ? item.do === "" : item.do === filterState.do;
+        return matchCategory && matchDo;
+      });
 
   // 無資料時自動重設select
   useEffect(() => {
@@ -148,6 +157,16 @@ export default function Simplicity() {
             alt="簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu"
           />
           <div className="topSelect" style={{ display: "flex", gap: "1rem" }}>
+            <button
+              className="view-all"
+              onClick={() => {
+                setShowAll(true);
+                setFilterState({ category: "全部 All", do: "" });
+                scrollToTop();
+              }}
+            >
+              所有品項
+            </button>
             <select
               value={filterState.category}
               onChange={(e) => handleSelectChange("category", e.target.value)}

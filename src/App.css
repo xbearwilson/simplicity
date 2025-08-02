@@ -64,12 +64,12 @@
   align-items: flex-start;
 }
 
-.topSelect select {
-  display: flex;
-  font-size: var(--normal-font-size);
-}
-
 .top {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: background-color 0.4s;
   width: 90%;
   display: flex;
   justify-content: space-between;
@@ -89,17 +89,29 @@
   }
 }
 
-.sticky {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+.view-all {
+  outline: none;
+  background: #fff;
+  border: 1px solid var(--thi-color);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s;
+  &:hover {
+    background: var(--thi-color);
+    color: #fff;
+  }
+}
+
+.topSelect select {
+  display: flex;
+  font-size: var(--normal-font-size);
 }
 
 .main {
   position: relative;
   width: 90%;
-  margin: 0 auto;
+  margin: 8.5rem auto 0;
 }
 
 .flex {
@@ -152,9 +164,7 @@
   right: 25px;
   z-index: 99;
   outline: none;
-  /* background-color: rgb(239, 239, 239); */
   background: #fff;
-  /* border: 1px solid #333; */
   border: 1px solid var(--thi-color);
   cursor: pointer;
   padding: 1rem;
@@ -163,7 +173,6 @@
   transition: all 0.5s ease-in-out;
   visibility: hidden;
   opacity: 0;
-  /* box-shadow: 1px 1px 1px 1px var(--thi-color); */
 }
 
 @keyframes movescrollTop {
@@ -194,7 +203,6 @@
   top: 0;
   left: 0;
   width: 373px;
-  /* width: 15%; */
   animation-duration: 0.8s;
   animation-name: enter;
   padding: 1rem;
@@ -264,6 +272,9 @@
 }
 
 @media screen and (max-width: 400px) {
+  .main {
+    margin: 13rem auto 0 !important;
+  }
   .top {
     width: 100%;
     flex-direction: column;
@@ -276,13 +287,12 @@
   .topSelect {
     flex-direction: column;
     width: 100%;
-    select {
+    .view-all {
       margin-top: 0.5rem;
+    }
+    select {
       width: 100%;
     }
-  }
-  .main {
-    width: 100%;
   }
   .foot {
     flex-direction: column;
@@ -296,6 +306,9 @@
 }
 
 @media screen and (max-width: 799px) {
+  .main {
+    margin: 8rem auto 0;
+  }
   .item {
     width: 50%;
     .type {
