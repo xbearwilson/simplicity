@@ -42,6 +42,18 @@ export default function Simplicity() {
   // 強制初始狀態（component mount）
   useEffect(() => {
     // 動態偵測top高度
+    window.addEventListener("load", () => {
+      setTimeout(updateTopHeight, 0);
+    });
+    return () => {
+      window.removeEventListener("load", () => {
+        setTimeout(updateTopHeight, 0);
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    // 動態偵測top高度
     setTimeout(updateTopHeight, 0);
     setShowAll(false);
     setFilterState({ category: "全部 All", do: "" });
@@ -68,8 +80,6 @@ export default function Simplicity() {
         scrollBtnRef.current.style.bottom = "-50px";
         scrollBtnRef.current.style.opacity = "0";
       }
-      // top sticky
-      // topRef.current.classList.toggle("sticky", window.scrollY >= 10);
     };
 
     updateTopHeight();
