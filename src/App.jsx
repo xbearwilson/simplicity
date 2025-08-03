@@ -41,15 +41,7 @@ export default function Simplicity() {
 
   // 強制初始狀態（component mount）
   useEffect(() => {
-    // 動態偵測top高度
-    window.addEventListener("load", () => {
-      setTimeout(updateTopHeight, 0);
-    });
-    return () => {
-      window.removeEventListener("load", () => {
-        setTimeout(updateTopHeight, 0);
-      });
-    };
+    setTimeout(updateTopHeight, 0);
   }, []);
 
   useEffect(() => {
