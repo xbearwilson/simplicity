@@ -111,7 +111,7 @@
 .main {
   position: relative;
   width: 90%;
-  margin-top: 8.5rem;
+  /* margin: 8.5rem auto 0; */
   left: 50%;
   transform: translateX(-50%);
 }
