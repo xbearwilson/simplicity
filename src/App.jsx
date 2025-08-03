@@ -1,5 +1,5 @@
 import Lenis from "@studio-freight/lenis";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "./App.css";
 import PlaceholderImage from "./img/logo.svg";
@@ -7,9 +7,7 @@ import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
   const updateTopHeight = () => {
-    if (topRef.current) {
-      setTopHeight(topRef.current.offsetHeight);
-    }
+    if (topRef.current) setTopHeight(topRef.current.offsetHeight);
   };
   const [topHeight, setTopHeight] = useState(0);
   // 頁面初始預設狀態
@@ -19,18 +17,6 @@ export default function Simplicity() {
     category: "全部 All",
     do: "",
   });
-  // 頁面初始進入時執行一次 top 高度偵測
-  useEffect(() => {
-    setTimeout(updateTopHeight, 0);
-  }, []);
-  // 動態偵測top高度
-
-  // 強制初始狀態（component mount）
-  useEffect(() => {
-    setShowAll(false);
-    setFilterState({ category: "全部 All", do: "" });
-    updateTopHeight();
-  }, []);
 
   // 初始狀態下只顯示 do === "" 的品項
   const isInitial =
@@ -47,6 +33,19 @@ export default function Simplicity() {
   const doOptions = Array.from(
     new Set(filteredByCategory.map((item) => item.do))
   );
+  const loadingRef = useRef();
+  const AppRef = useRef();
+  const topRef = useRef();
+  const scrollBtnRef = useRef();
+  const [loading, setLoading] = useState(0);
+
+  // 強制初始狀態（component mount）
+  useEffect(() => {
+    // 動態偵測top高度
+    setTimeout(updateTopHeight, 0);
+    setShowAll(false);
+    setFilterState({ category: "全部 All", do: "" });
+  }, []);
 
   // 自動選取<select>2第一個有資料的選項
   useEffect(() => {
@@ -57,13 +56,8 @@ export default function Simplicity() {
       }
     }
   }, [filterState.category, doOptions]);
-  const loadingRef = useRef();
-  const AppRef = useRef();
-  const topRef = useRef();
-  const scrollBtnRef = useRef();
-  const [loading, setLoading] = useState(0);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const scrollY = () => {
       if (window.scrollY > 300) {
         scrollBtnRef.current.style.visibility = "visible";
@@ -168,7 +162,7 @@ export default function Simplicity() {
   };
 
   const Main = () => {
-    useLayoutEffect(() => {
+    useEffect(() => {
       const lenis = new Lenis();
       function raf(time) {
         lenis.raf(time);
