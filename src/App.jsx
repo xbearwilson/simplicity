@@ -6,6 +6,13 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
+  // 動態偵測top高度
+  const updateTopHeight = () => {
+    if (topRef.current) {
+      setTopHeight(topRef.current.offsetHeight);
+    }
+  };
+  const [topHeight, setTopHeight] = useState(0);
   // 頁面初始預設狀態
   const [showAll, setShowAll] = useState(false);
   const resetTimeout = useRef();
@@ -62,13 +69,18 @@ export default function Simplicity() {
         scrollBtnRef.current.style.bottom = "-50px";
         scrollBtnRef.current.style.opacity = "0";
       }
-
+      // top sticky
       // topRef.current.classList.toggle("sticky", window.scrollY >= 10);
     };
 
+    updateTopHeight();
+    window.addEventListener("resize", updateTopHeight);
     document.addEventListener("scroll", scrollY);
 
-    return () => window.removeEventListener("scroll", scrollY);
+    return () => {
+      window.removeEventListener("resize", updateTopHeight);
+      document.removeEventListener("scroll", scrollY);
+    };
   }, []);
 
   const scrollToTop = () =>
@@ -88,6 +100,7 @@ export default function Simplicity() {
       setShowAll(false);
     }
     scrollToTop();
+    setTimeout(updateTopHeight, 0);
   };
 
   // 依據 category 與 do 過濾
@@ -170,16 +183,19 @@ export default function Simplicity() {
             alt="簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu"
           />
           <div className="topSelect" style={{ display: "flex", gap: "1rem" }}>
-            <button
-              className="view-all"
-              onClick={() => {
-                setShowAll(true);
-                setFilterState({ category: "全部 All", do: "" });
-                scrollToTop();
-              }}
-            >
-              所有品項
-            </button>
+            {!showAll && (
+              <button
+                className="view-all"
+                onClick={() => {
+                  setShowAll(true);
+                  setFilterState({ category: "全部 All", do: "" });
+                  scrollToTop();
+                  setTimeout(updateTopHeight, 0);
+                }}
+              >
+                所有品項
+              </button>
+            )}
             <select
               value={filterState.category}
               onChange={(e) => handleSelectChange("category", e.target.value)}
@@ -215,14 +231,12 @@ export default function Simplicity() {
             )}
             {/* 若分類為全部，提示先選分類 */}
             {filterState.category === "全部 All" && (
-              <span style={{ color: "#888", marginLeft: "1rem" }}>
-                請先選擇分類
-              </span>
+              <span style={{ color: "#888" }}>請先選擇品項分類</span>
             )}
           </div>
         </div>
 
-        <div className="main">
+        <div className="main" style={{ marginTop: `${topHeight + 16}px` }}>
           <div className="flex">
             {itemsToShow.length === 0 ? (
               <div
