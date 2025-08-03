@@ -6,6 +6,10 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
+  // 頁面初始進入時執行一次 top 高度偵測
+  useEffect(() => {
+    setTimeout(updateTopHeight, 0);
+  }, []);
   // 動態偵測top高度
   const updateTopHeight = () => {
     if (topRef.current) {
