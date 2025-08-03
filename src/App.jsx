@@ -6,6 +6,7 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
+  // 使用 ResizeObserver 監聽 <div>.top 高度
   const updateTopHeight = () => {
     if (topRef.current) setTopHeight(topRef.current.offsetHeight);
   };
@@ -41,7 +42,19 @@ export default function Simplicity() {
 
   // 強制初始狀態（component mount）
   useEffect(() => {
-    setTimeout(updateTopHeight, 0);
+    // 只在 mount 時執行一次 ResizeObserver
+    let observer;
+    if (topRef.current) {
+      observer = new window.ResizeObserver(() => {
+        setTopHeight(topRef.current.offsetHeight);
+      });
+      observer.observe(topRef.current);
+      // 初始也執行一次
+      setTopHeight(topRef.current.offsetHeight);
+    }
+    return () => {
+      if (observer && topRef.current) observer.unobserve(topRef.current);
+    };
   }, []);
 
   useEffect(() => {
