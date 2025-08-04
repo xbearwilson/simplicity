@@ -7,11 +7,6 @@ import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
   // 使用 ResizeObserver 監聽 top 高度
-  const updateTopHeight = () => {
-    if (topRef.current) {
-      setTopHeight(topRef.current.offsetHeight);
-    }
-  };
   const [topHeight, setTopHeight] = useState(0);
   // 頁面初始預設狀態
   const [showAll, setShowAll] = useState(false);
@@ -41,6 +36,14 @@ export default function Simplicity() {
   const topRef = useRef();
   const scrollBtnRef = useRef();
   const [loading, setLoading] = useState(0);
+
+  useEffect(() => {
+    setTopHeight("178px");
+  }, []);
+
+  const updateTopHeight = () => {
+    if (topRef.current) setTopHeight(topRef.current.offsetHeight);
+  };
 
   // 強制初始狀態（component mount）
   // 伺服器與本地皆能即時偵測 top 高度
