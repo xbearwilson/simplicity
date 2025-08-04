@@ -6,9 +6,11 @@ import PlaceholderImage from "./img/logo.svg";
 import inventory, { categories } from "./inventory.js";
 
 export default function Simplicity() {
-  // 使用 ResizeObserver 監聽 <div>.top 高度
+  // 使用 ResizeObserver 監聽 top 高度
   const updateTopHeight = () => {
-    if (topRef.current) setTopHeight(topRef.current.offsetHeight);
+    if (topRef.current) {
+      setTopHeight(topRef.current.offsetHeight);
+    }
   };
   const [topHeight, setTopHeight] = useState(0);
   // 頁面初始預設狀態
@@ -41,18 +43,19 @@ export default function Simplicity() {
   const [loading, setLoading] = useState(0);
 
   // 強制初始狀態（component mount）
+  // 伺服器與本地皆能即時偵測 top 高度
   useEffect(() => {
-    // 只在 mount 時執行一次 ResizeObserver
+    setTimeout(() => updateTopHeight(), 0); // mount 時立即偵測
     let observer;
-    if (topRef.current) {
+    if (topRef.current && window.ResizeObserver) {
       observer = new window.ResizeObserver(() => {
-        setTopHeight(topRef.current.offsetHeight);
+        updateTopHeight();
       });
       observer.observe(topRef.current);
-      // 初始也執行一次
-      setTopHeight(topRef.current.offsetHeight);
     }
+    window.addEventListener("resize", updateTopHeight);
     return () => {
+      window.removeEventListener("resize", updateTopHeight);
       if (observer && topRef.current) observer.unobserve(topRef.current);
     };
   }, []);
@@ -87,7 +90,7 @@ export default function Simplicity() {
       }
     };
 
-    updateTopHeight();
+    setTimeout(() => updateTopHeight(), 0);
     window.addEventListener("resize", updateTopHeight);
     document.addEventListener("scroll", scrollY);
 
@@ -381,6 +384,7 @@ export default function Simplicity() {
         setPct(parseFloat(progress.toPrecision(3)));
       }, 100);
 
+      setTimeout(() => updateTopHeight(), 0);
       return () => clearInterval(interval);
     }, []);
 
@@ -435,6 +439,7 @@ export default function Simplicity() {
     setTimeout(() => {
       setLoading(0);
     }, 800);
+    setTimeout(() => updateTopHeight(), 0);
   }, []);
 
   return <>{loading ? <Preloader /> : <Main />}</>;
