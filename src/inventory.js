@@ -248,7 +248,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './01.jpg',
+		pic: './mashedTaroFilledCheeseMantou.jpg',
 		do: '',
 	},
 	{
