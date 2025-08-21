@@ -14,7 +14,7 @@
   transition: all 0.5s;
   margin-right: 1rem;
 
-  span {
+  & span {
     color: var(--thi-color);
     margin-top: 1rem;
     font-size: var(--smaller-font-size);
@@ -215,7 +215,7 @@
   align-items: flex-start;
   overflow: hidden;
 
-  h3 {
+  & h3 {
     font-size: var(--h3-font-size);
     margin: 0 0 4px 4px;
     padding-bottom: 2rem;
@@ -266,7 +266,7 @@
     bottom: 0.2rem;
     right: 1.5rem;
 
-    span {
+    & span {
       color: rgb(121, 121, 121);
       font-size: var(--smaller-font-size);
       font-weight: bold;
@@ -291,7 +291,7 @@
     .view-all {
       margin-top: 0.5rem;
     }
-    select {
+    & select {
       width: 100%;
     }
   }
