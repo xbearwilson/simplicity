@@ -217,7 +217,7 @@ export default function Simplicity() {
 						style={{ display: 'flex', gap: '1rem' }}
 					>
 						<div className='storeHoliday'>
-							<span>九月份店休日：</span>
+							<span>九月特別店休日：</span>
 							<span>9/29(一)</span>
 						</div>
 						{!showAll && (

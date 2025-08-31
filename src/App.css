@@ -296,8 +296,8 @@
 	.storeHoliday {
 		text-align: center;
 		margin-top: 1rem;
-		background: none;
-		color: #d84f4f;
+		/* background: none;
+		color: #d84f4f; */
 	}
 	.topSelect {
 		margin-top: unset !important;
