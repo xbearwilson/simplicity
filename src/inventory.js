@@ -19,7 +19,7 @@ const inventory = [
 		price: 16,
 		type: '素 Vegan',
 		pic: './plainMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 2,
@@ -119,7 +119,7 @@ const inventory = [
 		price: 17,
 		type: '素 Vegan',
 		pic: './brownSugerMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 12,
@@ -209,7 +209,7 @@ const inventory = [
 		price: 27,
 		type: '素 Vegan',
 		pic: './berriesMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 21,
@@ -239,7 +239,7 @@ const inventory = [
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './taroRedBeanFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 24,
@@ -249,7 +249,7 @@ const inventory = [
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './01.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 25,
@@ -259,7 +259,7 @@ const inventory = [
 		price: 36,
 		type: '葷 Non Vegetarian',
 		pic: './mashedTaroMeatFlossFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 26,
@@ -289,7 +289,7 @@ const inventory = [
 		price: 33,
 		type: '素 Vegan',
 		pic: './nutsFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 29,
@@ -409,7 +409,7 @@ const inventory = [
 		price: 35,
 		type: '素 Vegan',
 		pic: './sweetPotatoNutsFilledPurpleRiceMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 41,
@@ -419,7 +419,7 @@ const inventory = [
 		price: 28,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './redBeanFilledPurpleRiceMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 42,
@@ -529,7 +529,7 @@ const inventory = [
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './cranberryPineappleFilledCreamCheeseMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 53,
@@ -539,7 +539,7 @@ const inventory = [
 		price: 26,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './cheeseFilledMantouRoll.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 54,
@@ -569,7 +569,7 @@ const inventory = [
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './saltedEggCreamyMilkButterBrownSugerMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 57,
@@ -579,7 +579,7 @@ const inventory = [
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './kingOysterMushroomFilledCheeseMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 58,
@@ -599,7 +599,7 @@ const inventory = [
 		price: 43,
 		type: '葷 Non Vegetarian',
 		pic: './braisedMeatballFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 60,
@@ -609,7 +609,7 @@ const inventory = [
 		price: 46,
 		type: '葷 Non Vegetarian',
 		pic: './porkwithSaltedVegetablesFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 61,
@@ -619,7 +619,7 @@ const inventory = [
 		price: 36,
 		type: '葷 Non Vegetarian',
 		pic: './smokedCheeseChickenFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 62,
@@ -629,7 +629,7 @@ const inventory = [
 		price: 36,
 		type: '葷 Non Vegetarian',
 		pic: './germanSausageMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 63,
@@ -639,7 +639,7 @@ const inventory = [
 		price: 33,
 		type: '葷 Non Vegetarian',
 		pic: './chiliPopcornChickenMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 64,
@@ -649,7 +649,7 @@ const inventory = [
 		price: 28,
 		type: '葷 Non Vegetarian',
 		pic: './meatFlossWalnutFilledMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 65,
@@ -659,7 +659,7 @@ const inventory = [
 		price: 28,
 		type: '葷 Non Vegetarian',
 		pic: './meatFlossFilledCheeseMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 66,
@@ -669,7 +669,7 @@ const inventory = [
 		price: 33,
 		type: '葷 Non Vegetarian',
 		pic: './meatFlossFilledCheeseMantou.jpg',
-		do: '',
+		do: '天天有',
 	},
 	{
 		id: 67,
@@ -694,12 +694,12 @@ const inventory = [
 	{
 		id: 69,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '燕麥素鬆\nWheat & Vegetarian Floss-Filled Mantou',
+		name: '燕麥核桃素鬆\nWheat & Vegetarian Floss-Filled Mantou',
 		description: '',
 		price: 35,
 		type: '素 Vegan',
 		pic: './wheatVegetarianFlossFilledMantou.jpg',
-		do: '',
+		do: '製作日：1, 6',
 	},
 	{
 		id: 70,
@@ -720,6 +720,16 @@ const inventory = [
 		type: '素 Vegan',
 		pic: './wheatPumpkinFilledMantou.jpg',
 		do: '製作日：1, 6',
+	},
+	{
+		id: 72,
+		category: '(無糖)有內餡 No Sugar Added Fillings',
+		name: '乳酪南瓜\nCheese & Pumpkin-Filled Milk Mantou',
+		description: '牛奶/藜麥',
+		price: 38,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './cheesePumpkinFilledMantou.jpg',
+		do: '天天有',
 	},
 ];
 

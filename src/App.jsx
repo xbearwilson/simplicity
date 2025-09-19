@@ -12,25 +12,22 @@ export default function Simplicity() {
 	const [showAll, setShowAll] = useState(false);
 	const resetTimeout = useRef();
 	const [filterState, setFilterState] = useState({
-		category: '全部 All',
+		category: '品項分類',
 		do: '',
 	});
 
 	// 初始狀態下只顯示 do === "" 的品項
-	const isInitial =
-		filterState.category === '全部 All' && filterState.do === '' && !showAll;
+	const isInitial = filterState.category === '=== 品項分類 ===' && filterState.do === '' && !showAll;
 	const [data] = useState(inventory);
 	const [list] = useState(categories);
 	// 依據目前選擇的 category 動態取得 do 選項
 	const filteredByCategory = data.filter(
 		(item) =>
-			filterState.category === '全部 All' ||
+			filterState.category === '品項分類' ||
 			item.category === filterState.category ||
 			item.type === filterState.category
 	);
-	const doOptions = Array.from(
-		new Set(filteredByCategory.map((item) => item.do))
-	);
+	const doOptions = Array.from(new Set(filteredByCategory.map((item) => item.do)));
 	const loadingRef = useRef();
 	const AppRef = useRef();
 	const topRef = useRef();
@@ -67,12 +64,12 @@ export default function Simplicity() {
 		// 動態偵測top高度
 		setTimeout(updateTopHeight, 0);
 		setShowAll(false);
-		setFilterState({ category: '全部 All', do: '' });
+		setFilterState({ category: '品項分類', do: '' });
 	}, []);
 
 	// 自動選取<select>2第一個有資料的選項
 	useEffect(() => {
-		if (filterState.category !== '全部 All' && doOptions.length > 0) {
+		if (filterState.category !== '品項分類' && doOptions.length > 0) {
 			// 若目前do不在可選範圍，則自動選第一個
 			if (!doOptions.includes(filterState.do)) {
 				setFilterState((prev) => ({ ...prev, do: doOptions[0] }));
@@ -103,8 +100,7 @@ export default function Simplicity() {
 		};
 	}, []);
 
-	const scrollToTop = () =>
-		window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+	const scrollToTop = () => window.scroll({ top: 0, left: 0, behavior: 'smooth' });
 	const MakeSelect = (X) => (
 		<option
 			key={X}
@@ -115,8 +111,8 @@ export default function Simplicity() {
 	);
 
 	const handleSelectChange = (key, value) => {
-		if (key === 'category' && value === '全部 All') {
-			setFilterState({ category: '全部 All', do: '' });
+		if (key === 'category' && value === '品項分類') {
+			setFilterState({ category: '品項分類', do: '' });
 			setShowAll(false);
 		} else {
 			setFilterState((prev) => ({ ...prev, [key]: value }));
@@ -133,22 +129,18 @@ export default function Simplicity() {
 		? data.filter((item) => item.do === '')
 		: data.filter((item) => {
 				const matchCategory =
-					filterState.category === '全部 All' ||
+					filterState.category === '品項分類' ||
 					item.category === filterState.category ||
 					item.type === filterState.category;
-				const matchDo =
-					filterState.do === '' ? item.do === '' : item.do === filterState.do;
+				const matchDo = filterState.do === '' ? item.do === '' : item.do === filterState.do;
 				return matchCategory && matchDo;
 		  });
 
 	// 無資料時自動重設select
 	useEffect(() => {
-		if (
-			itemsToShow.length === 0 &&
-			(filterState.category !== '全部 All' || filterState.do !== '')
-		) {
+		if (itemsToShow.length === 0 && (filterState.category !== '品項分類' || filterState.do !== '')) {
 			resetTimeout.current = setTimeout(() => {
-				setFilterState({ category: '全部 All', do: '' });
+				setFilterState({ category: '品項分類', do: '' });
 			}, 3500);
 		} else {
 			if (resetTimeout.current) clearTimeout(resetTimeout.current);
@@ -225,7 +217,7 @@ export default function Simplicity() {
 								className='view-all'
 								onClick={() => {
 									setShowAll(true);
-									setFilterState({ category: '全部 All', do: '' });
+									setFilterState({ category: '品項分類', do: '' });
 									scrollToTop();
 									setTimeout(updateTopHeight, 0);
 								}}
@@ -237,7 +229,7 @@ export default function Simplicity() {
 							value={filterState.category}
 							onChange={(e) => handleSelectChange('category', e.target.value)}
 						>
-							<option value='全部 All'>========== 全部 All ==========</option>
+							<option value='品項分類'>========== 品項分類 ==========</option>
 							{list.map(MakeSelect)}
 						</select>
 						{/* 初始狀態下 <select> 2 只顯示預設值 */}
@@ -249,7 +241,7 @@ export default function Simplicity() {
 								<option value=''>天天有 Every Day</option>
 							</select>
 						) : (
-							filterState.category !== '全部 All' &&
+							filterState.category !== '品項分類' &&
 							doOptions.length > 0 && (
 								<select
 									value={filterState.do}
@@ -267,15 +259,11 @@ export default function Simplicity() {
 							)
 						)}
 						{/* 若分類不是全部但無 do 選項，顯示提示 */}
-						{filterState.category !== '全部 All' && doOptions.length === 0 && (
-							<span style={{ color: '#888', marginLeft: '1rem' }}>
-								目前暫無品項
-							</span>
+						{filterState.category !== '品項分類' && doOptions.length === 0 && (
+							<span style={{ color: '#888', marginLeft: '1rem' }}>目前暫無品項</span>
 						)}
 						{/* 若分類為全部，提示先選分類 */}
-						{filterState.category === '全部 All' && (
-							<span style={{ color: '#888' }}>請先選擇品項分類</span>
-						)}
+						{filterState.category === '品項分類' && <span style={{ color: '#888' }}>請先選擇品項分類</span>}
 					</div>
 				</div>
 
@@ -413,9 +401,7 @@ export default function Simplicity() {
 
 			const interval = setInterval(() => {
 				currProgress += step;
-				let progress =
-					Math.round((Math.atan(currProgress) / (Math.PI / 2)) * 100 * 1000) /
-					1000;
+				let progress = Math.round((Math.atan(currProgress) / (Math.PI / 2)) * 100 * 1000) / 1000;
 				setPct(parseFloat(progress.toPrecision(3)));
 			}, 100);
 
@@ -480,7 +466,7 @@ export default function Simplicity() {
 		setLoading(1);
 		setTimeout(() => {
 			setLoading(0);
-		}, 800);
+		}, 0);
 		setTimeout(() => updateTopHeight(), 0);
 	}, []);
 
