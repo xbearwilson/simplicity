@@ -7,22 +7,28 @@ import inventory, { categories } from "./inventory.js";
 import { getCurrentHolidayInfo } from "./storeHoliday.js";
 
 export default function Simplicity() {
+  // 製作日分類狀態，預設 '天天有 Every day'
+  const [makeDay, setMakeDay] = useState("天天有 Every day");
   // 使用 ResizeObserver 監聽 top 高度
   const [topHeight, setTopHeight] = useState(0);
-  // 頁面初始預設狀態
-  const [showAll, setShowAll] = useState(false);
+  // 頁面初始預設狀態：預設顯示全部商品
+  const [showAll, setShowAll] = useState(true);
   const resetTimeout = useRef();
   const [filterState, setFilterState] = useState({
     category: "品項分類",
     do: "",
   });
 
-  // 初始狀態下只顯示 do === "" 的品項
-  const isInitial =
-    filterState.category === "=== 品項分類 ===" &&
-    filterState.do === "" &&
-    !showAll;
+  // 初始狀態下顯示全部商品
+  const isInitial = showAll;
   const [data] = useState(inventory);
+  // 取得所有 do 選項（去重、排序，空字串顯示「天天有 Every day」）
+  const allDoOptions = Array.from(new Set(data.map((item) => item.do)));
+  allDoOptions.sort((a, b) => {
+    if (a === "") return -1;
+    if (b === "") return 1;
+    return a.localeCompare(b, "zh-Hant");
+  });
   const [list] = useState(categories);
   // 依據目前選擇的 category 動態取得 do 選項
   const filteredByCategory = data.filter(
@@ -69,7 +75,7 @@ export default function Simplicity() {
   useEffect(() => {
     // 動態偵測top高度
     setTimeout(updateTopHeight, 0);
-    setShowAll(false);
+    // 不要在這裡 setShowAll(false)，讓首頁預設顯示全部商品
     setFilterState({ category: "品項分類", do: "" });
   }, []);
 
@@ -127,10 +133,9 @@ export default function Simplicity() {
   };
 
   // 依據 category 與 do 過濾
+  // 首頁預設顯示全部商品，showAll 為 true 時直接顯示 data
   const itemsToShow = showAll
     ? data
-    : isInitial
-    ? data.filter((item) => item.do === "")
     : data.filter((item) => {
         const matchCategory =
           filterState.category === "品項分類" ||
@@ -209,6 +214,24 @@ export default function Simplicity() {
             alt="簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu"
           />
           <div className="topSelect" style={{ display: "flex", gap: "1rem" }}>
+            {/* 製作日分類下拉選單 */}
+            <select
+              value={makeDay}
+              onChange={(e) => setMakeDay(e.target.value)}
+            >
+              <option value="製作日分類">
+                ========== 製作日分類 ==========
+              </option>
+              {allDoOptions.map((opt) => (
+                <option
+                  key={opt || "everyday"}
+                  value={opt === "" ? "天天有 Every day" : opt}
+                >
+                  {opt === "" ? "天天有 Every day" : opt}
+                </option>
+              ))}
+            </select>
+            {/* 其他原有選單與區塊 */}
             {holidayInfos &&
               holidayInfos.map((info, idx) => (
                 <div className="storeHoliday" key={info.monthLabel + idx}>
@@ -222,6 +245,7 @@ export default function Simplicity() {
                 onClick={() => {
                   setShowAll(true);
                   setFilterState({ category: "品項分類", do: "" });
+                  setMakeDay("天天有 Every day");
                   scrollToTop();
                   setTimeout(updateTopHeight, 0);
                 }}
@@ -270,20 +294,11 @@ export default function Simplicity() {
         </div>
 
         <div className="main" style={{ marginTop: `${topHeight + 16}px` }}>
+          {/* 先顯示 do="" (天天有) 的商品 */}
           <div className="flex">
-            {itemsToShow.length === 0 ? (
-              <div
-                style={{
-                  color: "#888",
-                  width: "100%",
-                  textAlign: "center",
-                  padding: "2rem",
-                }}
-              >
-                目前暫無品項，3秒後自動回到預設分類
-              </div>
-            ) : (
-              itemsToShow.map((t) => (
+            {data
+              .filter((item) => item.do === "")
+              .map((t) => (
                 <Item
                   key={t.id}
                   name={t.name}
@@ -293,9 +308,26 @@ export default function Simplicity() {
                   pic={t.pic}
                   does={t.do}
                 />
-              ))
-            )}
+              ))}
           </div>
+          {/* 再顯示符合 makeDay 的商品（排除 do=""） */}
+          {makeDay !== "天天有 Every day" && makeDay !== "製作日分類" && (
+            <div className="flex">
+              {data
+                .filter((item) => item.do === makeDay && item.do !== "")
+                .map((t) => (
+                  <Item
+                    key={t.id}
+                    name={t.name}
+                    price={t.price}
+                    desc={t.description}
+                    type={t.type}
+                    pic={t.pic}
+                    does={t.do}
+                  />
+                ))}
+            </div>
+          )}
         </div>
 
         <div className="foot">
