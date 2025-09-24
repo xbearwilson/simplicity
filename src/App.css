@@ -272,6 +272,7 @@
 		color: var(--first-color);
 		font-size: var(--biggest-font-size);
 		font-weight: 900;
+		letter-spacing: -0.05em;
 		bottom: 0.2rem;
 		right: 1.5rem;
 
