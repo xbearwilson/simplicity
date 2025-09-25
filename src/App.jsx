@@ -252,7 +252,7 @@ export default function Simplicity() {
 								onClick={() => {
 									setShowAll(true);
 									setFilterState({ category: '品項分類', do: '' });
-									// setMakeDay('天天有 Every day');
+									setMakeDay('天天有 Every day');
 									scrollToTop();
 									setTimeout(updateTopHeight, 0);
 								}}
@@ -260,6 +260,7 @@ export default function Simplicity() {
 								所有品項
 							</button>
 						)}
+						{/* 品項分類下拉選單 */}
 						<select
 							value={filterState.category}
 							onChange={(e) => handleSelectChange('category', e.target.value)}
