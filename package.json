@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "d": "vite",
-    "b": "vite build",
-    "p": "vite preview"
+    "d": "vite --host --open",
+    "b": "rm -rf dist && vite build && pnpm p",
+    "p": "vite preview --open"
   },
   "dependencies": {
     "lenis": "^1.3.8",
@@ -16,12 +16,24 @@
     "react-lazy-load-image-component": "^1.6.3"
   },
   "devDependencies": {
-    "@types/react": "^18.3.23",
+    "@types/react": "latest",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.21",
+    "cssnano": "^7.0.7",
+    "pi": "^2.0.5",
     "postcss": "^8.5.6",
-    "vite": "^4.5.14",
+    "postcss-assets": "^6.0.0",
+    "postcss-combine-duplicated-selectors": "^10.0.3",
+    "postcss-combine-media-query": "^2.0.0",
+    "postcss-easings": "^4.0.0",
+    "postcss-import": "^16.1.1",
+    "postcss-nested": "^7.0.2",
+    "postcss-nesting": "^13.0.2",
+    "postcss-preset-env": "^10.2.2",
+    "postcss-pxtorem": "^6.1.0",
+    "sass": "^1.90.0",
+    "vite": "^7.1.3",
     "vite-plugin-purgecss": "^0.2.13"
   },
   "eslintConfig": {

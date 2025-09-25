@@ -1,0 +1,592 @@
+@charset 'UTF-8';
+
+@use 'sass:map';
+
+$breakpoints: (
+	2xs: 22.5rem,
+	xs: 30rem,
+	sm: 48rem,
+	md: 64rem,
+	lg: 80rem,
+	xl: 90rem,
+	2xl: 105rem,
+	3xl: 120rem,
+	4xl: 160rem,
+);
+
+// mixins pc first
+@mixin mxw($size) {
+	@if (map.has-key($breakpoints, $size)) {
+		@media (width <= map.get($breakpoints, $size)) {
+			@content;
+		}
+	} @else {
+		@error "Property '#{$size}' not found in $breakpoints list.";
+	}
+}
+
+// mixins pc first
+@mixin miw($size) {
+	@if (map.has-key($breakpoints, $size)) {
+		@media (width >= map.get($breakpoints, $size)) {
+			@content;
+		}
+	} @else {
+		@error "Property '#{$size}' not found in $breakpoints list.";
+	}
+}
+
+#root {
+	width: 100%;
+	margin: 0 auto;
+	/* user-select: none; */
+}
+
+.loading {
+	width: 50%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: left;
+	flex-direction: column;
+	background: #fff;
+	transition: all 0.5s;
+	margin-right: 1rem;
+
+	& span {
+		color: var(--thi-color);
+		margin-top: 1rem;
+		font-size: var(--smaller-font-size);
+		animation: jump 1s ease 0s infinite normal;
+	}
+
+	.logo {
+		position: relative;
+		margin-top: 3rem;
+		width: 80px;
+		height: 80px;
+	}
+}
+
+@keyframes jump {
+	0% {
+		transform: translateY(0);
+	}
+	20% {
+		transform: translateY(0);
+	}
+	40% {
+		transform: translateY(-0.5rem);
+	}
+	50% {
+		transform: translateY(0);
+	}
+	60% {
+		transform: translateY(-0.2rem);
+	}
+	80% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.App {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+.top {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: background-color 0.4s;
+	width: 100%;
+	height: auto;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	margin: 0 auto;
+	padding: 0 2rem 1rem 2rem;
+	z-index: 999;
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(10px);
+	transition: background-color 0.4s;
+
+	@include miw(4xl) {
+		width: 90%;
+	}
+	@include mxw(3xl) {
+		padding-inline: 1.8rem;
+	}
+	@include mxw(2xl) {
+		padding-inline: 0.8rem;
+	}
+	@include mxw(xl) {
+		padding-inline: 0.5rem;
+	}
+	@include mxw(lg) {
+		padding-inline: 1rem;
+	}
+	@include mxw(md) {
+		padding-top: 1rem;
+	}
+	@include mxw(sm) {
+		padding: 1rem !important;
+		width: 100%;
+	}
+	@include mxw(2xs) {
+		padding-top: unset !important;
+		padding-bottom: unset !important;
+		padding-inline: 0.5rem !important;
+		height: 31vh;
+	}
+
+	.storeHoliday {
+		display: flex;
+		align-items: center;
+		font-weight: 600;
+		color: #fff;
+		background: var(--first-color);
+		padding: 0.7rem 1.2rem;
+		border-radius: 0.4rem;
+		font-size: var(--normal-font-size);
+		line-height: 1;
+		box-shadow: 0 2px 8px rgba(216, 79, 79, 0.08);
+		white-space: pre-line;
+
+		span:last-child {
+			font-weight: 400;
+			margin-left: 0.5rem;
+		}
+
+		@include mxw(3xl) {
+			font-size: var(--small-font-size);
+		}
+		@include mxw(md) {
+			font-weight: 400;
+			padding: 0.3rem 0.4rem;
+			font-size: var(--smaller-font-size);
+		}
+		@include mxw(2xs) {
+			text-align: center;
+			margin-top: 1rem;
+			font-size: 0.7rem;
+		}
+	}
+
+	.logo {
+		position: relative;
+		width: 8rem;
+		bottom: -1rem;
+		cursor: pointer;
+
+		@include mxw(3xl) {
+			width: 7rem;
+		}
+		@include mxw(2xl) {
+			width: 6rem;
+		}
+		@include mxw(xl) {
+			width: 5rem;
+		}
+		@include mxw(lg) {
+			width: 4.5rem;
+		}
+		@include mxw(md) {
+			width: 5.5rem;
+		}
+	}
+
+	.topSelect {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+
+		// @include mxw(lg) {
+		// 	gap: 0rem;
+		// }
+
+		@include mxw(sm) {
+			flex-direction: column;
+			align-items: flex-end;
+			margin: 0;
+		}
+		@include mxw(2xs) {
+			position: relative;
+			top: -2rem;
+			margin-top: unset !important;
+			flex-direction: column;
+			width: 100%;
+		}
+		@include mxw(md) {
+			flex-direction: column;
+			align-items: flex-end;
+		}
+
+		.storeHoliday {
+			&:nth-child(1) {
+				position: relative;
+				@include mxw(2xs) {
+					bottom: -1rem;
+				}
+			}
+		}
+
+		select {
+			display: flex;
+			font-size: var(--normal-font-size);
+			// @include mxw(3xl) {
+			// 	font-size: var(--small-font-size);
+			// }
+			// @include mxw(md) {
+			// 	font-size: var(--smaller-font-size);
+			// }
+			@include mxw(2xs) {
+				position: relative;
+				margin-bottom: 0.5rem;
+				width: 90%;
+			}
+		}
+	}
+
+	.view-all {
+		outline: none;
+		background: #fff;
+		border: 1px solid var(--thi-color);
+		cursor: pointer;
+		padding: 0.5rem 1rem;
+		border-radius: 4px;
+		transition: all 0.3s;
+		&:hover {
+			background: var(--first-color);
+			color: #fff;
+			border: 1px solid var(--first-color);
+		}
+	}
+}
+
+.main {
+	/* position: relative; */
+	width: 100%;
+	/* margin: 8.5rem auto 0; */
+	margin-top: 8.5rem;
+	padding-inline: 2rem;
+	/* left: 50%; */
+	/* transform: translateX(-50%); */
+	@include miw(4xl) {
+		width: 90%;
+		margin: 0 auto;
+	}
+	@include mxw(3xl) {
+		padding-inline: 1rem;
+	}
+	@include mxw(2xl) {
+		padding-inline: 0;
+	}
+	@include mxw(xl) {
+		padding-inline: 0.5rem;
+	}
+
+	.flex {
+		display: flex;
+		flex-wrap: wrap;
+		/* justify-content: flex-start; */
+		/* 讓所有item齊左，外層main已居中 */
+		width: 100%;
+
+		@include miw(4xl) {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(9vw, 1fr));
+		}
+		@include mxw(3xl) {
+			justify-content: center;
+		}
+		@include mxw(sm) {
+			position: relative;
+			justify-content: center;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
+	}
+
+	.item {
+		position: relative;
+		top: 0;
+		left: 0;
+		width: auto;
+		animation-duration: 0.8s;
+		animation-name: enter;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		overflow: hidden;
+
+		@include mxw(3xl) {
+			width: 16%;
+			padding: 0.5rem;
+		}
+		@include mxw(2xl) {
+			width: 16.5%;
+		}
+		@include mxw(xl) {
+			width: 20%;
+		}
+		@include mxw(md) {
+			width: 25%;
+		}
+		@include mxw(xs) {
+			width: 50%;
+		}
+
+		& h3 {
+			font-size: var(--h3-font-size);
+			margin: 0 0 4px 4px;
+			padding-bottom: 2rem;
+			max-width: 26ch;
+			line-height: 1.1;
+			@include mxw(lg) {
+				font-size: var(--small-font-size);
+			}
+		}
+
+		.type {
+			font-size: var(--small-font-size);
+			font-weight: bold;
+			margin: 8px 4px 2px;
+			@include mxw(lg) {
+				font-size: var(--smaller-font-size);
+			}
+			@include mxw(md) {
+				transform-origin: left top;
+				transform: scale(0.8);
+			}
+		}
+
+		span {
+			border-radius: 5px;
+			overflow: hidden;
+		}
+
+		.img {
+			width: 100%;
+			max-width: 320px;
+			aspect-ratio: 16/9;
+			border-radius: 20px;
+			filter: contrast(101%) saturate(105%);
+			overflow: hidden;
+			@include mxw(sm) {
+				border-radius: 10px;
+			}
+		}
+
+		.does {
+			position: absolute;
+			color: #fff;
+			background: var(--first-color);
+			padding: 0.3rem 0.8rem;
+			top: 1.5rem;
+			left: 1.5rem;
+			border-radius: 20px;
+			border: 2px solid rgba(255, 255, 255, 0.8);
+			line-height: 1.2;
+			font-size: var(--smaller-font-size);
+			font-weight: 500;
+			@include mxw(3xl) {
+				top: 1rem;
+				left: 1rem;
+			}
+			@include mxw(2xl) {
+				top: 0.8rem;
+				left: 0.8rem;
+			}
+			@include mxw(xl) {
+				border: 1px solid rgba(255, 255, 255, 0.8);
+			}
+			@include mxw(sm) {
+				transform-origin: left center;
+				transform: scale(0.8);
+				top: 0.5rem;
+				left: 0.7rem;
+			}
+		}
+
+		.desc {
+			position: absolute;
+			font-size: var(--small-font-size);
+			max-width: 21ch;
+			line-height: 15px;
+			padding: 4px;
+			bottom: 0;
+
+			@include mxw(lg) {
+				font-size: var(--smaller-font-size);
+			}
+			@include mxw(sm) {
+				transform-origin: left center;
+				transform: scale(0.7);
+			}
+			@include mxw(xs) {
+				transform: scale(0.8);
+			}
+			@include mxw(2xs) {
+				transform: scale(0.6) !important;
+			}
+		}
+
+		.price {
+			position: absolute;
+			text-align: right;
+			color: var(--first-color);
+			font-size: var(--biggest-font-size);
+			font-weight: 900;
+			letter-spacing: -0.05em;
+			bottom: 0;
+			right: 1rem;
+
+			@include mxw(3xl) {
+				right: 0.5rem;
+			}
+			@include mxw(2xl) {
+				right: 0.5rem;
+			}
+			@include mxw(sm) {
+				transform-origin: right bottom;
+				transform: scale(1.4);
+			}
+
+			& span {
+				color: rgb(121, 121, 121);
+				font-size: var(--smaller-font-size);
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+.foot {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	color: var(--thi-color);
+	font-size: var(--small-font-size);
+	gap: 1.5rem;
+	border-top: 1px solid var(--thi-color);
+	border-bottom: 1px solid var(--thi-color);
+	margin: 3rem auto 4rem;
+	padding: 1rem 10rem;
+	line-height: 1.5;
+
+	@include mxw(2xl) {
+		gap: 0.5rem;
+	}
+	@include mxw(md) {
+		padding: 1rem 1rem;
+	}
+	@include mxw(sm) {
+		font-size: var(--small-font-size);
+		gap: 0;
+		margin: 2rem 0 0 0;
+		padding: 1rem;
+		line-height: 1.5;
+		flex-direction: column;
+	}
+
+	> div {
+		margin: 0.3rem;
+	}
+
+	.foot_logo {
+		width: 3rem;
+		opacity: 0.3;
+		filter: grayscale(1);
+		cursor: pointer;
+	}
+
+	.point {
+		cursor: pointer;
+		font-weight: bolder;
+		color: var(--first-color);
+		text-decoration: underline;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.scroll-top {
+	position: fixed;
+	bottom: -50px;
+	right: 25px;
+	z-index: 99;
+	outline: none;
+	background: #fff;
+	border: 1px solid var(--thi-color);
+	cursor: pointer;
+	padding: 1rem;
+	border-radius: 4px;
+	animation: movescrollTop 3s ease-in-out infinite;
+	transition: all 0.5s ease-in-out;
+	visibility: hidden;
+	opacity: 0;
+}
+
+@keyframes movescrollTop {
+	0% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-20px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
+}
+
+/* item */
+@keyframes enter {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.storeHoliday {
+	}
+	.topSelect {
+		// margin-top: unset !important;
+		// flex-direction: column;
+		// width: 100%;
+	}
+	.foot {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+	.scroll-top {
+		right: 10px;
+		padding: 0.3rem;
+	}
+}

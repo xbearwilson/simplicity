@@ -1,7 +1,7 @@
 import Lenis from 'lenis';
 import { useEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import './App.css';
+import './App.scss';
 import PlaceholderImage from './img/logo.svg';
 import inventory, { categories } from './inventory.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
@@ -120,13 +120,29 @@ export default function Simplicity() {
 		</option>
 	);
 
+	// select 1: category, select 2: makeDay
 	const handleSelectChange = (key, value) => {
-		if (key === 'category' && value === '品項分類') {
-			setFilterState({ category: '品項分類', do: '' });
-			setShowAll(false);
-		} else {
-			setFilterState((prev) => ({ ...prev, [key]: value }));
-			setShowAll(false);
+		if (key === 'category') {
+			if (value === '品項分類') {
+				setShowAll(true);
+				setFilterState({ category: '品項分類', do: '' });
+				setMakeDay('天天有 Every day');
+			} else {
+				setShowAll(false);
+				setFilterState({ category: value, do: '' });
+				setMakeDay('製作日分類');
+			}
+		} else if (key === 'makeDay') {
+			if (value === '天天有 Every day' || value === '製作日分類') {
+				// 修正：只要回到預設或『製作日分類』預設值都顯示所有商品
+				setShowAll(true);
+				setFilterState({ category: '品項分類', do: '' });
+				setMakeDay('天天有 Every day');
+			} else {
+				setShowAll(false);
+				setMakeDay(value);
+				setFilterState({ category: '品項分類', do: '' });
+			}
 		}
 		scrollToTop();
 		setTimeout(updateTopHeight, 0);
@@ -134,16 +150,20 @@ export default function Simplicity() {
 
 	// 依據 category 與 do 過濾
 	// 首頁預設顯示全部商品，showAll 為 true 時直接顯示 data
-	const itemsToShow = showAll
-		? data
-		: data.filter((item) => {
-				const matchCategory =
-					filterState.category === '品項分類' ||
-					item.category === filterState.category ||
-					item.type === filterState.category;
-				const matchDo = filterState.do === '' ? item.do === '' : item.do === filterState.do;
-				return matchCategory && matchDo;
-		  });
+	// 商品顯示邏輯
+	let itemsToShow = data;
+	if (!showAll) {
+		if (filterState.category !== '品項分類') {
+			// 只依 category 過濾
+			itemsToShow = data.filter((item) => item.category === filterState.category || item.type === filterState.category);
+		} else if (makeDay !== '天天有 Every day' && makeDay !== '製作日分類') {
+			// 只依 makeDay 過濾
+			itemsToShow = data.filter((item) => item.do === makeDay);
+		} else {
+			// 預設顯示 do=""（天天有）
+			itemsToShow = data.filter((item) => item.do === '');
+		}
+	}
 
 	// 無資料時自動重設select
 	useEffect(() => {
@@ -210,31 +230,15 @@ export default function Simplicity() {
 					ref={topRef}
 					className='top'
 				>
-					<img
-						onClick={scrollToTop}
-						className='logo'
-						src='./logo.svg'
-						alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
-					/>
-					<div
-						className='topSelect'
-						style={{ display: 'flex', gap: '1rem' }}
-					>
-						{/* 製作日分類下拉選單 */}
-						<select
-							value={makeDay}
-							onChange={(e) => setMakeDay(e.target.value)}
-						>
-							<option value='製作日分類'>========== 製作日分類 ==========</option>
-							{allDoOptions.map((opt) => (
-								<option
-									key={opt || 'everyday'}
-									value={opt === '' ? '天天有 Every day' : opt}
-								>
-									{opt === '' ? '天天有 Every day' : opt}
-								</option>
-							))}
-						</select>
+					<a href='#'>
+						<img
+							onClick={scrollToTop}
+							className='logo'
+							src='./logo.svg'
+							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
+						/>
+					</a>
+					<div className='topSelect'>
 						{/* 特別店休日區塊 */}
 						{holidayInfos &&
 							holidayInfos.map((info, idx) => (
@@ -260,46 +264,38 @@ export default function Simplicity() {
 								所有品項
 							</button>
 						)}
+
+						{/* 製作日分類下拉選單 */}
+						<select
+							value={makeDay}
+							onChange={(e) => handleSelectChange('makeDay', e.target.value)}
+						>
+							<option value='製作日分類'>===== 製作日分類 =====</option>
+							{allDoOptions
+								.filter((opt) => opt !== '')
+								.map((opt) => (
+									<option
+										key={opt}
+										value={opt}
+									>
+										{opt}
+									</option>
+								))}
+						</select>
+
 						{/* 品項分類下拉選單 */}
 						<select
 							value={filterState.category}
 							onChange={(e) => handleSelectChange('category', e.target.value)}
 						>
-							<option value='品項分類'>========== 品項分類 ==========</option>
+							<option value='品項分類'>===== 品項分類 =====</option>
 							{list.map(MakeSelect)}
 						</select>
-						{/* 初始狀態下 <select> 2 只顯示預設值 */}
-						{isInitial ? (
-							<select
-								value=''
-								disabled
-							>
-								<option value=''>天天有 Every Day</option>
-							</select>
-						) : (
-							filterState.category !== '品項分類' &&
-							doOptions.length > 0 && (
-								<select
-									value={filterState.do}
-									onChange={(e) => handleSelectChange('do', e.target.value)}
-								>
-									{doOptions.map((opt) => (
-										<option
-											key={opt}
-											value={opt}
-										>
-											{opt === '' ? '天天有 Every Day' : opt}
-										</option>
-									))}
-								</select>
-							)
-						)}
+
 						{/* 若分類不是全部但無 do 選項，顯示提示 */}
 						{filterState.category !== '品項分類' && doOptions.length === 0 && (
 							<span style={{ color: '#888', marginLeft: '1rem' }}>目前暫無品項</span>
 						)}
-						{/* 若分類為全部，提示先選分類 */}
-						{filterState.category === '品項分類' && <span style={{ color: '#888' }}>請先選擇品項分類</span>}
 					</div>
 				</div>
 
@@ -307,11 +303,10 @@ export default function Simplicity() {
 					className='main'
 					style={{ marginTop: `${topHeight + 16}px` }}
 				>
-					{/* 先顯示 do="" (天天有) 的商品 */}
+					{/* 首頁預設顯示所有商品 */}
 					<div className='flex'>
-						{data
-							.filter((item) => item.do === '')
-							.map((t) => (
+						{itemsToShow.length > 0 ? (
+							itemsToShow.map((t) => (
 								<Item
 									key={t.id}
 									name={t.name}
@@ -321,26 +316,11 @@ export default function Simplicity() {
 									pic={t.pic}
 									does={t.do}
 								/>
-							))}
+							))
+						) : (
+							<span style={{ color: '#888', fontSize: '1.2rem' }}>目前暫無品項</span>
+						)}
 					</div>
-					{/* 再顯示符合 makeDay 的商品（排除 do=""） */}
-					{makeDay !== '天天有 Every day' && makeDay !== '製作日分類' && (
-						<div className='flex'>
-							{data
-								.filter((item) => item.do === makeDay && item.do !== '')
-								.map((t) => (
-									<Item
-										key={t.id}
-										name={t.name}
-										price={t.price}
-										desc={t.description}
-										type={t.type}
-										pic={t.pic}
-										does={t.do}
-									/>
-								))}
-						</div>
-					)}
 				</div>
 
 				<div className='foot'>

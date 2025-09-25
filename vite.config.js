@@ -4,10 +4,9 @@
  * @Description:
  */
 import react from '@vitejs/plugin-react';
-import autoprefixer from 'autoprefixer';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import htmlPurge from 'vite-plugin-purgecss';
+// import htmlPurge from 'vite-plugin-purgecss';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -35,7 +34,7 @@ export default defineConfig({
 			},
 		},
 		react(),
-		htmlPurge([htmlPurge()]),
+		// htmlPurge([htmlPurge()]),
 	],
 	resolve: {
 		alias: {
@@ -43,26 +42,6 @@ export default defineConfig({
 			'@': resolve(__dirname, 'src'), // 设置 `@` 指向 `src` 目录
 		},
 		extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.mjs'],
-	},
-	css: {
-		postcss: {
-			plugins: [
-				autoprefixer({
-					// overrideBrowserslist: [
-					//   "Android 4.1",
-					//   "iOS 7.1",
-					//   "Chrome > 31",
-					//   "ff > 31",
-					//   "ie >= 8",
-					//   "last 10 versions", // 所有主流浏览器最近10版本用
-					// ],
-					overrideBrowserslist: [
-						'last 10 versions', // 所有主流浏览器最近10版本用
-					],
-					grid: true,
-				}), // add options if needed
-			],
-		},
 	},
 	server: {
 		// host: '0.0.0.0',
