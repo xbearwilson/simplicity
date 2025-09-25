@@ -12,32 +12,30 @@ import htmlPurge from 'vite-plugin-purgecss';
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
-		react(),
-		htmlPurge([
-			htmlPurge(),
-			{
-				name: 'reload',
-				configureServer(server) {
-					const { ws, watcher } = server;
-					watcher.on('change', (file) => {
-						if (
-							file.endsWith('.html') ||
-							file.endsWith('.pug') ||
-							file.endsWith('.css') ||
-							file.endsWith('.sass') ||
-							file.endsWith('.scss') ||
-							file.endsWith('.styl') ||
-							file.endsWith('.jsx') ||
-							file.endsWith('.js')
-						) {
-							ws.send({
-								type: 'full-reload',
-							});
-						}
-					});
-				},
+		{
+			name: 'reload',
+			configureServer(server) {
+				const { ws, watcher } = server;
+				watcher.on('change', (file) => {
+					if (
+						file.endsWith('.html') ||
+						file.endsWith('.pug') ||
+						file.endsWith('.css') ||
+						file.endsWith('.sass') ||
+						file.endsWith('.scss') ||
+						file.endsWith('.styl') ||
+						file.endsWith('.jsx') ||
+						file.endsWith('.js')
+					) {
+						ws.send({
+							type: 'full-reload',
+						});
+					}
+				});
 			},
-		]),
+		},
+		react(),
+		htmlPurge([htmlPurge()]),
 	],
 	resolve: {
 		alias: {
