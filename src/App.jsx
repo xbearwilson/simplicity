@@ -490,9 +490,9 @@ export default function Simplicity() {
 		setLoading(1);
 		setTimeout(() => {
 			setLoading(0);
-		}, 0);
+		}, 3000);
 		setTimeout(() => updateTopHeight(), 0);
-	}, [5000]);
+	}, []);
 
 	return <>{loading ? <Preloader /> : <Main />}</>;
 }
