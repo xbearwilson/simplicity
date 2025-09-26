@@ -148,10 +148,11 @@ $breakpoints: (
 		padding-top: unset !important;
 		padding-bottom: unset !important;
 		padding-inline: 0.5rem !important;
-		height: 31vh;
+		height: 15rem;
 	}
 
 	.storeHoliday {
+		position: relative;
 		display: flex;
 		align-items: center;
 		font-weight: 600;
@@ -169,6 +170,20 @@ $breakpoints: (
 			margin-left: 0.5rem;
 		}
 
+		&:nth-child(1) {
+			@include mxw(xs) {
+				bottom: 0rem;
+			}
+			@include mxw(2xs) {
+				bottom: -0.2rem !important;
+			}
+		}
+		&:nth-child(2) {
+			@include mxw(2xs) {
+				bottom: 0.8rem;
+			}
+		}
+
 		@include mxw(3xl) {
 			font-size: var(--small-font-size);
 		}
@@ -180,7 +195,7 @@ $breakpoints: (
 		@include mxw(2xs) {
 			text-align: center;
 			margin-top: 1rem;
-			font-size: 0.7rem;
+			font-size: 0.6rem;
 		}
 	}
 
@@ -205,17 +220,18 @@ $breakpoints: (
 		@include mxw(md) {
 			width: 5.5rem;
 		}
+		@include mxw(2xs) {
+			top: 0.4rem;
+			width: 3.5rem;
+		}
 	}
 
 	.topSelect {
+		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		gap: 0.5rem;
-
-		// @include mxw(lg) {
-		// 	gap: 0rem;
-		// }
 
 		@include mxw(sm) {
 			flex-direction: column;
@@ -223,55 +239,60 @@ $breakpoints: (
 			margin: 0;
 		}
 		@include mxw(2xs) {
-			position: relative;
 			top: -2rem;
 			margin-top: unset !important;
 			flex-direction: column;
 			width: 100%;
 		}
+		@include mxw(lg) {
+			align-self: end;
+			gap: 0.2rem;
+		}
 		@include mxw(md) {
 			flex-direction: column;
 			align-items: flex-end;
 		}
-
-		.storeHoliday {
-			&:nth-child(1) {
-				position: relative;
-				@include mxw(2xs) {
-					bottom: -1rem;
-				}
-			}
+		@include mxw(sm) {
+			gap: 0.4rem;
 		}
 
 		select {
 			display: flex;
 			font-size: var(--normal-font-size);
-			// @include mxw(3xl) {
-			// 	font-size: var(--small-font-size);
-			// }
-			// @include mxw(md) {
-			// 	font-size: var(--smaller-font-size);
-			// }
+			background: #fff;
+			@include mxw(md) {
+				font-size: var(--small-font-size);
+			}
+			@include mxw(xs) {
+				height: 30px;
+				font-size: var(--smaller-font-size);
+			}
 			@include mxw(2xs) {
-				position: relative;
-				margin-bottom: 0.5rem;
-				width: 90%;
+				// position: relative;
+				// margin-bottom: 0.5rem;
+				width: 100%;
 			}
 		}
 	}
 
 	.view-all {
+		position: relative;
 		outline: none;
 		background: #fff;
 		border: 1px solid var(--thi-color);
 		cursor: pointer;
 		padding: 0.5rem 1rem;
 		border-radius: 4px;
+		font-size: var(--normal-font-size);
 		transition: all 0.3s;
-		&:hover {
+		&:hover,
+		&:active {
 			background: var(--first-color);
 			color: #fff;
 			border: 1px solid var(--first-color);
+		}
+		@include mxw(sm) {
+			font-size: var(--small-font-size);
 		}
 	}
 }
@@ -280,22 +301,38 @@ $breakpoints: (
 	/* position: relative; */
 	width: 100%;
 	/* margin: 8.5rem auto 0; */
-	margin-top: 8.5rem;
+	margin-top: 11.5rem;
 	padding-inline: 2rem;
 	/* left: 50%; */
 	/* transform: translateX(-50%); */
 	@include miw(4xl) {
 		width: 90%;
-		margin: 0 auto;
+		margin: 10.5rem auto 0 auto;
 	}
 	@include mxw(3xl) {
+		margin-top: 9.3rem;
 		padding-inline: 1rem;
 	}
 	@include mxw(2xl) {
+		margin-top: 8rem;
 		padding-inline: 0;
 	}
 	@include mxw(xl) {
+		margin-top: 6.9rem;
 		padding-inline: 0.5rem;
+	}
+	@include mxw(lg) {
+		margin-top: 6.6rem;
+	}
+	@include mxw(md) {
+		margin-top: 11.2rem;
+	}
+	@include mxw(sm) {
+		margin-top: 10.7rem;
+		padding-inline: 0;
+	}
+	@include mxw(2xs) {
+		margin-top: 15rem;
 	}
 
 	.flex {
@@ -502,10 +539,10 @@ $breakpoints: (
 		padding: 1rem 1rem;
 	}
 	@include mxw(sm) {
-		font-size: var(--small-font-size);
+		font-size: var(--smaller-font-size);
 		gap: 0;
-		margin: 2rem 0 0 0;
-		padding: 1rem;
+		margin: 1rem 0 0 0;
+		padding: 0.5rem;
 		line-height: 1.5;
 		flex-direction: column;
 	}

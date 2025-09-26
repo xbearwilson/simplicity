@@ -301,7 +301,7 @@ export default function Simplicity() {
 
 				<div
 					className='main'
-					style={{ marginTop: `${topHeight + 16}px` }}
+					// style={{ marginTop: `${topHeight}px + 5px` }}
 				>
 					{/* 首頁預設顯示所有商品 */}
 					<div className='flex'>
@@ -492,7 +492,7 @@ export default function Simplicity() {
 			setLoading(0);
 		}, 0);
 		setTimeout(() => updateTopHeight(), 0);
-	}, [3000]);
+	}, [5000]);
 
 	return <>{loading ? <Preloader /> : <Main />}</>;
 }

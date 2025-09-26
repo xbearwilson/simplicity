@@ -728,7 +728,7 @@ const inventory = [
 		description: '牛奶/藜麥',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cheesePumpkinFilledMantou.jpg',
+		pic: './cheesePumpkinFilled.jpg',
 		do: '天天有',
 	},
 	{
@@ -748,7 +748,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '素 Vegan',
-		pic: './MashedTaroPineappleFilledMantou.jpg',
+		pic: './mashedTaroPineappleFilled.jpg',
 		do: '天天有',
 	},
 	{
@@ -758,7 +758,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './MashedTaroPineappleFilledMantou.jpg',
+		pic: './mashedTaroPineappleFilled.jpg',
 		do: '天天有',
 	},
 	{
@@ -768,7 +768,7 @@ const inventory = [
 		description: '牛奶/抹茶',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './CranberryCreamyMilkButterFilledMatchaMantou.jpg',
+		pic: './cranberryCreamyMilkButterFilledMatcha.jpg',
 		do: '天天有',
 	},
 	{
@@ -778,7 +778,7 @@ const inventory = [
 		description: '綠巨人非基改玉米粒,Saputo摩佐羅拉乾酪',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './CornCheeseFilledMantou.jpg',
+		pic: './cornCheeseFilled.jpg',
 		do: '天天有',
 	},
 ];
