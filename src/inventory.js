@@ -14,7 +14,8 @@ const inventory = [
 	{
 		id: 1,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '白饅頭\nPlain Mantou',
+		name: '白饅頭',
+		ename: 'Plain Mantou',
 		description: '',
 		price: 16,
 		type: '素 Vegan',
@@ -24,7 +25,8 @@ const inventory = [
 	{
 		id: 2,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '伯爵牛奶饅頭\nEarl Milk Mantou',
+		name: '伯爵牛奶饅頭',
+		ename: 'Earl Milk Mantou',
 		description: '唐寧',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
@@ -34,7 +36,8 @@ const inventory = [
 	{
 		id: 3,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '牛奶饅頭\nMilk Mantou',
+		name: '牛奶饅頭',
+		ename: 'Milk Mantou',
 		description: '紐西蘭奶粉',
 		price: 22,
 		type: '奶素 Lacto-Vegetarian',
@@ -44,7 +47,8 @@ const inventory = [
 	{
 		id: 4,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '藜麥饅頭\nQuinoa Mantou',
+		name: '藜麥饅頭',
+		ename: 'Quinoa Mantou',
 		description: '30%全麥',
 		price: 22,
 		type: '素 Vegan',
@@ -54,7 +58,8 @@ const inventory = [
 	{
 		id: 5,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '薑黃起司饅頭\nTurmeric Cheese Mantou',
+		name: '薑黃起司饅頭',
+		ename: 'Turmeric Cheese Mantou',
 		description: '提拉姆起司',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
@@ -64,7 +69,8 @@ const inventory = [
 	{
 		id: 6,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '全麥饅頭\nWhole-Wheat Mantou',
+		name: '全麥饅頭',
+		ename: 'Whole-Wheat Mantou',
 		description: '100%全麥',
 		price: 20,
 		type: '素 Vegan',
@@ -74,7 +80,8 @@ const inventory = [
 	{
 		id: 7,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '超麥饅頭\nNuts Whole-Wheat Mantou',
+		name: '超麥饅頭',
+		ename: 'Nuts Whole-Wheat Mantou',
 		description: '100%全麥, 核, 芝, 亞, 藜',
 		price: 27,
 		type: '素 Vegan',
@@ -84,7 +91,8 @@ const inventory = [
 	{
 		id: 8,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '穀物南瓜饅頭\nGrain Pumpkin Mantou',
+		name: '穀物南瓜饅頭',
+		ename: 'Grain Pumpkin Mantou',
 		description: '50%全麥, 小米, 蕎麥, 藜麥',
 		price: 27,
 		type: '素 Vegan',
@@ -94,7 +102,8 @@ const inventory = [
 	{
 		id: 9,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '牛奶芋絲饅頭\nTaro Shreds Milk Mantou',
+		name: '牛奶芋絲饅頭',
+		ename: 'Taro Shreds Milk Mantou',
 		description: '',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
@@ -104,7 +113,8 @@ const inventory = [
 	{
 		id: 10,
 		category: '(無糖)無內餡 No Sugar Added',
-		name: '燕麥南瓜饅頭\nWheat Pumpkin Mantou',
+		name: '燕麥南瓜饅頭',
+		ename: 'Wheat Pumpkin Mantou',
 		description: '50%全麥, 燕麥, 南瓜',
 		price: 27,
 		type: '素 Vegan',
@@ -114,7 +124,8 @@ const inventory = [
 	{
 		id: 11,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '黑糖饅頭\nBrown Suger Mantou',
+		name: '黑糖饅頭',
+		ename: 'Brown Suger Mantou',
 		description: '',
 		price: 17,
 		type: '素 Vegan',
@@ -124,7 +135,8 @@ const inventory = [
 	{
 		id: 12,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '芝麻多饅頭\nSesame Mantou',
+		name: '芝麻多饅頭',
+		ename: 'Sesame Mantou',
 		description: '',
 		price: 23,
 		type: '素 Vegan',
@@ -134,7 +146,8 @@ const inventory = [
 	{
 		id: 13,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '紫米饅頭\nPurple Rice Mantou',
+		name: '紫米饅頭',
+		ename: 'Purple Rice Mantou',
 		description: '',
 		price: 22,
 		type: '素 Vegan',
@@ -144,7 +157,8 @@ const inventory = [
 	{
 		id: 14,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '可可饅頭\nCacao Mantou',
+		name: '可可饅頭',
+		ename: 'Cacao Mantou',
 		description: '',
 		price: 25,
 		type: '素 Vegan',
@@ -154,7 +168,8 @@ const inventory = [
 	{
 		id: 15,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '抹茶饅頭\nMatcha Mantou',
+		name: '抹茶饅頭',
+		ename: 'Matcha Mantou',
 		description: '自然農法抹茶',
 		price: 25,
 		type: '素 Vegan',
@@ -164,7 +179,8 @@ const inventory = [
 	{
 		id: 16,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '土豆饅頭\nPeanut Mantou',
+		name: '土豆饅頭',
+		ename: 'Peanut Mantou',
 		description: '柴燒烘烤/金弘花生',
 		price: 25,
 		type: '素 Vegan',
@@ -174,7 +190,8 @@ const inventory = [
 	{
 		id: 17,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '芋絲饅頭\nTaro-Shreds Mantou',
+		name: '芋絲饅頭',
+		ename: 'Taro-Shreds Mantou',
 		description: '低糖微甜',
 		price: 27,
 		type: '素 Vegan',
@@ -184,7 +201,8 @@ const inventory = [
 	{
 		id: 18,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '鐵觀音饅頭\nTieguanyin Mantou',
+		name: '鐵觀音饅頭',
+		ename: 'Tieguanyin Mantou',
 		description: '低糖微甜',
 		price: 27,
 		type: '素 Vegan',
@@ -194,7 +212,8 @@ const inventory = [
 	{
 		id: 19,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '莓果牛奶饅頭\nCranberry Milk Mantou',
+		name: '莓果牛奶饅頭',
+		ename: 'Cranberry Milk Mantou',
 		description: '低糖微甜',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
@@ -204,7 +223,8 @@ const inventory = [
 	{
 		id: 20,
 		category: '(有糖)無內餡 Low Sugar Added',
-		name: '莓果饅頭\nBerries Mantou',
+		name: '莓果饅頭',
+		ename: 'Berries Mantou',
 		description: '(低糖微甜) 黑, 藍, 覆盆, 蔓越莓',
 		price: 27,
 		type: '素 Vegan',
@@ -214,7 +234,8 @@ const inventory = [
 	{
 		id: 21,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋頭多\nTaro-Filled Mantou',
+		name: '芋頭多',
+		ename: 'Taro-Filled Mantou',
 		description: '',
 		price: 35,
 		type: '素 Vegan',
@@ -224,7 +245,8 @@ const inventory = [
 	{
 		id: 22,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '牛奶芋頭多\nMilk Taro-Filled Mantou',
+		name: '牛奶芋頭多',
+		ename: 'Milk Taro-Filled Mantou',
 		description: '',
 		price: 35,
 		type: '奶素 Lacto-Vegetarian',
@@ -234,7 +256,8 @@ const inventory = [
 	{
 		id: 23,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋頭紅豆\nTaro & Red Bean-Filled Mantou',
+		name: '芋頭紅豆',
+		ename: 'Taro & Red Bean-Filled Mantou',
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
@@ -244,7 +267,8 @@ const inventory = [
 	{
 		id: 24,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋泥起司\nMashed Taro-Filled Cheese Mantou',
+		name: '芋泥起司',
+		ename: 'Mashed Taro-Filled Cheese Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -254,7 +278,8 @@ const inventory = [
 	{
 		id: 25,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋泥肉鬆\nMashed Taro & Meat Floss-Filled Mantou',
+		name: '芋泥肉鬆',
+		ename: 'Mashed Taro & Meat Floss-Filled Mantou',
 		description: '',
 		price: 36,
 		type: '葷 Non Vegetarian',
@@ -264,7 +289,8 @@ const inventory = [
 	{
 		id: 26,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '鐵觀音奶酪核桃\nWalnut & Cream Cheese-Filled Tieguanyin Mantou',
+		name: '鐵觀音奶酪核桃',
+		ename: 'Walnut & Cream Cheese-Filled Tieguanyin Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -274,7 +300,8 @@ const inventory = [
 	{
 		id: 27,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '鐵觀音紅豆\nRed Bean-Filled Tieguanyin Mantou',
+		name: '鐵觀音紅豆',
+		ename: 'Red Bean-Filled Tieguanyin Mantou',
 		description: '',
 		price: 32,
 		type: '素 Vegan',
@@ -284,7 +311,8 @@ const inventory = [
 	{
 		id: 28,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '堅果多\nNuts-Filled Mantou',
+		name: '堅果多',
+		ename: 'Nuts-Filled Mantou',
 		description: '',
 		price: 33,
 		type: '素 Vegan',
@@ -294,7 +322,8 @@ const inventory = [
 	{
 		id: 29,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芝麻花生捲\nPeanut-Filled Sesame Mantou Roll',
+		name: '芝麻花生捲',
+		ename: 'Peanut-Filled Sesame Mantou Roll',
 		description: '',
 		price: 32,
 		type: '素 Vegan',
@@ -304,7 +333,8 @@ const inventory = [
 	{
 		id: 30,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '土豆芝麻捲\nSesame-Filled Peanut Mantou Roll',
+		name: '土豆芝麻捲',
+		ename: 'Sesame-Filled Peanut Mantou Roll',
 		description: '',
 		price: 32,
 		type: '素 Vegan',
@@ -314,7 +344,8 @@ const inventory = [
 	{
 		id: 31,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '土豆栗子\nChesnut-Filled Peanut Mantou',
+		name: '土豆栗子',
+		ename: 'Chesnut-Filled Peanut Mantou',
 		description: '',
 		price: 35,
 		type: '素 Vegan',
@@ -324,7 +355,8 @@ const inventory = [
 	{
 		id: 32,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '可可起司\nCacao Cheese Mantou',
+		name: '可可起司',
+		ename: 'Cacao Cheese Mantou',
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
@@ -334,7 +366,8 @@ const inventory = [
 	{
 		id: 33,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '可可栗子\nChesnut-Filled Cacao Mantou',
+		name: '可可栗子',
+		ename: 'Chesnut-Filled Cacao Mantou',
 		description: '',
 		price: 38,
 		type: '素 Vegan',
@@ -344,7 +377,8 @@ const inventory = [
 	{
 		id: 34,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '可可蔓越莓\nCranberry-Filled Cacao Mantou',
+		name: '可可蔓越莓',
+		ename: 'Cranberry-Filled Cacao Mantou',
 		description: '',
 		price: 32,
 		type: '素 Vegan',
@@ -354,7 +388,8 @@ const inventory = [
 	{
 		id: 35,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '可可奶酪蔓越莓\nCranberry & Cream Cheese-Filled Cacao Mantou',
+		name: '可可奶酪蔓越莓',
+		ename: 'Cranberry & Cream Cheese-Filled Cacao Mantou',
 		description: '菲力奶油',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
@@ -364,7 +399,8 @@ const inventory = [
 	{
 		id: 36,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '牛奶芝麻捲\nMilk & Sesame Mantou Roll',
+		name: '牛奶芝麻捲',
+		ename: 'Milk & Sesame Mantou Roll',
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
@@ -374,7 +410,8 @@ const inventory = [
 	{
 		id: 37,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '牛奶栗子起司\nChesnut & Cheese-Filled Milk Mantou',
+		name: '牛奶栗子起司',
+		ename: 'Chesnut & Cheese-Filled Milk Mantou',
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
@@ -384,7 +421,8 @@ const inventory = [
 	{
 		id: 38,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '牛奶奶酪蔓越莓\nCranberry & Cream Cheese-Filled Milk Mantou',
+		name: '牛奶奶酪蔓越莓',
+		ename: 'Cranberry & Cream Cheese-Filled Milk Mantou',
 		description: '菲力奶油',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
@@ -394,7 +432,8 @@ const inventory = [
 	{
 		id: 39,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '牛奶蔓越莓奶酥\nCranberry & Creamy Milk Butter-Filled Milk Mantou',
+		name: '牛奶蔓越莓奶酥',
+		ename: 'Cranberry & Creamy Milk Butter-Filled Milk Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -404,7 +443,8 @@ const inventory = [
 	{
 		id: 40,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '紫米堅果地瓜\nSweet Potato & Nuts-Filled Purple Rice Mantou',
+		name: '紫米堅果地瓜',
+		ename: 'Sweet Potato & Nuts-Filled Purple Rice Mantou',
 		description: '',
 		price: 35,
 		type: '素 Vegan',
@@ -414,7 +454,8 @@ const inventory = [
 	{
 		id: 41,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '紫米紅豆\nRed Bean-Filled Purple Rice Mantou',
+		name: '紫米紅豆',
+		ename: 'Red Bean-Filled Purple Rice Mantou',
 		description: '小紅豆+花豆',
 		price: 28,
 		type: '奶素 Lacto-Vegetarian',
@@ -424,7 +465,8 @@ const inventory = [
 	{
 		id: 42,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '抹茶奶酪栗子\nChesnut & Cream Cheese-Filled Matcha Mantou',
+		name: '抹茶奶酪栗子',
+		ename: 'Chesnut & Cream Cheese-Filled Matcha Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -434,7 +476,8 @@ const inventory = [
 	{
 		id: 43,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '抹茶紅豆\nRed Bean-Filled Matcha Mantou',
+		name: '抹茶紅豆',
+		ename: 'Red Bean-Filled Matcha Mantou',
 		description: '小紅豆+花豆',
 		price: 30,
 		type: '素 Vegan',
@@ -444,7 +487,8 @@ const inventory = [
 	{
 		id: 44,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '抹茶奶酪蔓越莓\nCranberry & Cream Cheese-Filled Matcha Mantou',
+		name: '抹茶奶酪蔓越莓',
+		ename: 'Cranberry & Cream Cheese-Filled Matcha Mantou',
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
@@ -454,7 +498,8 @@ const inventory = [
 	{
 		id: 45,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '抹茶芋頭\nTaro-Filled Matcha Mantou',
+		name: '抹茶芋頭',
+		ename: 'Taro-Filled Matcha Mantou',
 		description: '',
 		price: 34,
 		type: '素 Vegan',
@@ -464,7 +509,8 @@ const inventory = [
 	{
 		id: 46,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '藜麥芝麻捲\nQuinoa & Sesame Mantou Roll',
+		name: '藜麥芝麻捲',
+		ename: 'Quinoa & Sesame Mantou Roll',
 		description: '',
 		price: 32,
 		type: '素 Vegan',
@@ -474,7 +520,8 @@ const inventory = [
 	{
 		id: 47,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '藜麥芋頭\nTaro-Filled Quinoa Mantou',
+		name: '藜麥芋頭',
+		ename: 'Taro-Filled Quinoa Mantou',
 		description: '',
 		price: 34,
 		type: '素 Vegan',
@@ -484,7 +531,8 @@ const inventory = [
 	{
 		id: 48,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '藜麥堅果多\nNuts-Filled Quinoa Mantou',
+		name: '藜麥堅果多',
+		ename: 'Nuts-Filled Quinoa Mantou',
 		description: '無糖需預訂',
 		price: 35,
 		type: '素 Vegan',
@@ -494,7 +542,8 @@ const inventory = [
 	{
 		id: 49,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '起司紅豆\nRed Bean-Filled Cheese Mantou',
+		name: '起司紅豆',
+		ename: 'Red Bean-Filled Cheese Mantou',
 		description: '安佳起司',
 		price: 28,
 		type: '奶素 Lacto-Vegetarian',
@@ -504,7 +553,8 @@ const inventory = [
 	{
 		id: 50,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '可可奶酥\nCreamy Milk Butter-Filled Cacao Mantou',
+		name: '可可奶酥',
+		ename: 'Creamy Milk Butter-Filled Cacao Mantou',
 		description: '可可/抹茶/花生',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -514,7 +564,8 @@ const inventory = [
 	{
 		id: 51,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '伯爵奶酥\nCreamy Milk Butter-Filled Earl Mantou',
+		name: '伯爵奶酥',
+		ename: 'Creamy Milk Butter-Filled Earl Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -524,7 +575,8 @@ const inventory = [
 	{
 		id: 52,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '莓果奶酪鳳梨\nCranberry & Pineapple-Filled Cream Cheese Mantou',
+		name: '莓果奶酪鳳梨',
+		ename: 'Cranberry & Pineapple-Filled Cream Cheese Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -534,7 +586,8 @@ const inventory = [
 	{
 		id: 53,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '起司捲\nCheese-Filled Mantou Roll',
+		name: '起司捲',
+		ename: 'Cheese-Filled Mantou Roll',
 		description: '提拉姆起司',
 		price: 26,
 		type: '奶素 Lacto-Vegetarian',
@@ -544,7 +597,8 @@ const inventory = [
 	{
 		id: 54,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '起司芋絲捲\nTaro-Shreds & Cheese-Filled Mantou Roll',
+		name: '起司芋絲捲',
+		ename: 'Taro-Shreds & Cheese-Filled Mantou Roll',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -554,7 +608,8 @@ const inventory = [
 	{
 		id: 55,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '黃金起司芋絲捲\nGolden Taro-Shreds & Cheese-Filled Mantou Roll',
+		name: '黃金起司芋絲捲',
+		ename: 'Golden Taro-Shreds & Cheese-Filled Mantou Roll',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -564,7 +619,8 @@ const inventory = [
 	{
 		id: 56,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '黑糖鹹蛋奶酥\nSalted Egg & Creamy Milk Butter Brown Suger Mantou',
+		name: '黑糖鹹蛋奶酥',
+		ename: 'Salted Egg & Creamy Milk Butter Brown Suger Mantou',
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
@@ -574,7 +630,8 @@ const inventory = [
 	{
 		id: 57,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '杏鮑菇起司\nKing Oyster Mushroom-Filled Cheese Mantou',
+		name: '杏鮑菇起司',
+		ename: 'King Oyster Mushroom-Filled Cheese Mantou',
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
@@ -584,7 +641,8 @@ const inventory = [
 	{
 		id: 58,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '藜麥杏鮑菇起司\nKing Oyster Mushroom-Filled Quinoa Cheese Mantou',
+		name: '藜麥杏鮑菇起司',
+		ename: 'King Oyster Mushroom-Filled Quinoa Cheese Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -594,7 +652,8 @@ const inventory = [
 	{
 		id: 59,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '獅子頭\nBraised Meatball-Filled Mantou',
+		name: '獅子頭',
+		ename: 'Braised Meatball-Filled Mantou',
 		description: '台畜',
 		price: 43,
 		type: '葷 Non Vegetarian',
@@ -604,7 +663,8 @@ const inventory = [
 	{
 		id: 60,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '梅干扣肉\nPork with Salted Vegetables-Filled Mantou',
+		name: '梅干扣肉',
+		ename: 'Pork with Salted Vegetables-Filled Mantou',
 		description: '台畜',
 		price: 46,
 		type: '葷 Non Vegetarian',
@@ -614,7 +674,8 @@ const inventory = [
 	{
 		id: 61,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '燻雞起司\nSmoked Cheese Chicken-Filled Mantou',
+		name: '燻雞起司',
+		ename: 'Smoked Cheese Chicken-Filled Mantou',
 		description: '正點',
 		price: 36,
 		type: '葷 Non Vegetarian',
@@ -624,7 +685,8 @@ const inventory = [
 	{
 		id: 62,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '德式純肉香腸\nGerman Sausage Mantou',
+		name: '德式純肉香腸',
+		ename: 'German Sausage Mantou',
 		description: '台畜',
 		price: 36,
 		type: '葷 Non Vegetarian',
@@ -634,7 +696,8 @@ const inventory = [
 	{
 		id: 63,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '辣子雞丁\nChili Popcorn Chicken Mantou',
+		name: '辣子雞丁',
+		ename: 'Chili Popcorn Chicken Mantou',
 		description: '(基富) 小辣',
 		price: 33,
 		type: '葷 Non Vegetarian',
@@ -644,7 +707,8 @@ const inventory = [
 	{
 		id: 64,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '肉鬆核桃\nMeat Floss & Walnut-Filled Mantou',
+		name: '肉鬆核桃',
+		ename: 'Meat Floss & Walnut-Filled Mantou',
 		description: '',
 		price: 28,
 		type: '葷 Non Vegetarian',
@@ -654,7 +718,8 @@ const inventory = [
 	{
 		id: 65,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '肉鬆起司\nMeat Floss-Filled Cheese Mantou',
+		name: '肉鬆起司',
+		ename: 'Meat Floss-Filled Cheese Mantou',
 		description: '安佳起司',
 		price: 28,
 		type: '葷 Non Vegetarian',
@@ -664,7 +729,8 @@ const inventory = [
 	{
 		id: 66,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '肉鬆起司\nMeat Floss-Filled Cheese Mantou',
+		name: '肉鬆起司',
+		ename: 'Meat Floss-Filled Cheese Mantou',
 		description: '提拉姆起司',
 		price: 33,
 		type: '葷 Non Vegetarian',
@@ -674,7 +740,8 @@ const inventory = [
 	{
 		id: 67,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '燕麥南瓜鹹蛋\nWheat & Salted Egg Pumpkin-Filled Mantou',
+		name: '燕麥南瓜鹹蛋',
+		ename: 'Wheat & Salted Egg Pumpkin-Filled Mantou',
 		description: '',
 		price: 40,
 		type: '奶素 Lacto-Vegetarian',
@@ -684,7 +751,8 @@ const inventory = [
 	{
 		id: 68,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '燕麥堅果起司\nWheat & Nuts-Filled Cheese Mantou',
+		name: '燕麥堅果起司',
+		ename: 'Wheat & Nuts-Filled Cheese Mantou',
 		description: '',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
@@ -694,7 +762,8 @@ const inventory = [
 	{
 		id: 69,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '燕麥核桃素鬆\nWheat & Vegetarian Floss-Filled Mantou',
+		name: '燕麥核桃素鬆',
+		ename: 'Wheat & Vegetarian Floss-Filled Mantou',
 		description: '非基改',
 		price: 35,
 		type: '素 Vegan',
@@ -704,7 +773,8 @@ const inventory = [
 	{
 		id: 70,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
-		name: '燕麥南瓜起司\nWheat & Pumpkin-Filled Cheese Mantou',
+		name: '燕麥南瓜起司',
+		ename: 'Wheat & Pumpkin-Filled Cheese Mantou',
 		description: '',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
@@ -714,7 +784,8 @@ const inventory = [
 	{
 		id: 71,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
-		name: '燕麥南瓜多多\nWheat & Pumpkin-Filled Mantou',
+		name: '燕麥南瓜多多',
+		ename: 'Wheat & Pumpkin-Filled Mantou',
 		description: '',
 		price: 36,
 		type: '素 Vegan',
@@ -724,7 +795,8 @@ const inventory = [
 	{
 		id: 72,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
-		name: '乳酪南瓜\nCheese & Pumpkin-Filled Milk Mantou',
+		name: '乳酪南瓜',
+		ename: 'Cheese & Pumpkin-Filled Milk Mantou',
 		description: '牛奶/藜麥',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
@@ -734,7 +806,8 @@ const inventory = [
 	{
 		id: 73,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋頭紅豆\nTaro & Red Bean-Filled Mantou',
+		name: '芋頭紅豆',
+		ename: 'Taro & Red Bean-Filled Mantou',
 		description: '',
 		price: 32,
 		type: '素 Vegan',
@@ -744,7 +817,8 @@ const inventory = [
 	{
 		id: 74,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋泥鳳梨\nMashed Taro & Pineapple-Filled Mantou',
+		name: '芋泥鳳梨',
+		ename: 'Mashed Taro & Pineapple-Filled Mantou',
 		description: '',
 		price: 36,
 		type: '素 Vegan',
@@ -754,7 +828,8 @@ const inventory = [
 	{
 		id: 75,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋泥鳳梨\nMashed Taro & Pineapple-Filled Mantou',
+		name: '芋泥鳳梨',
+		ename: 'Mashed Taro & Pineapple-Filled Mantou',
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -764,7 +839,8 @@ const inventory = [
 	{
 		id: 76,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '抹茶蔓越莓奶酥\nCranberry & Creamy Milk Butter-Filled Matcha Mantou',
+		name: '抹茶蔓越莓奶酥',
+		ename: 'Cranberry & Creamy Milk Butter-Filled Matcha Mantou',
 		description: '牛奶/抹茶',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
@@ -774,7 +850,8 @@ const inventory = [
 	{
 		id: 77,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
-		name: '玉米乳酪\nCorn & Cheese-Filled Mantou',
+		name: '玉米乳酪',
+		ename: 'Corn & Cheese-Filled Mantou',
 		description: '綠巨人非基改玉米粒,Saputo摩佐羅拉乾酪',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',

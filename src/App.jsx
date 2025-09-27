@@ -187,7 +187,7 @@ export default function Simplicity() {
 		);
 	};
 
-	const Item = ({ name, price, desc, does, type, pic }) => {
+	const Item = ({ name, ename, price, desc, does, type, pic }) => {
 		return (
 			<div className='item'>
 				<LazyLoadImage
@@ -198,7 +198,10 @@ export default function Simplicity() {
 					loading='lazy'
 				/>
 				{type.length > 0 && <p className='type'>{type}</p>}
-				<h3>{name}</h3>
+				<h3>
+					{name}
+					<div className='ename'>{ename}</div>
+				</h3>
 				{desc.length > 0 && <p className='desc'>{desc}</p>}
 				{does.length > 0 && <p className='does'>{does}</p>}
 				<Price value={price + 2} />
@@ -310,6 +313,7 @@ export default function Simplicity() {
 								<Item
 									key={t.id}
 									name={t.name}
+									ename={t.ename}
 									price={t.price}
 									desc={t.description}
 									type={t.type}
@@ -490,7 +494,7 @@ export default function Simplicity() {
 		setLoading(1);
 		setTimeout(() => {
 			setLoading(0);
-		}, 3000);
+		}, 4000);
 		setTimeout(() => updateTopHeight(), 0);
 	}, []);
 
