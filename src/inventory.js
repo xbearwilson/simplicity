@@ -841,10 +841,10 @@ const inventory = [
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '抹茶蔓越莓奶酥',
 		ename: 'Cranberry & Creamy Milk Butter-Filled Matcha Mantou',
-		description: '牛奶/抹茶',
+		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryCreamyMilkButterFilledMatcha.jpg',
+		pic: './cranberryCreamyMilkButterFilledMatchaMantou.jpg',
 		do: '天天有',
 	},
 	{
