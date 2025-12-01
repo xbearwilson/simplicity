@@ -3,11 +3,9 @@ module.exports = {
 		cssnano: {
 			preset: 'default',
 		},
-		// tailwindcss: {},
 		// https://github.com/postcss/postcss-easings
 		'postcss-import': {},
 		'postcss-easings': {},
-		'postcss-nesting': {},
 		'postcss-nested': {},
 		// 兼容浏览器，添加前缀
 		'postcss-pxtorem': {},
@@ -26,7 +24,7 @@ module.exports = {
 			overrideBrowserslist: [
 				'last 2 versions', // 所有主流浏览器最近10版本用
 			],
-			grid: true,
+			grid: false,
 		},
 		// 'postcss-pxtorem': {
 		// 	// Vant 官方根字体大小是 37.5

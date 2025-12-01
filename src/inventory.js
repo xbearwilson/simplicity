@@ -1,7 +1,6 @@
 /*
  * @Date: 2023-01-02 04:31:36
- * @LastEditTime: 2023-01-23 01:35:11
- * @Description:
+ * @LastEditTime: 2025-12-01
  */
 /* eslint-disable indent */
 /* eslint-disable no-tabs */
@@ -19,7 +18,7 @@ const inventory = [
 		description: '',
 		price: 16,
 		type: '素 Vegan',
-		pic: './plainMantou.jpg',
+		pic: './plainMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -30,7 +29,7 @@ const inventory = [
 		description: '唐寧',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './earlMilkMantou.jpg',
+		pic: './earlMilkMantou.webp',
 		do: '製作日：2, 6',
 	},
 	{
@@ -41,7 +40,7 @@ const inventory = [
 		description: '紐西蘭奶粉',
 		price: 22,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './milkMantou.jpg',
+		pic: './milkMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -52,7 +51,7 @@ const inventory = [
 		description: '30%全麥',
 		price: 22,
 		type: '素 Vegan',
-		pic: './quinoaMantou.jpg',
+		pic: './quinoaMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -63,7 +62,7 @@ const inventory = [
 		description: '提拉姆起司',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './turmericCheeseMantou.jpg',
+		pic: './turmericCheeseMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -74,7 +73,7 @@ const inventory = [
 		description: '100%全麥',
 		price: 20,
 		type: '素 Vegan',
-		pic: './wholeWheatMantou.jpg',
+		pic: './wholeWheatMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -85,7 +84,7 @@ const inventory = [
 		description: '100%全麥, 核, 芝, 亞, 藜',
 		price: 27,
 		type: '素 Vegan',
-		pic: './nutsWholeWheatMantou.jpg',
+		pic: './nutsWholeWheatMantou.webp',
 		do: '製作日：3',
 	},
 	{
@@ -96,7 +95,7 @@ const inventory = [
 		description: '50%全麥, 小米, 蕎麥, 藜麥',
 		price: 27,
 		type: '素 Vegan',
-		pic: './grainPumpkinMantou.jpg',
+		pic: './grainPumpkinMantou.webp',
 		do: '製作日：6',
 	},
 	{
@@ -107,18 +106,18 @@ const inventory = [
 		description: '',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './taroShredsMilkMantou.jpg',
+		pic: './taroShredsMilkMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
 		id: 10,
 		category: '(無糖)無內餡 No Sugar Added',
 		name: '燕麥南瓜饅頭',
-		ename: 'Wheat Pumpkin Mantou',
+		ename: 'Oatmeal & Pumpkin Mantou',
 		description: '50%全麥, 燕麥, 南瓜',
 		price: 27,
 		type: '素 Vegan',
-		pic: './wheatPumpkinMantou.jpg',
+		pic: './wheatPumpkinMantou.webp',
 		do: '製作日：1, 6',
 	},
 	{
@@ -129,7 +128,7 @@ const inventory = [
 		description: '',
 		price: 17,
 		type: '素 Vegan',
-		pic: './brownSugerMantou.jpg',
+		pic: './brownSugerMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -140,7 +139,7 @@ const inventory = [
 		description: '',
 		price: 23,
 		type: '素 Vegan',
-		pic: './sesameMantou.jpg',
+		pic: './sesameMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -151,7 +150,7 @@ const inventory = [
 		description: '',
 		price: 22,
 		type: '素 Vegan',
-		pic: './purpleRiceMantou.jpg',
+		pic: './purpleRiceMantou.webp',
 		do: '須預訂',
 	},
 	{
@@ -162,7 +161,7 @@ const inventory = [
 		description: '',
 		price: 25,
 		type: '素 Vegan',
-		pic: './cacaoMantou.jpg',
+		pic: './cacaoMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -173,7 +172,7 @@ const inventory = [
 		description: '自然農法抹茶',
 		price: 25,
 		type: '素 Vegan',
-		pic: './matchaMantou.jpg',
+		pic: './matchaMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -184,7 +183,7 @@ const inventory = [
 		description: '柴燒烘烤/金弘花生',
 		price: 25,
 		type: '素 Vegan',
-		pic: './peanutMantou.jpg',
+		pic: './peanutMantou.webp',
 		do: '須預訂：5',
 	},
 	{
@@ -195,7 +194,7 @@ const inventory = [
 		description: '低糖微甜',
 		price: 27,
 		type: '素 Vegan',
-		pic: './taroShredsMantou.jpg',
+		pic: './taroShredsMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -206,7 +205,7 @@ const inventory = [
 		description: '低糖微甜',
 		price: 27,
 		type: '素 Vegan',
-		pic: './tieguanyinMantou.jpg',
+		pic: './tieguanyinMantou.webp',
 		do: '製作日：1, 3',
 	},
 	{
@@ -217,7 +216,7 @@ const inventory = [
 		description: '低糖微甜',
 		price: 27,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryMilkMantou.jpg',
+		pic: './cranberryMilkMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -228,7 +227,7 @@ const inventory = [
 		description: '(低糖微甜) 黑, 藍, 覆盆, 蔓越莓',
 		price: 27,
 		type: '素 Vegan',
-		pic: './berriesMantou.jpg',
+		pic: './berriesMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -239,7 +238,7 @@ const inventory = [
 		description: '',
 		price: 35,
 		type: '素 Vegan',
-		pic: './taroFilledMantou.jpg',
+		pic: './taroFilledMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -250,7 +249,7 @@ const inventory = [
 		description: '',
 		price: 35,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './taroFilledMantou.jpg',
+		pic: './taroFilledMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -261,7 +260,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './taroRedBeanFilledMantou.jpg',
+		pic: './taroRedBeanFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -272,7 +271,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './01.jpg',
+		pic: './01.webp',
 		do: '天天有',
 	},
 	{
@@ -283,7 +282,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '葷 Non Vegetarian',
-		pic: './mashedTaroMeatFlossFilledMantou.jpg',
+		pic: './mashedTaroMeatFlossFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -294,7 +293,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './walnutCreamCheeseFilledTieguanyinMantou.jpg',
+		pic: './walnutCreamCheeseFilledTieguanyinMantou.webp',
 		do: '製作日：1, 3',
 	},
 	{
@@ -305,7 +304,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '素 Vegan',
-		pic: './redBeanFilledTieguanyinMantou.jpg',
+		pic: './redBeanFilledTieguanyinMantou.webp',
 		do: '製作日：1, 3',
 	},
 	{
@@ -316,7 +315,7 @@ const inventory = [
 		description: '',
 		price: 33,
 		type: '素 Vegan',
-		pic: './nutsFilledMantou.jpg',
+		pic: './nutsFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -327,7 +326,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '素 Vegan',
-		pic: './peanutFilledSesameMantouRoll.jpg',
+		pic: './peanutFilledSesameMantouRoll.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -338,7 +337,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '素 Vegan',
-		pic: './sesameFilledPeanutMantouRoll.jpg',
+		pic: './sesameFilledPeanutMantouRoll.webp',
 		do: '製作日：5',
 	},
 	{
@@ -349,7 +348,7 @@ const inventory = [
 		description: '',
 		price: 35,
 		type: '素 Vegan',
-		pic: './chesnutFilledPeanutMantou.jpg',
+		pic: './chesnutFilledPeanutMantou.webp',
 		do: '製作日：5',
 	},
 	{
@@ -360,7 +359,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cacaoCheeseMantou.jpg',
+		pic: './cacaoCheeseMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -371,7 +370,7 @@ const inventory = [
 		description: '',
 		price: 38,
 		type: '素 Vegan',
-		pic: './chesnutFilledCacaoMantou.jpg',
+		pic: './chesnutFilledCacaoMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -382,7 +381,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '素 Vegan',
-		pic: './cranberryFilledCacaoMantou.jpg',
+		pic: './cranberryFilledCacaoMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -393,7 +392,7 @@ const inventory = [
 		description: '菲力奶油',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryCreamCheeseFilledCacaoMantou.jpg',
+		pic: './cranberryCreamCheeseFilledCacaoMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -404,7 +403,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './milkSesameMantouRoll.jpg',
+		pic: './milkSesameMantouRoll.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -415,7 +414,7 @@ const inventory = [
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './chesnutCheeseFilledMilkMantou.jpg',
+		pic: './chesnutCheeseFilledMilkMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -426,7 +425,7 @@ const inventory = [
 		description: '菲力奶油',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryCreamCheeseFilledMilkMantou.jpg',
+		pic: './cranberryCreamCheeseFilledMilkMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -437,7 +436,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryCreamyMilkButterFilledMilkMantou.jpg',
+		pic: './cranberryCreamyMilkButterFilledMilkMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -448,7 +447,7 @@ const inventory = [
 		description: '',
 		price: 35,
 		type: '素 Vegan',
-		pic: './sweetPotatoNutsFilledPurpleRiceMantou.jpg',
+		pic: './sweetPotatoNutsFilledPurpleRiceMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -459,7 +458,7 @@ const inventory = [
 		description: '小紅豆+花豆',
 		price: 28,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './redBeanFilledPurpleRiceMantou.jpg',
+		pic: './redBeanFilledPurpleRiceMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -470,7 +469,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './chesnutCreamCheeseFilledMatchaMantou.jpg',
+		pic: './chesnutCreamCheeseFilledMatchaMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -481,7 +480,7 @@ const inventory = [
 		description: '小紅豆+花豆',
 		price: 30,
 		type: '素 Vegan',
-		pic: './redBeanFilledMatchaMantou.jpg',
+		pic: './redBeanFilledMatchaMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -492,7 +491,7 @@ const inventory = [
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryCreamCheeseFilledMatchaMantou.jpg',
+		pic: './cranberryCreamCheeseFilledMatchaMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -503,7 +502,7 @@ const inventory = [
 		description: '',
 		price: 34,
 		type: '素 Vegan',
-		pic: './taroFilledMatchaMantou.jpg',
+		pic: './taroFilledMatchaMantou.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -514,7 +513,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '素 Vegan',
-		pic: './quinoaSesameMantouRoll.jpg',
+		pic: './quinoaSesameMantouRoll.webp',
 		do: '製作日：2, 5',
 	},
 	{
@@ -525,7 +524,7 @@ const inventory = [
 		description: '',
 		price: 34,
 		type: '素 Vegan',
-		pic: './taroFilledQuinoaMantou.jpg',
+		pic: './taroFilledQuinoaMantou.webp',
 		do: '須預訂：2, 5',
 	},
 	{
@@ -536,7 +535,7 @@ const inventory = [
 		description: '無糖需預訂',
 		price: 35,
 		type: '素 Vegan',
-		pic: './nutsFilledQuinoaMantou.jpg',
+		pic: './nutsFilledQuinoaMantou.webp',
 		do: '須預訂：2, 5',
 	},
 	{
@@ -547,7 +546,7 @@ const inventory = [
 		description: '安佳起司',
 		price: 28,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './redBeanFilledCheeseMantou.jpg',
+		pic: './redBeanFilledCheeseMantou.webp',
 		do: '須預訂',
 	},
 	{
@@ -558,7 +557,7 @@ const inventory = [
 		description: '可可/抹茶/花生',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './creamyMilkButterFilledCacaoMantou.jpg',
+		pic: './creamyMilkButterFilledCacaoMantou.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
@@ -569,7 +568,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './creamyMilkButterFilledEarlMantou.jpg',
+		pic: './creamyMilkButterFilledEarlMantou.webp',
 		do: '製作日：2, 6',
 	},
 	{
@@ -580,7 +579,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryPineappleFilledCreamCheeseMantou.jpg',
+		pic: './cranberryPineappleFilledCreamCheeseMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -591,7 +590,7 @@ const inventory = [
 		description: '提拉姆起司',
 		price: 26,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cheeseFilledMantouRoll.jpg',
+		pic: './cheeseFilledMantouRoll.webp',
 		do: '天天有',
 	},
 	{
@@ -602,7 +601,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './taroShredsCheeseFilledMantouRoll.jpg',
+		pic: './taroShredsCheeseFilledMantouRoll.webp',
 		do: '須預訂',
 	},
 	{
@@ -613,7 +612,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './goldenTaroShredsCheeseFilledMantouRoll.jpg',
+		pic: './goldenTaroShredsCheeseFilledMantouRoll.webp',
 		do: '須預訂：2, 5',
 	},
 	{
@@ -624,7 +623,7 @@ const inventory = [
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './saltedEggCreamyMilkButterBrownSugerMantou.jpg',
+		pic: './saltedEggCreamyMilkButterBrownSugerMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -635,7 +634,7 @@ const inventory = [
 		description: '',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './kingOysterMushroomFilledCheeseMantou.jpg',
+		pic: './kingOysterMushroomFilledCheeseMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -646,7 +645,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './kingOysterMushroomFilledQuinoaCheeseMantou.jpg',
+		pic: './kingOysterMushroomFilledQuinoaCheeseMantou.webp',
 		do: '須預訂：2, 5',
 	},
 	{
@@ -657,7 +656,7 @@ const inventory = [
 		description: '台畜',
 		price: 43,
 		type: '葷 Non Vegetarian',
-		pic: './braisedMeatballFilledMantou.jpg',
+		pic: './braisedMeatballFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -668,7 +667,7 @@ const inventory = [
 		description: '台畜',
 		price: 46,
 		type: '葷 Non Vegetarian',
-		pic: './porkwithSaltedVegetablesFilledMantou.jpg',
+		pic: './porkwithSaltedVegetablesFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -679,7 +678,7 @@ const inventory = [
 		description: '正點',
 		price: 36,
 		type: '葷 Non Vegetarian',
-		pic: './smokedCheeseChickenFilledMantou.jpg',
+		pic: './smokedCheeseChickenFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -690,7 +689,7 @@ const inventory = [
 		description: '台畜',
 		price: 36,
 		type: '葷 Non Vegetarian',
-		pic: './germanSausageMantou.jpg',
+		pic: './germanSausageMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -701,7 +700,7 @@ const inventory = [
 		description: '(基富) 小辣',
 		price: 33,
 		type: '葷 Non Vegetarian',
-		pic: './chiliPopcornChickenMantou.jpg',
+		pic: './chiliPopcornChickenMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -712,7 +711,7 @@ const inventory = [
 		description: '',
 		price: 28,
 		type: '葷 Non Vegetarian',
-		pic: './meatFlossWalnutFilledMantou.jpg',
+		pic: './meatFlossWalnutFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -723,7 +722,7 @@ const inventory = [
 		description: '安佳起司',
 		price: 28,
 		type: '葷 Non Vegetarian',
-		pic: './meatFlossFilledCheeseMantou.jpg',
+		pic: './meatFlossFilledCheeseMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -734,62 +733,62 @@ const inventory = [
 		description: '提拉姆起司',
 		price: 33,
 		type: '葷 Non Vegetarian',
-		pic: './meatFlossFilledCheeseMantou.jpg',
+		pic: './meatFlossFilledCheeseMantou.webp',
 		do: '天天有',
 	},
 	{
 		id: 67,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燕麥南瓜鹹蛋',
-		ename: 'Wheat & Salted Egg Pumpkin-Filled Mantou',
+		ename: 'Oatmeal & Salted Egg Pumpkin-Filled Mantou',
 		description: '',
 		price: 40,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './wheatSaltedEggPumpkinFilledMantou.jpg',
+		pic: './wheatSaltedEggPumpkinFilledMantou.webp',
 		do: '製作日：1, 6',
 	},
 	{
 		id: 68,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燕麥堅果起司',
-		ename: 'Wheat & Nuts-Filled Cheese Mantou',
+		ename: 'Oatmeal & Nuts-Filled Cheese Mantou',
 		description: '',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './wheatNutsFilledCheeseMantou.jpg',
+		pic: './wheatNutsFilledCheeseMantou.webp',
 		do: '製作日：1, 6',
 	},
 	{
 		id: 69,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燕麥核桃素鬆',
-		ename: 'Wheat & Vegetarian Floss-Filled Mantou',
+		ename: 'Oatmeal & Vegetarian Floss-Filled Mantou',
 		description: '非基改',
 		price: 35,
 		type: '素 Vegan',
-		pic: './wheatVegetarianFlossFilledMantou.jpg',
+		pic: './wheatVegetarianFlossFilledMantou.webp',
 		do: '製作日：1, 6',
 	},
 	{
 		id: 70,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
 		name: '燕麥南瓜起司',
-		ename: 'Wheat & Pumpkin-Filled Cheese Mantou',
+		ename: 'Oatmeal & Pumpkin-Filled Cheese Mantou',
 		description: '',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './wheatPumpkinFilledCheeseMantou.jpg',
+		pic: './wheatPumpkinFilledCheeseMantou.webp',
 		do: '製作日：1, 6',
 	},
 	{
 		id: 71,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
 		name: '燕麥南瓜多多',
-		ename: 'Wheat & Pumpkin-Filled Mantou',
+		ename: 'Oatmeal & Pumpkin-Filled Mantou',
 		description: '',
 		price: 36,
 		type: '素 Vegan',
-		pic: './wheatPumpkinFilledMantou.jpg',
+		pic: './wheatPumpkinFilledMantou.webp',
 		do: '製作日：1, 6',
 	},
 	{
@@ -800,7 +799,7 @@ const inventory = [
 		description: '牛奶/藜麥',
 		price: 38,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cheesePumpkinFilled.jpg',
+		pic: './cheesePumpkinFilled.webp',
 		do: '天天有',
 	},
 	{
@@ -811,7 +810,7 @@ const inventory = [
 		description: '',
 		price: 32,
 		type: '素 Vegan',
-		pic: './taroRedBeanFilledMantou.jpg',
+		pic: './taroRedBeanFilledMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -822,7 +821,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '素 Vegan',
-		pic: './mashedTaroPineappleFilled.jpg',
+		pic: './mashedTaroPineappleFilled.webp',
 		do: '天天有',
 	},
 	{
@@ -833,7 +832,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './mashedTaroPineappleFilled.jpg',
+		pic: './mashedTaroPineappleFilled.webp',
 		do: '天天有',
 	},
 	{
@@ -844,7 +843,7 @@ const inventory = [
 		description: '',
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cranberryCreamyMilkButterFilledMatchaMantou.jpg',
+		pic: './cranberryCreamyMilkButterFilledMatchaMantou.webp',
 		do: '天天有',
 	},
 	{
@@ -855,7 +854,7 @@ const inventory = [
 		description: '綠巨人非基改玉米粒,Saputo摩佐羅拉乾酪',
 		price: 34,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './cornCheeseFilled.jpg',
+		pic: './cornCheeseFilled.webp',
 		do: '天天有',
 	},
 ];

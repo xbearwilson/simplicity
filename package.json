@@ -5,8 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"d": "vite --host --open",
-		"b": "rm -rf dist && vite build && pnpm p",
-		"p": "vite preview --open"
+		"b": "rm -rf dist && pnpm optimize-images && vite build && pnpm p",
+		"p": "vite preview --open",
+		"optimize-images": "node scripts/optimize-images.js"
 	},
 	"dependencies": {
 		"lenis": "^1.3.8",
@@ -29,12 +30,11 @@
 		"postcss-easings": "^4.0.0",
 		"postcss-import": "^16.1.1",
 		"postcss-nested": "^7.0.2",
-		"postcss-nesting": "^13.0.2",
 		"postcss-preset-env": "^10.2.2",
 		"postcss-pxtorem": "^6.1.0",
 		"sass": "^1.90.0",
-		"vite": "^7.1.3",
-		"vite-plugin-purgecss": "^0.2.13"
+		"sharp": "^0.33.5",
+		"vite": "^7.1.3"
 	},
 	"engines": {
 		"node": "22.x"
