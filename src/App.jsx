@@ -420,22 +420,24 @@ export default function Simplicity() {
 		);
 	};
 
-	const Preloader = () => {
+	const Preloader = ({ duration = 4000 }) => {
 		const [pct, setPct] = useState(0);
 
 		useEffect(() => {
 			let currProgress = 10;
-			let step = 1;
+			// 根據 duration 動態調整 step 大小
+			const step = duration > 1000 ? 1 : 3;
+			const intervalTime = duration > 1000 ? 100 : 50;
 
 			const interval = setInterval(() => {
 				currProgress += step;
 				let progress = Math.round((Math.atan(currProgress) / (Math.PI / 2)) * 100 * 1000) / 1000;
 				setPct(parseFloat(progress.toPrecision(3)));
-			}, 100);
+			}, intervalTime);
 
 			setTimeout(() => updateTopHeight(), 0);
 			return () => clearInterval(interval);
-		}, []);
+		}, [duration]);
 
 		const Loading = () => {
 			return (
@@ -491,12 +493,56 @@ export default function Simplicity() {
 	};
 
 	useEffect(() => {
-		setLoading(1);
+		// 智能判斷是否需要顯示 Preloader
+		const shouldShowPreloader = () => {
+			// 1. 檢查 sessionStorage - 是否在同一個瀏覽階段已經載入過
+			const hasLoadedInSession = sessionStorage.getItem('simplicity_loaded');
+
+			// 2. 檢查是否有快取 - 使用 Performance API
+			const hasCachedResources = () => {
+				if (!window.performance || !window.performance.getEntriesByType) {
+					return false;
+				}
+
+				const resources = window.performance.getEntriesByType('resource');
+				// 檢查圖片資源是否從快取載入
+				const imageResources = resources.filter(
+					(r) => r.name.includes('.webp') || r.name.includes('.jpg') || r.name.includes('.png')
+				);
+
+				// 如果有圖片且大部分從快取載入（transferSize 很小或為 0）
+				if (imageResources.length > 0) {
+					const cachedCount = imageResources.filter((r) => r.transferSize === 0 || r.transferSize < 1000).length;
+					return cachedCount / imageResources.length > 0.5; // 超過50%從快取載入
+				}
+
+				return false;
+			};
+
+			// 3. 決定 loading 時間
+			if (hasLoadedInSession) {
+				// 同一瀏覽階段，已經載入過，快速通過
+				return { show: true, duration: 500 };
+			} else if (hasCachedResources()) {
+				// 有快取但可能是新的瀏覽階段（關閉後重開），稍微快一點
+				return { show: true, duration: 800 };
+			} else {
+				// 首次訪問或清除快取，顯示完整 loading
+				return { show: true, duration: 4000 };
+			}
+		};
+
+		const preloaderConfig = shouldShowPreloader();
+
+		setLoading(preloaderConfig.duration); // 將 duration 儲存到 loading state
 		setTimeout(() => {
 			setLoading(0);
-		}, 4000);
+			// 標記此瀏覽階段已載入過
+			sessionStorage.setItem('simplicity_loaded', 'true');
+		}, preloaderConfig.duration);
+
 		setTimeout(() => updateTopHeight(), 0);
 	}, []);
 
-	return <>{loading ? <Preloader /> : <Main />}</>;
+	return <>{loading ? <Preloader duration={loading} /> : <Main />}</>;
 }
