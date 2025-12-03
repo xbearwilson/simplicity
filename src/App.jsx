@@ -2,9 +2,10 @@ import Lenis from 'lenis';
 import { useEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './App.scss';
-import PlaceholderImage from './img/logo.svg';
 import inventory, { categories } from './inventory.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
+// PlaceholderImage 改用 public/logo.svg
+const PlaceholderImage = '/logo.svg';
 
 export default function Simplicity() {
 	// 製作日分類狀態，預設 '天天有 Every day'
@@ -237,7 +238,7 @@ export default function Simplicity() {
 						<img
 							onClick={scrollToTop}
 							className='logo'
-							src='./logo.svg'
+							src='/logo.svg'
 							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 						/>
 					</a>
@@ -334,7 +335,7 @@ export default function Simplicity() {
 					>
 						{/* <a href='#'> */}
 						<img
-							src='./logo.svg'
+							src='/logo.svg'
 							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 						/>
 						{/* </a> */}
@@ -480,7 +481,7 @@ export default function Simplicity() {
 					>
 						<img
 							className='logo'
-							src='./logo.svg'
+							src='/logo.svg'
 							alt=''
 						/>
 						<span>載入中 Loading</span>
