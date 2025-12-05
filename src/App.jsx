@@ -421,129 +421,131 @@ export default function Simplicity() {
 		);
 	};
 
-	const Preloader = ({ duration = 4000 }) => {
-		const [pct, setPct] = useState(0);
-
-		useEffect(() => {
-			let currProgress = 10;
-			// 根據 duration 動態調整 step 大小
-			const step = duration > 1000 ? 1 : 3;
-			const intervalTime = duration > 1000 ? 100 : 50;
-
-			const interval = setInterval(() => {
-				currProgress += step;
-				let progress = Math.round((Math.atan(currProgress) / (Math.PI / 2)) * 100 * 1000) / 1000;
-				setPct(parseFloat(progress.toPrecision(3)));
-			}, intervalTime);
-
-			setTimeout(() => updateTopHeight(), 0);
-			return () => clearInterval(interval);
-		}, [duration]);
-
-		const Loading = () => {
-			return (
+	const Preloader = ({ progress = 0 }) => {
+		return (
+			<div
+				className='preloader'
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					gap: '.5rem',
+				}}
+			>
 				<div
-					className='preloader'
+					className='progress-bar'
 					style={{
 						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						gap: '.5rem',
+						flexDirection: 'column',
+						width: '100%',
+						alignItems: 'right',
 					}}
 				>
 					<div
-						className='progress-bar'
+						className='progress'
 						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							width: '100%',
-							alignItems: 'right',
+							background: 'var(--first-color)',
+							color: 'var(--sec-color)',
+							width: progress ? `${progress}%` : '0%',
+							height: '3px',
+							textAlign: 'right',
+							fontSize: 'var(--smaller-font-size)',
+							transition: 'all 0.3s',
 						}}
 					>
-						<div
-							className='progress'
-							style={{
-								background: 'var(--first-color)',
-								color: 'var(--sec-color)',
-								width: pct ? `${pct}%` : '10%',
-								height: '3px',
-								textAlign: 'right',
-								fontSize: 'var(--smaller-font-size)',
-								transition: 'all 0.3s',
-							}}
-						>
-							{Math.round(pct)}%
-						</div>
-					</div>
-					<div
-						ref={loadingRef}
-						className='loading'
-					>
-						<img
-							className='logo'
-							src='/logo.svg'
-							alt=''
-						/>
-						<span>載入中 Loading</span>
+						{Math.round(progress)}%
 					</div>
 				</div>
-			);
-		};
-
-		return <Loading />;
+				<div
+					ref={loadingRef}
+					className='loading'
+				>
+					<img
+						className='logo'
+						src='./logo.svg'
+						alt=''
+					/>
+					<span>載入中 Loading</span>
+				</div>
+			</div>
+		);
 	};
 
 	useEffect(() => {
-		// 智能判斷是否需要顯示 Preloader
-		const shouldShowPreloader = () => {
-			// 1. 檢查 sessionStorage - 是否在同一個瀏覽階段已經載入過
-			const hasLoadedInSession = sessionStorage.getItem('simplicity_loaded');
+		// 1. 檢查 sessionStorage - 是否在同一個瀏覽階段已經載入過
+		const hasLoadedInSession = sessionStorage.getItem('simplicity_loaded');
 
-			// 2. 檢查是否有快取 - 使用 Performance API
-			const hasCachedResources = () => {
-				if (!window.performance || !window.performance.getEntriesByType) {
-					return false;
-				}
+		if (hasLoadedInSession) {
+			// 同一瀏覽階段，直接跳過 loading，不顯示任何畫面
+			setLoading(0);
+			setTimeout(() => updateTopHeight(), 0);
+			return;
+		}
 
-				const resources = window.performance.getEntriesByType('resource');
-				// 檢查圖片資源是否從快取載入
-				const imageResources = resources.filter(
-					(r) => r.name.includes('.webp') || r.name.includes('.jpg') || r.name.includes('.png')
-				);
+		// 2. 提取所有產品圖片 URL
+		const imageUrls = data.map((item) => item.pic);
+		const totalImages = imageUrls.length;
+		let loadedCount = 0;
+		let timeoutId;
 
-				// 如果有圖片且大部分從快取載入（transferSize 很小或為 0）
-				if (imageResources.length > 0) {
-					const cachedCount = imageResources.filter((r) => r.transferSize === 0 || r.transferSize < 1000).length;
-					return cachedCount / imageResources.length > 0.5; // 超過50%從快取載入
-				}
+		// 3. 預載入所有圖片
+		const preloadImages = () => {
+			imageUrls.forEach((url) => {
+				const img = new Image();
 
-				return false;
-			};
+				img.onload = () => {
+					loadedCount++;
+					const progress = (loadedCount / totalImages) * 100;
+					setLoading(progress);
 
-			// 3. 決定 loading 時間
-			if (hasLoadedInSession) {
-				// 同一瀏覽階段，已經載入過，快速通過
-				return { show: true, duration: 500 };
-			} else if (hasCachedResources()) {
-				// 有快取但可能是新的瀏覽階段（關閉後重開），稍微快一點
-				return { show: true, duration: 800 };
-			} else {
-				// 首次訪問或清除快取，顯示完整 loading
-				return { show: true, duration: 4000 };
-			}
+					if (loadedCount === totalImages) {
+						// 所有圖片載入完成
+						clearTimeout(timeoutId);
+						setTimeout(() => {
+							setLoading(0);
+							sessionStorage.setItem('simplicity_loaded', 'true');
+						}, 300); // 稍微延遲以顯示 100%
+					}
+				};
+
+				img.onerror = () => {
+					// 載入失敗也計入進度（避免卡住）
+					loadedCount++;
+					const progress = (loadedCount / totalImages) * 100;
+					setLoading(progress);
+
+					if (loadedCount === totalImages) {
+						clearTimeout(timeoutId);
+						setTimeout(() => {
+							setLoading(0);
+							sessionStorage.setItem('simplicity_loaded', 'true');
+						}, 300);
+					}
+				};
+
+				img.src = url;
+			});
 		};
 
-		const preloaderConfig = shouldShowPreloader();
+		// 4. Timeout 保護機制（最多10秒）
+		timeoutId = setTimeout(() => {
+			if (loadedCount < totalImages) {
+				console.warn(`載入超時：已載入 ${loadedCount}/${totalImages} 張圖片`);
+				setLoading(0);
+				sessionStorage.setItem('simplicity_loaded', 'true');
+			}
+		}, 10000);
 
-		setLoading(preloaderConfig.duration); // 將 duration 儲存到 loading state
-		setTimeout(() => {
-			setLoading(0);
-			// 標記此瀏覽階段已載入過
-			sessionStorage.setItem('simplicity_loaded', 'true');
-		}, preloaderConfig.duration);
-
+		// 開始預載入
+		preloadImages();
+		setLoading(1); // 設定初始進度 1% 以顯示 Preloader
 		setTimeout(() => updateTopHeight(), 0);
-	}, []);
 
-	return <>{loading ? <Preloader duration={loading} /> : <Main />}</>;
+		// Cleanup
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [data]);
+
+	return <>{loading > 0 ? <Preloader progress={loading} /> : <Main />}</>;
 }
