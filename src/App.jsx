@@ -499,12 +499,12 @@ export default function Simplicity() {
 					setLoading(progress);
 
 					if (loadedCount === totalImages) {
-						// 所有圖片載入完成
+						// 所有圖片載入完成（此時進度已為 100%）
 						clearTimeout(timeoutId);
 						setTimeout(() => {
-							setLoading(0);
+							setLoading(0); // 隱藏 Preloader，顯示主內容
 							sessionStorage.setItem('simplicity_loaded', 'true');
-						}, 300); // 稍微延遲以顯示 100%
+						}, 300); // 延遲 300ms 讓用戶看到 100% 完成
 					}
 				};
 

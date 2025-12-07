@@ -456,6 +456,7 @@ $breakpoints: (
 			line-height: 1.2;
 			font-size: var(--smaller-font-size);
 			font-weight: 500;
+			user-select: none;
 			@include mxw(3xl) {
 				top: 1rem;
 				left: 1rem;
