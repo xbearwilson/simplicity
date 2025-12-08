@@ -1,5 +1,5 @@
 建立此工作階段的中文簡短 commit message
-格式：gacm '[20251207]commit message'
+格式：gacm '[20251208]commit message'
 
 gacm '[20251201][圖片優化與配置清理]
 
@@ -15,3 +15,6 @@ gacm '[20251201][圖片優化與配置清理]
 
 gacm '[20251203]智能 Preloader - 根據快取與瀏覽階段動態調整載入時間'
 gacm '[20251205]Preloader 改為實際圖片載入進度偵測, 所有 webp 優化為 w400px 50% 質量'
+
+請動態偵測 src/App.scss:106 .top 的高度
+再將 src/App.scss:300 .main 全部的 @media @include 中的 margin-top 調整為 src/App.scss:106 .top 的高度，但要絕對保證語法在 Reactjs 初始 DOM 下載完成後執行，避免 margin-top 未定義或錯誤

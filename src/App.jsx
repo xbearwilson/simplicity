@@ -45,12 +45,12 @@ export default function Simplicity() {
 	const scrollBtnRef = useRef();
 	const [loading, setLoading] = useState(0);
 
-	useEffect(() => {
-		setTopHeight('178px');
-	}, []);
-
 	const updateTopHeight = () => {
-		if (topRef.current) setTopHeight(topRef.current.offsetHeight);
+		if (topRef.current) {
+			const height = topRef.current.offsetHeight;
+			setTopHeight(height); // 設置為數字，方便後續計算
+			console.log('Top height updated:', height); // 調試信息
+		}
 	};
 
 	// 強制初始狀態（component mount）
@@ -212,6 +212,12 @@ export default function Simplicity() {
 
 	const Main = () => {
 		useEffect(() => {
+			// 立即偵測一次高度（在 Main 組件掛載時）
+			setTimeout(() => updateTopHeight(), 0);
+			// 延遲再偵測一次，確保所有內容都已渲染
+			setTimeout(() => updateTopHeight(), 100);
+			setTimeout(() => updateTopHeight(), 300);
+
 			const lenis = new Lenis();
 			function raf(time) {
 				lenis.raf(time);
@@ -305,7 +311,7 @@ export default function Simplicity() {
 
 				<div
 					className='main'
-					// style={{ marginTop: `${topHeight}px + 5px` }}
+					style={{ marginTop: topHeight > 0 ? `${topHeight}px` : undefined }}
 				>
 					{/* 首頁預設顯示所有商品 */}
 					<div className='flex'>

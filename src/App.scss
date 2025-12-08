@@ -138,17 +138,17 @@ $breakpoints: (
 		padding-inline: 1rem;
 	}
 	@include mxw(md) {
-		padding-top: 1rem;
+		padding-top: 0;
 	}
 	@include mxw(sm) {
-		padding: 1rem !important;
-		width: 100%;
+		padding: 0 1rem 1rem 1rem;
 	}
 	@include mxw(2xs) {
-		padding-top: unset !important;
-		padding-bottom: unset !important;
-		padding-inline: 0.5rem !important;
-		height: 15rem;
+		padding-top: unset;
+		padding-bottom: unset;
+		padding-inline: 0.5rem;
+		gap: 2.5rem;
+		height: 160px;
 	}
 
 	.storeHoliday {
@@ -300,39 +300,26 @@ $breakpoints: (
 .main {
 	/* position: relative; */
 	width: 100%;
-	/* margin: 8.5rem auto 0; */
-	margin-top: 11.5rem;
+	/* margin-top 現在由 React inline style 動態設置，基於 .top 的實際高度 */
 	padding-inline: 2rem;
 	/* left: 50%; */
 	/* transform: translateX(-50%); */
 	@include miw(4xl) {
 		width: 90%;
-		margin: 10.5rem auto 0 auto;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	@include mxw(3xl) {
-		margin-top: 9.3rem;
 		padding-inline: 1rem;
 	}
 	@include mxw(2xl) {
-		margin-top: 8rem;
 		padding-inline: 0;
 	}
 	@include mxw(xl) {
-		margin-top: 6.9rem;
 		padding-inline: 0.5rem;
 	}
-	@include mxw(lg) {
-		margin-top: 6.6rem;
-	}
-	@include mxw(md) {
-		margin-top: 11.2rem;
-	}
 	@include mxw(sm) {
-		margin-top: 10.7rem;
 		padding-inline: 0;
-	}
-	@include mxw(2xs) {
-		margin-top: 15rem;
 	}
 
 	.flex {
