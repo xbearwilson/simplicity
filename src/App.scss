@@ -36,6 +36,12 @@ $breakpoints: (
 	}
 }
 
+html {
+	@include mxw(xs) {
+		text-size-adjust: none;
+	}
+}
+
 #root {
 	width: 100%;
 	margin: 0 auto;
@@ -455,11 +461,54 @@ $breakpoints: (
 			@include mxw(xl) {
 				border: 1px solid rgba(255, 255, 255, 0.8);
 			}
+			@include mxw(md) {
+				transform-origin: left top;
+				scale: 0.9;
+			}
 			@include mxw(sm) {
 				transform-origin: left center;
 				transform: scale(0.8);
 				top: 0.5rem;
 				left: 0.7rem;
+			}
+		}
+
+		.new-badge {
+			position: absolute;
+			top: 1.5rem;
+			right: 1.5rem;
+			// background: #d32f2f;
+			background: #fff;
+			// border: 2px solid rgba(255, 255, 255, 0.8);
+			border: 2px solid #d32f2f;
+			// color: white;
+			color: #d32f2f;
+			font-weight: 700;
+			font-size: 0.8rem;
+			padding: 4px 10px;
+			border-radius: 10px;
+			z-index: 10;
+			// box-shadow: 0 2px 6px rgba(211, 47, 47, 0.4);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			user-select: none;
+
+			@include mxw(3xl) {
+				top: 1rem;
+				right: 1rem;
+			}
+			@include mxw(2xl) {
+				top: 0.8rem;
+				right: 0.8rem;
+			}
+			@include mxw(md) {
+				transform-origin: right center;
+				scale: 0.9;
+			}
+			@include mxw(sm) {
+				transform: scale(0.8);
+				top: 0.5rem;
+				right: 0.7rem;
 			}
 		}
 
@@ -479,6 +528,7 @@ $breakpoints: (
 				transform: scale(0.7);
 			}
 			@include mxw(xs) {
+				max-width: 22ch;
 				transform: scale(0.8);
 			}
 			@include mxw(2xs) {
@@ -492,7 +542,7 @@ $breakpoints: (
 			color: var(--first-color);
 			font-size: var(--biggest-font-size);
 			font-weight: 900;
-			letter-spacing: -0.05em;
+			letter-spacing: -0.1em;
 			bottom: 0;
 			right: 1rem;
 
@@ -502,15 +552,17 @@ $breakpoints: (
 			@include mxw(2xl) {
 				right: 0.5rem;
 			}
-			@include mxw(sm) {
-				transform-origin: right bottom;
-				transform: scale(1.4);
-			}
 
 			& span {
+				position: relative;
 				color: rgb(121, 121, 121);
 				font-size: var(--smaller-font-size);
 				font-weight: bold;
+				left: -5px;
+
+				@include mxw(sm) {
+					left: -4px;
+				}
 			}
 		}
 	}

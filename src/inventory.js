@@ -7,6 +7,9 @@
 /* eslint-disable semi */
 import _ from 'lodash';
 
+// NEW 標籤顯示期間（月份）- 可自行調整此數值
+export const NEW_DISPLAY_MONTHS = 6;
+
 // white-space: pre;
 
 const inventory = [
@@ -122,6 +125,18 @@ const inventory = [
 	},
 	{
 		id: 11,
+		category: '(無糖)無內餡 No Sugar Added',
+		name: '肉桂饅頭',
+		ename: 'Cinnamon Mantou',
+		description: '30%全麥, 肉桂, 奇亞籽',
+		price: 27,
+		type: '素 Vegan',
+		pic: './cinnamon.webp',
+		do: '製作日：1, 3, 6',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 12,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '黑糖饅頭',
 		ename: 'Brown Suger Mantou',
@@ -132,7 +147,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 12,
+		id: 13,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '芝麻多饅頭',
 		ename: 'Sesame Mantou',
@@ -143,18 +158,18 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 13,
+		id: 14,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '紫米饅頭',
 		ename: 'Purple Rice Mantou',
 		description: '',
 		price: 22,
 		type: '素 Vegan',
-		pic: './purpleRiceMantou.webp',
+		pic: './purpleRiceMantou_1.webp',
 		do: '須預訂',
 	},
 	{
-		id: 14,
+		id: 15,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '可可饅頭',
 		ename: 'Cacao Mantou',
@@ -165,7 +180,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 15,
+		id: 16,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '抹茶饅頭',
 		ename: 'Matcha Mantou',
@@ -176,7 +191,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 16,
+		id: 17,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '土豆饅頭',
 		ename: 'Peanut Mantou',
@@ -187,7 +202,7 @@ const inventory = [
 		do: '須預訂：5',
 	},
 	{
-		id: 17,
+		id: 18,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '芋絲饅頭',
 		ename: 'Taro-Shreds Mantou',
@@ -198,7 +213,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 18,
+		id: 19,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '鐵觀音饅頭',
 		ename: 'Tieguanyin Mantou',
@@ -209,7 +224,7 @@ const inventory = [
 		do: '製作日：1, 3',
 	},
 	{
-		id: 19,
+		id: 20,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '莓果牛奶饅頭',
 		ename: 'Cranberry Milk Mantou',
@@ -220,7 +235,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 20,
+		id: 21,
 		category: '(有糖)無內餡 Low Sugar Added',
 		name: '莓果饅頭',
 		ename: 'Berries Mantou',
@@ -231,7 +246,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 21,
+		id: 22,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋頭多',
 		ename: 'Taro-Filled Mantou',
@@ -242,7 +257,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 22,
+		id: 23,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '牛奶芋頭多',
 		ename: 'Milk Taro-Filled Mantou',
@@ -253,7 +268,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 23,
+		id: 24,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋頭紅豆',
 		ename: 'Taro & Red Bean-Filled Mantou',
@@ -264,7 +279,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 24,
+		id: 25,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋泥起司',
 		ename: 'Mashed Taro-Filled Cheese Mantou',
@@ -275,7 +290,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 25,
+		id: 26,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋泥肉鬆',
 		ename: 'Mashed Taro & Meat Floss-Filled Mantou',
@@ -286,7 +301,43 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 26,
+		id: 27,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '肉桂芝麻核桃',
+		ename: 'Sesame & Walnut-Filled Cinnamon Mantou',
+		description: '',
+		price: 38,
+		type: '素 Vegan',
+		pic: './sesameWalnutFilledCinnamon.webp',
+		do: '製作日：1, 3, 6',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 28,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '肉桂花生腰果',
+		ename: 'Peanuts & Cashews-Filled Cinnamon Mantou',
+		description: '',
+		price: 38,
+		type: '素 Vegan',
+		pic: './peanutsCashews-FilledCinnamon.webp',
+		do: '製作日：1, 3, 6',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 29,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '肉桂葡萄奶酥',
+		ename: 'Grape & Creamy Milk Butter-Filled Cinnamon Mantou',
+		description: '',
+		price: 38,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './grapeCreamyMilkButter-FilledCinnamon.webp',
+		do: '製作日：1, 3, 6',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 30,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '鐵觀音奶酪核桃',
 		ename: 'Walnut & Cream Cheese-Filled Tieguanyin Mantou',
@@ -297,7 +348,7 @@ const inventory = [
 		do: '製作日：1, 3',
 	},
 	{
-		id: 27,
+		id: 31,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '鐵觀音紅豆',
 		ename: 'Red Bean-Filled Tieguanyin Mantou',
@@ -308,7 +359,7 @@ const inventory = [
 		do: '製作日：1, 3',
 	},
 	{
-		id: 28,
+		id: 32,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '堅果多',
 		ename: 'Nuts-Filled Mantou',
@@ -319,7 +370,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 29,
+		id: 33,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芝麻花生捲',
 		ename: 'Peanut-Filled Sesame Mantou Roll',
@@ -330,7 +381,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 30,
+		id: 34,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '土豆芝麻捲',
 		ename: 'Sesame-Filled Peanut Mantou Roll',
@@ -341,7 +392,7 @@ const inventory = [
 		do: '製作日：5',
 	},
 	{
-		id: 31,
+		id: 35,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '土豆栗子',
 		ename: 'Chesnut-Filled Peanut Mantou',
@@ -352,7 +403,7 @@ const inventory = [
 		do: '製作日：5',
 	},
 	{
-		id: 32,
+		id: 36,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '可可起司',
 		ename: 'Cacao Cheese Mantou',
@@ -363,7 +414,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 33,
+		id: 37,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '可可栗子',
 		ename: 'Chesnut-Filled Cacao Mantou',
@@ -374,7 +425,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 34,
+		id: 38,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '可可蔓越莓',
 		ename: 'Cranberry-Filled Cacao Mantou',
@@ -385,7 +436,19 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 35,
+		id: 39,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '可可花生夏威夷果',
+		ename: 'Peanut & Macadamia-Filled Cacao Mantou',
+		description: '',
+		price: 38,
+		type: '素 Vegan',
+		pic: './peanutMacadamia-FilledCacao.webp',
+		do: '製作日：1, 3, 6',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 40,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '可可奶酪蔓越莓',
 		ename: 'Cranberry & Cream Cheese-Filled Cacao Mantou',
@@ -396,18 +459,30 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 36,
+		id: 41,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '可可栗子起司',
+		ename: 'Chestnut & Cheese-Filled Cacao Mantou',
+		description: '',
+		price: 38,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './chestnutCheese-FilledCacao.webp',
+		do: '製作日：1, 3, 6',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 42,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '牛奶芝麻捲',
 		ename: 'Milk & Sesame Mantou Roll',
 		description: '',
 		price: 32,
 		type: '奶素 Lacto-Vegetarian',
-		pic: './milkSesameMantouRoll.webp',
+		pic: './milkSesameMantouRoll_1.webp',
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 37,
+		id: 43,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '牛奶栗子起司',
 		ename: 'Chesnut & Cheese-Filled Milk Mantou',
@@ -418,7 +493,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 38,
+		id: 44,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '牛奶奶酪蔓越莓',
 		ename: 'Cranberry & Cream Cheese-Filled Milk Mantou',
@@ -429,7 +504,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 39,
+		id: 45,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '牛奶蔓越莓奶酥',
 		ename: 'Cranberry & Creamy Milk Butter-Filled Milk Mantou',
@@ -440,7 +515,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 40,
+		id: 46,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '紫米堅果地瓜',
 		ename: 'Sweet Potato & Nuts-Filled Purple Rice Mantou',
@@ -451,7 +526,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 41,
+		id: 47,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '紫米紅豆',
 		ename: 'Red Bean-Filled Purple Rice Mantou',
@@ -462,7 +537,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 42,
+		id: 48,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '抹茶奶酪栗子',
 		ename: 'Chesnut & Cream Cheese-Filled Matcha Mantou',
@@ -473,7 +548,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 43,
+		id: 49,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '抹茶紅豆',
 		ename: 'Red Bean-Filled Matcha Mantou',
@@ -484,7 +559,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 44,
+		id: 50,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '抹茶奶酪蔓越莓',
 		ename: 'Cranberry & Cream Cheese-Filled Matcha Mantou',
@@ -495,7 +570,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 45,
+		id: 51,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '抹茶芋頭',
 		ename: 'Taro-Filled Matcha Mantou',
@@ -506,7 +581,19 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 46,
+		id: 52,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '抹茶奶酪雙果',
+		ename: 'Passion fruit & Macadamia nuts-Filled Matcha Mantou',
+		description: '百香果+夏威夷果',
+		price: 38,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './passionfruitMacadamianuts-FilledMatcha.webp',
+		do: '製作日：2, 5',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 53,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '藜麥芝麻捲',
 		ename: 'Quinoa & Sesame Mantou Roll',
@@ -517,7 +604,7 @@ const inventory = [
 		do: '製作日：2, 5',
 	},
 	{
-		id: 47,
+		id: 54,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '藜麥芋頭',
 		ename: 'Taro-Filled Quinoa Mantou',
@@ -528,7 +615,7 @@ const inventory = [
 		do: '須預訂：2, 5',
 	},
 	{
-		id: 48,
+		id: 55,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '藜麥堅果多',
 		ename: 'Nuts-Filled Quinoa Mantou',
@@ -539,7 +626,19 @@ const inventory = [
 		do: '須預訂：2, 5',
 	},
 	{
-		id: 49,
+		id: 56,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '蔾麥南瓜夏威夷果',
+		ename: 'Pumpkin & Macadamia-Filled Quinoa Mantou',
+		description: '',
+		price: 38,
+		type: '素 Vegan',
+		pic: './pumpkinMacadamia-FilledQuinoa.webp',
+		do: '製作日：2, 5',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 57,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '起司紅豆',
 		ename: 'Red Bean-Filled Cheese Mantou',
@@ -550,7 +649,7 @@ const inventory = [
 		do: '須預訂',
 	},
 	{
-		id: 50,
+		id: 58,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '可可奶酥',
 		ename: 'Creamy Milk Butter-Filled Cacao Mantou',
@@ -561,7 +660,7 @@ const inventory = [
 		do: '製作日：1, 3, 6',
 	},
 	{
-		id: 51,
+		id: 59,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '伯爵奶酥',
 		ename: 'Creamy Milk Butter-Filled Earl Mantou',
@@ -572,7 +671,7 @@ const inventory = [
 		do: '製作日：2, 6',
 	},
 	{
-		id: 52,
+		id: 60,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '莓果奶酪鳳梨',
 		ename: 'Cranberry & Pineapple-Filled Cream Cheese Mantou',
@@ -583,7 +682,19 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 53,
+		id: 61,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '莓果奶酪雙果',
+		ename: 'Passion fruit & Cranberry-Filled Cream Cheese Mantou',
+		description: '百香果+蔓越莓',
+		price: 38,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './passionfruitCranberry-FilledCreamCheese.webp',
+		do: '天天有',
+		addedDate: '2025-12-25',
+	},
+	{
+		id: 62,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '起司捲',
 		ename: 'Cheese-Filled Mantou Roll',
@@ -594,7 +705,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 54,
+		id: 63,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '起司芋絲捲',
 		ename: 'Taro-Shreds & Cheese-Filled Mantou Roll',
@@ -605,7 +716,7 @@ const inventory = [
 		do: '須預訂',
 	},
 	{
-		id: 55,
+		id: 64,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '黃金起司芋絲捲',
 		ename: 'Golden Taro-Shreds & Cheese-Filled Mantou Roll',
@@ -616,7 +727,7 @@ const inventory = [
 		do: '須預訂：2, 5',
 	},
 	{
-		id: 56,
+		id: 65,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '黑糖鹹蛋奶酥',
 		ename: 'Salted Egg & Creamy Milk Butter Brown Suger Mantou',
@@ -627,7 +738,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 57,
+		id: 66,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '杏鮑菇起司',
 		ename: 'King Oyster Mushroom-Filled Cheese Mantou',
@@ -638,7 +749,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 58,
+		id: 67,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '藜麥杏鮑菇起司',
 		ename: 'King Oyster Mushroom-Filled Quinoa Cheese Mantou',
@@ -649,7 +760,7 @@ const inventory = [
 		do: '須預訂：2, 5',
 	},
 	{
-		id: 59,
+		id: 68,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '獅子頭',
 		ename: 'Braised Meatball-Filled Mantou',
@@ -660,7 +771,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 60,
+		id: 69,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '梅干扣肉',
 		ename: 'Pork with Salted Vegetables-Filled Mantou',
@@ -671,7 +782,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 61,
+		id: 70,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燻雞起司',
 		ename: 'Smoked Cheese Chicken-Filled Mantou',
@@ -682,7 +793,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 62,
+		id: 71,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '德式純肉香腸',
 		ename: 'German Sausage Mantou',
@@ -693,7 +804,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 63,
+		id: 72,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '辣子雞丁',
 		ename: 'Chili Popcorn Chicken Mantou',
@@ -704,7 +815,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 64,
+		id: 73,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '肉鬆核桃',
 		ename: 'Meat Floss & Walnut-Filled Mantou',
@@ -715,7 +826,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 65,
+		id: 74,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '肉鬆起司',
 		ename: 'Meat Floss-Filled Cheese Mantou',
@@ -726,7 +837,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 66,
+		id: 75,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '肉鬆起司',
 		ename: 'Meat Floss-Filled Cheese Mantou',
@@ -737,7 +848,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 67,
+		id: 76,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燕麥南瓜鹹蛋',
 		ename: 'Oatmeal & Salted Egg Pumpkin-Filled Mantou',
@@ -748,7 +859,7 @@ const inventory = [
 		do: '製作日：1, 6',
 	},
 	{
-		id: 68,
+		id: 77,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燕麥堅果起司',
 		ename: 'Oatmeal & Nuts-Filled Cheese Mantou',
@@ -759,7 +870,7 @@ const inventory = [
 		do: '製作日：1, 6',
 	},
 	{
-		id: 69,
+		id: 78,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '燕麥核桃素鬆',
 		ename: 'Oatmeal & Vegetarian Floss-Filled Mantou',
@@ -770,7 +881,7 @@ const inventory = [
 		do: '製作日：1, 6',
 	},
 	{
-		id: 70,
+		id: 79,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
 		name: '燕麥南瓜起司',
 		ename: 'Oatmeal & Pumpkin-Filled Cheese Mantou',
@@ -781,7 +892,7 @@ const inventory = [
 		do: '製作日：1, 6',
 	},
 	{
-		id: 71,
+		id: 80,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
 		name: '燕麥南瓜多多',
 		ename: 'Oatmeal & Pumpkin-Filled Mantou',
@@ -792,7 +903,7 @@ const inventory = [
 		do: '製作日：1, 6',
 	},
 	{
-		id: 72,
+		id: 81,
 		category: '(無糖)有內餡 No Sugar Added Fillings',
 		name: '乳酪南瓜',
 		ename: 'Cheese & Pumpkin-Filled Milk Mantou',
@@ -803,7 +914,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 73,
+		id: 82,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋頭紅豆',
 		ename: 'Taro & Red Bean-Filled Mantou',
@@ -814,7 +925,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 74,
+		id: 83,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋泥鳳梨',
 		ename: 'Mashed Taro & Pineapple-Filled Mantou',
@@ -825,7 +936,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 75,
+		id: 84,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '芋泥鳳梨',
 		ename: 'Mashed Taro & Pineapple-Filled Mantou',
@@ -836,7 +947,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 76,
+		id: 85,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '抹茶蔓越莓奶酥',
 		ename: 'Cranberry & Creamy Milk Butter-Filled Matcha Mantou',
@@ -847,7 +958,7 @@ const inventory = [
 		do: '天天有',
 	},
 	{
-		id: 77,
+		id: 86,
 		category: '(鹹)有內餡 Mantou with Savory Fillings',
 		name: '玉米乳酪',
 		ename: 'Corn & Cheese-Filled Mantou',

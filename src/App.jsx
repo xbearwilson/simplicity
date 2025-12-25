@@ -121,6 +121,17 @@ export default function Simplicity() {
 		</option>
 	);
 
+	// 判斷是否為新商品（根據 addedDate）
+	const isNewProduct = (addedDate, monthsToShow = 2) => {
+		if (!addedDate) return false;
+
+		const added = new Date(addedDate);
+		const now = new Date();
+		const monthsDiff = (now.getFullYear() - added.getFullYear()) * 12 + (now.getMonth() - added.getMonth());
+
+		return monthsDiff < monthsToShow;
+	};
+
 	// select 1: category, select 2: makeDay
 	const handleSelectChange = (key, value) => {
 		if (key === 'category') {
@@ -154,7 +165,10 @@ export default function Simplicity() {
 	// 商品顯示邏輯
 	let itemsToShow = data;
 	if (!showAll) {
-		if (filterState.category !== '品項分類') {
+		if (filterState.category === '新品項 New') {
+			// 顯示所有有 addedDate 且在 2 個月內的新商品
+			itemsToShow = data.filter((item) => isNewProduct(item.addedDate, 2));
+		} else if (filterState.category !== '品項分類') {
 			// 只依 category 過濾
 			itemsToShow = data.filter((item) => item.category === filterState.category || item.type === filterState.category);
 		} else if (makeDay !== '天天有 Every day' && makeDay !== '製作日分類') {
@@ -188,7 +202,9 @@ export default function Simplicity() {
 		);
 	};
 
-	const Item = ({ name, ename, price, desc, does, type, pic }) => {
+	const Item = ({ name, ename, price, desc, does, type, pic, addedDate }) => {
+		const showNew = isNewProduct(addedDate, 2); // 2 個月內顯示 NEW
+
 		return (
 			<div className='item'>
 				<LazyLoadImage
@@ -198,6 +214,9 @@ export default function Simplicity() {
 					alt={name}
 					loading='lazy'
 				/>
+				{/* NEW 標籤 */}
+				{showNew && <div className='new-badge'>新 NEW</div>}
+
 				{type.length > 0 && <p className='type'>{type}</p>}
 				<h3>
 					{name}
@@ -299,6 +318,7 @@ export default function Simplicity() {
 							onChange={(e) => handleSelectChange('category', e.target.value)}
 						>
 							<option value='品項分類'>===== 品項分類 =====</option>
+							<option value='新品項 New'>🌟 新品項 New</option>
 							{list.map(MakeSelect)}
 						</select>
 
@@ -326,6 +346,7 @@ export default function Simplicity() {
 									type={t.type}
 									pic={t.pic}
 									does={t.do}
+									addedDate={t.addedDate}
 								/>
 							))
 						) : (
