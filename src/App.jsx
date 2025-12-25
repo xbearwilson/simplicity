@@ -20,8 +20,6 @@ export default function Simplicity() {
 		do: '',
 	});
 
-	// 初始狀態下顯示全部商品
-	const isInitial = showAll;
 	const [data] = useState(inventory);
 	// 取得所有 do 選項（去重、排序，空字串顯示「天天有 Every day」）
 	const allDoOptions = Array.from(new Set(data.map((item) => item.do)));
@@ -43,6 +41,7 @@ export default function Simplicity() {
 	const AppRef = useRef();
 	const topRef = useRef();
 	const scrollBtnRef = useRef();
+	const lenisRef = useRef();
 	const [loading, setLoading] = useState(0);
 
 	const updateTopHeight = () => {
@@ -111,7 +110,7 @@ export default function Simplicity() {
 		};
 	}, []);
 
-	const scrollToTop = () => window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+	const scrollToTop = () => lenisRef.current?.scrollTo(0);
 	const MakeSelect = (X) => (
 		<option
 			key={X}
@@ -238,12 +237,16 @@ export default function Simplicity() {
 			setTimeout(() => updateTopHeight(), 300);
 
 			const lenis = new Lenis();
+			lenisRef.current = lenis;
 			function raf(time) {
 				lenis.raf(time);
 				requestAnimationFrame(raf);
 			}
 			requestAnimationFrame(raf);
-			return () => lenis.destroy();
+			return () => {
+				lenis.destroy();
+				lenisRef.current = null;
+			};
 		}, []);
 
 		// 修正：在 Main 內部取得 holidayInfo

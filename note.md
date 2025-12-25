@@ -30,3 +30,8 @@ gacm '[20251205]Preloader 改為實際圖片載入進度偵測, 所有 webp 優�
 
 src/App.jsx 中的 品項分類 下拉選單，請新增 "新品項 New" 並置於最上端，顯示邏輯是 src/inventory.js 中的 addedDate
 品項分類 下拉選單，已新增 "新品項 New"，但是點選後是空白，無顯示符合條件商品，請立刻修改
+
+## 20251226
+
+src/App.jsx:115 為何 scrollToTop 使用 src/App.jsx:1 Lenis 無效，請立刻修改
+src/App.jsx:24 IDE 回報未使用，能移除嗎?
