@@ -328,7 +328,7 @@ export default function Simplicity() {
 						</select>
 
 						{/* 若分類不是全部但無 do 選項，顯示提示 */}
-						{filterState.category !== '品項分類' && doOptions.length === 0 && (
+						{filterState.category !== '品項分類' && filterState.category !== '新品項 New' && doOptions.length === 0 && (
 							<span style={{ color: '#888', marginLeft: '1rem' }}>目前暫無品項</span>
 						)}
 					</div>
