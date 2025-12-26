@@ -35,3 +35,43 @@ src/App.jsx 中的 品項分類 下拉選單，請新增 "新品項 New" 並置�
 
 src/App.jsx:115 為何 scrollToTop 使用 src/App.jsx:1 Lenis 無效，請立刻修改
 src/App.jsx:24 IDE 回報未使用，能移除嗎?
+
+1.希望網站的所有圖片能被 Google 搜尋引擎索引和顯示，並且每個商品的圖片都能被索引和顯示，滑鼠移動在圖片上時，能夠顯示圖片的 alt 屬性"商品名稱 中英文"，請立刻修改 2.希望滑鼠移動在 scrollToTop 按鈕時，能夠顯示 "回上方 TOP"。
+
+1.檢視 public/robots.txt，讓內容符合 Google 搜尋引擎索引和顯示的設定 2.補充其它增強 SEO 的設定，這個開發環境是上傳 github + vercel 部屬 3.加強 AI 搜尋引擎索引和顯示的設定
+
+1.在 .agent/workflows 建立指令，例如: /seo 指令，在我和你對話視窗輸入此指令，讓此開發環境自動執行全站 SEO & AI 搜尋引擎檢查並優化，全站圖片 alt & title 屬性 SEO 優化，並檢查補充 SEO & AI 搜尋引擎 缺少的部分。 2.目標為網站建立具備現代化、AI 友善的 SEO 完整全套基礎架構。
+
+工作流程指令有包含自動檢查並建立嗎?
+Vercel 伺服器優化?
+Github 伺服器優化?
+SEO & AI 搜尋引擎友善優化?
+public/robots.txt?
+：
+✅ 明確允許 Googlebot 和 Googlebot-Image 爬取，確保圖片能被索引。
+✅ 特別允許 GPTBot 和 ChatGPT-User，這對 AI 搜尋引擎非常重要。
+✅ 指定了 Sitemap 的正確位置。
+public/sitemap.xml?
+：
+✅ 更新了 lastmod 日期，通知搜尋引擎網站已有更新。
+✅ 加入了 changefreq 和 priority 屬性，建議爬蟲每週來訪。
+index.html?
+：
+✅ 移除 noimageindex：這是關鍵，之前這個設定阻止了 Google 索引您的圖片。現在圖片可以被正常搜尋到了。
+✅ 修正 OG Image：將原本指向不存在的 .png 修正為正確的
+.webp
+，確保在社群分享時能顯示預覽圖。
+✅ 加入 Schema.org 結構化資料：這是一段 JSON-LD 程式碼，直接告訴搜尋引擎這是一間「麵包店 (Bakery)」，並提供了地址、電話、營業時間等詳細資訊。這對 AI 搜尋引擎理解您的業務至關重要?
+✅ 加入 Canonical Link：防止網址參數造成的重複內容問題?
+工作流程指令內容希望是全面的完整地 SEO & AI 搜尋引擎友善優化。
+
+目前的環境是否已符合工作流程指令內容?
+
+並且在 /seo 工作流程指令內容也要加入你做過的這些檢查內容，確保只要執行 /seo 就能建立具備現代化、AI 友善的 SEO、Vercel 伺服器優化、
+Github 伺服器優化、
+SEO & AI 搜尋引擎友善優化的完整全套基礎架構
+
+/seo 工作流程 是否包含 檢查頁面 SEO (index.html)並自動優化?
+/seo 工作流程 是否已符合現代化、AI 友善的 SEO、Vercel 伺服器優化、
+Github 伺服器優化、
+SEO & AI 搜尋引擎友善優化的完整全套基礎架構?

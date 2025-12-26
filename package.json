@@ -1,5 +1,17 @@
 {
 	"name": "simplicity",
+	"description": "簡實新村 (Simplicity & Honesty) - 新店村老麵饅頭官方網站。提供道地老麵饅頭，堅持天然食材，無添加人工香料。",
+	"keywords": [
+		"簡實新村",
+		"老麵饅頭",
+		"新店美食",
+		"手工饅頭",
+		"Simplicity & Honesty",
+		"Mantou",
+		"Taiwanese Food"
+	],
+	"author": "簡實新村 Simplicity & Honesty",
+	"homepage": "https://simplicity-coral.vercel.app/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",

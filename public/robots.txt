@@ -1,5 +1,16 @@
-# Allow crawling of all content
 User-agent: *
-Disallow:
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
 
 Sitemap: https://simplicity-coral.vercel.app/sitemap.xml

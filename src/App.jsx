@@ -210,7 +210,8 @@ export default function Simplicity() {
 					placeholderSrc={PlaceholderImage}
 					className='img'
 					src={pic}
-					alt={name}
+					alt={`簡實新村|新店村::${name} ${ename}`}
+					title={`簡實新村|新店村::${name} ${ename}`}
 					loading='lazy'
 				/>
 				{/* NEW 標籤 */}
@@ -268,6 +269,7 @@ export default function Simplicity() {
 							className='logo'
 							src='/logo.svg'
 							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
+							title='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 						/>
 					</a>
 					<div className='topSelect'>
@@ -439,6 +441,7 @@ export default function Simplicity() {
 					type='button'
 					onClick={scrollToTop}
 					className='scroll-top'
+					title='回上方 TOP'
 				>
 					<span
 						role='img'
