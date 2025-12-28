@@ -74,7 +74,7 @@ const generateWebp = () => {
 						try {
 							const metadata = await pipeline.metadata();
 							if (metadata.width) {
-								const watermarkWidth = Math.round(metadata.width * 0.35); // 35% of image width
+								const watermarkWidth = Math.round(metadata.width * 0.1); // 35% of image width
 								const padding = Math.round(metadata.width * 0.03); // 3% padding
 
 								if (watermarkWidth > 20) {
@@ -140,25 +140,42 @@ const generateWebp = () => {
 					// Convert and optimize with better quality settings
 					const isAlreadyWebp = imgPath === webpPath;
 
-					if (isAlreadyWebp) {
-						// For WebP files, use buffer to avoid file locking
-						const buffer = await pipeline.webp({ quality: 85, effort: 6, smartSubsample: true }).toBuffer();
-						await fs.promises.writeFile(webpPath, buffer);
-						console.log(`✓ 已更新: ${fileName} (浮水印已加入)`);
-					} else {
-						// For other formats, convert to WebP
-						await pipeline.webp({ quality: 85, effort: 6, smartSubsample: true }).toFile(webpPath);
-						console.log(`✓ 已轉換: ${fileName} -> ${webpFileName}`);
-						// Delete original non-WebP file
-						await new Promise((resolve) => setTimeout(resolve, 100));
+					// Retry logic for Windows file locking issues
+					let retries = 3;
+					let success = false;
+
+					while (retries > 0 && !success) {
 						try {
-							await fs.promises.unlink(imgPath);
-						} catch (e) {
-							console.warn(`⚠ 無法刪除原檔: ${fileName}`);
+							if (isAlreadyWebp) {
+								// For WebP files, use buffer to avoid file locking
+								const buffer = await pipeline.webp({ quality: 85, effort: 6, smartSubsample: true }).toBuffer();
+								await new Promise((resolve) => setTimeout(resolve, 50 * (4 - retries))); // Progressive delay
+								await fs.promises.writeFile(webpPath, buffer);
+								console.log(`✓ 已更新: ${fileName} (浮水印已加入)`);
+							} else {
+								// For other formats, convert to WebP
+								await pipeline.webp({ quality: 85, effort: 6, smartSubsample: true }).toFile(webpPath);
+								console.log(`✓ 已轉換: ${fileName} -> ${webpFileName}`);
+								// Delete original non-WebP file
+								await new Promise((resolve) => setTimeout(resolve, 100));
+								try {
+									await fs.promises.unlink(imgPath);
+								} catch (e) {
+									console.warn(`⚠ 無法刪除原檔: ${fileName}`);
+								}
+							}
+
+							replacements.push({ from: fileName, to: webpFileName });
+							success = true;
+						} catch (convErr) {
+							retries--;
+							if (retries > 0) {
+								await new Promise((resolve) => setTimeout(resolve, 200));
+							} else {
+								console.error(`✗ 處理失敗 ${fileName}:`, convErr.message);
+							}
 						}
 					}
-
-					replacements.push({ from: fileName, to: webpFileName });
 				} catch (err) {
 					console.error(`Error converting ${fileName}:`, err);
 				}
