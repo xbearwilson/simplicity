@@ -21,6 +21,15 @@ const generateWebp = () => {
 			const imagesToProcess = [];
 			const filesToUpdate = [];
 
+			// Watermark setup
+			const watermarkPath = path.resolve('public/watermark.webp');
+			const hasWatermark = fs.existsSync(watermarkPath);
+			if (hasWatermark) {
+				console.log(`Watermark found at: ${watermarkPath}`);
+			} else {
+				console.warn(`Watermark NOT found at: ${watermarkPath}`);
+			}
+
 			const processDirectory = (dir) => {
 				const entries = fs.readdirSync(dir, { withFileTypes: true });
 				for (const entry of entries) {
@@ -29,8 +38,14 @@ const generateWebp = () => {
 						processDirectory(fullPath);
 					} else {
 						// Include GIF and existing WebP files in the conversion process
+						// BUT exclude watermark.webp and logo files from being processed
 						if (/\.(png|jpe?g|gif|webp)$/i.test(entry.name)) {
-							imagesToProcess.push(fullPath);
+							// Skip watermark and logo files
+							if (!/^(watermark|logo)/i.test(entry.name)) {
+								imagesToProcess.push(fullPath);
+							} else {
+								console.log(`Skipping watermark/logo file: ${entry.name}`);
+							}
 						} else if (/\.(html|css|js|json)$/i.test(entry.name)) {
 							filesToUpdate.push(fullPath);
 						}
@@ -52,15 +67,98 @@ const generateWebp = () => {
 				const webpFileName = path.basename(webpPath);
 
 				try {
-					// Convert and optimize with better quality settings
-					await sharp(imgPath).webp({ quality: 85, effort: 6, smartSubsample: true }).toFile(webpPath);
+					// Watermark logic
+					let pipeline = sharp(imgPath);
 
-					console.log(`Converted: ${fileName} -> ${webpFileName}`);
+					if (hasWatermark) {
+						try {
+							const metadata = await pipeline.metadata();
+							if (metadata.width) {
+								const watermarkWidth = Math.round(metadata.width * 0.35); // 35% of image width
+								const padding = Math.round(metadata.width * 0.03); // 3% padding
+
+								if (watermarkWidth > 20) {
+									const watermarkBuffer = await sharp(watermarkPath).resize({ width: watermarkWidth }).toBuffer();
+
+									const wmInfo = await sharp(watermarkBuffer).metadata();
+
+									// Random Position Logic
+									const positions = ['nw', 'ne', 'sw', 'se'];
+									const pos = positions[Math.floor(Math.random() * positions.length)];
+									let top, left;
+									const paddingVal = padding;
+
+									switch (pos) {
+										case 'nw': // Top-Left
+											top = paddingVal;
+											left = paddingVal;
+											break;
+										case 'ne': // Top-Right
+											top = paddingVal;
+											left = metadata.width - wmInfo.width - paddingVal;
+											break;
+										case 'sw': // Bottom-Left
+											top = metadata.height - wmInfo.height - paddingVal;
+											left = paddingVal;
+											break;
+										case 'se': // Bottom-Right
+										default:
+											top = metadata.height - wmInfo.height - paddingVal;
+											left = metadata.width - wmInfo.width - paddingVal;
+											break;
+									}
+
+									// Ensure coordinates are non-negative
+									top = Math.max(0, Math.round(top));
+									left = Math.max(0, Math.round(left));
+
+									const positionNames = {
+										nw: '左上角 Top-Left',
+										ne: '右上角 Top-Right',
+										sw: '左下角 Bottom-Left',
+										se: '右下角 Bottom-Right',
+									};
+
+									console.log(`✓ 浮水印已加入: ${fileName} | 位置: ${positionNames[pos]} (top:${top}, left:${left})`);
+
+									pipeline = pipeline.composite([
+										{
+											input: watermarkBuffer,
+											top: top,
+											left: left,
+										},
+									]);
+								} else {
+									console.log(`⊗ 圖片太小，跳過浮水印: ${fileName}`);
+								}
+							}
+						} catch (wmErr) {
+							console.warn(`✗ 浮水印加入失敗 ${fileName}:`, wmErr.message);
+						}
+					}
+
+					// Convert and optimize with better quality settings
+					const isAlreadyWebp = imgPath === webpPath;
+
+					if (isAlreadyWebp) {
+						// For WebP files, use buffer to avoid file locking
+						const buffer = await pipeline.webp({ quality: 85, effort: 6, smartSubsample: true }).toBuffer();
+						await fs.promises.writeFile(webpPath, buffer);
+						console.log(`✓ 已更新: ${fileName} (浮水印已加入)`);
+					} else {
+						// For other formats, convert to WebP
+						await pipeline.webp({ quality: 85, effort: 6, smartSubsample: true }).toFile(webpPath);
+						console.log(`✓ 已轉換: ${fileName} -> ${webpFileName}`);
+						// Delete original non-WebP file
+						await new Promise((resolve) => setTimeout(resolve, 100));
+						try {
+							await fs.promises.unlink(imgPath);
+						} catch (e) {
+							console.warn(`⚠ 無法刪除原檔: ${fileName}`);
+						}
+					}
 
 					replacements.push({ from: fileName, to: webpFileName });
-
-					// Delete original to enforce WebP usage
-					fs.unlinkSync(imgPath);
 				} catch (err) {
 					console.error(`Error converting ${fileName}:`, err);
 				}

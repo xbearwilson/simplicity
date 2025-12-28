@@ -81,3 +81,12 @@ src/App.jsx 中的 品項分類 下拉選單，已新增 "新品項 New"，且�
 其他選項正常
 
 gacm '[20251226]update info 藜麥,超麥'
+
+## 20251228
+
+需求：public/ webp 圖片 上傳部署時自動加入 watermark.webp 浮水印
+原因：因為之前有請你處理過圖片 SEO 優化，所以希望在部署時自動加入 watermark.webp 浮水印，提高圖片辨識度
+你已修改 vite.config.js 1.自動定位 很好，能更改為隨機"左上角"、"右上角"、"左下角"、"右下角" 2.我執行 pnpm p 發佈預覽，沒還是有看見圖片加上浮水印效果，我已修改 vite.config.js:25 將原 public/logo.svg 改為 public/watermark.webp
+
+請以最小&最基本 token 額度 執行，不要一直失敗，浪費我的 token 額度 1.我執行 pnpm p 發佈預覽，還是沒有看見圖片加上浮水印效果
+2.DEV 模式不需要圖片加上浮水印效果，圖片加上浮水印效果僅在 PUBLICATION 模式下生效 3.你的測試應該是 PUBLICATION 模式下，pnpm b or pnpm p 4.你既然回答我完成，我執行 pnpm p 發佈預覽為何會有錯誤產生?
