@@ -609,12 +609,16 @@ html {
 	}
 
 	.point {
-		cursor: pointer;
+		cursor: default;
 		font-weight: bolder;
 		color: var(--first-color);
-		text-decoration: underline;
+		text-decoration: none;
 		&:hover {
 			text-decoration: none;
+		}
+		&:not(.m) {
+			cursor: pointer;
+			text-decoration: underline;
 		}
 	}
 }

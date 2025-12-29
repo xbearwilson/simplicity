@@ -92,3 +92,7 @@ gacm '[20251226]update info 藜麥,超麥'
 2.DEV 模式不需要圖片加上浮水印效果，圖片加上浮水印效果僅在 PUBLICATION 模式下生效 3.你的測試應該是 PUBLICATION 模式下，pnpm b or pnpm p 4.你既然回答我完成，我執行 pnpm p 發佈預覽為何會有錯誤產生?
 
 1.浮水印已更新為 35% 大小，vite.config.js 在哪一行設定? 太大了，我需要手動調整 2.大部分圖片確實有加上浮水印效果，還是有少數圖片沒有加上浮水印效果，請立刻修改
+
+## 20251229
+
+gacm '[20251229]Remove logo.svga a# tag & add alt & title'

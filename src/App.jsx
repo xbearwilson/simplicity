@@ -263,15 +263,13 @@ export default function Simplicity() {
 					ref={topRef}
 					className='top'
 				>
-					<a href='#'>
-						<img
-							onClick={scrollToTop}
-							className='logo'
-							src='/logo.svg'
-							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
-							title='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
-						/>
-					</a>
+					<img
+						onClick={scrollToTop}
+						className='logo'
+						src='/logo.svg'
+						alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
+						title='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
+					/>
 					<div className='topSelect'>
 						{/* 特別店休日區塊 */}
 						{holidayInfos &&
@@ -365,12 +363,11 @@ export default function Simplicity() {
 						className='foot_logo'
 						onClick={scrollToTop}
 					>
-						{/* <a href='#'> */}
 						<img
 							src='/logo.svg'
 							alt='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
+							title='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 						/>
-						{/* </a> */}
 					</div>
 					<div>
 						<div>簡實新村|新店村|Simplicity & Honesty Xindian Village</div>
@@ -379,12 +376,14 @@ export default function Simplicity() {
 						<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
 						<div>假日：11:30am-18pm</div>
 						<div>Holiday: 11:30am-18pm</div>
-						<div>預約請於下午來電 (須提前 2 ~ 3 日)</div>
-						<div>固定店休日：每週 四、日 (如遇特別店休日將提前公告之)</div>
+						<div className='m point'>預約請於下午來電 (須提前 2 ~ 3 日)</div>
+						<div className='m point'>固定店休日：每週 四、日 (如遇特別店休日將提前公告之)</div>
 					</div>
 					<div>
 						<div>地址：Address:</div>
 						<div
+							alt='簡實新村|新店村|地址'
+							title='簡實新村|新店村|地址'
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
@@ -395,6 +394,8 @@ export default function Simplicity() {
 							23142 新北市新店區大豐路61號
 						</div>
 						<div
+							alt='Simplicity & Honesty Xindian Village Address'
+							title='Simplicity & Honesty Xindian Village Address'
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
@@ -408,6 +409,8 @@ export default function Simplicity() {
 					<div>
 						<div>訂購專線：TEL:</div>
 						<div
+							alt='簡實新村|新店村|訂購專線|TEL'
+							title='簡實新村|新店村|訂購專線|TEL'
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
@@ -417,6 +420,8 @@ export default function Simplicity() {
 							0963-593-096
 						</div>
 						<div
+							alt='簡實新村|新店村|訂購專線|TEL'
+							title='簡實新村|新店村|訂購專線|TEL'
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
@@ -426,6 +431,8 @@ export default function Simplicity() {
 							(02) 2918-9345
 						</div>
 						<div
+							alt='簡實新村|新店村|訂購專線|TEL'
+							title='簡實新村|新店村|訂購專線|TEL'
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
