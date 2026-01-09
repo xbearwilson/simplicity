@@ -2,7 +2,7 @@ import Lenis from 'lenis';
 import { useEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './App.scss';
-import inventory, { categories } from './inventory.js';
+import inventory, { categories, NEW_DISPLAY_MONTHS } from './inventory.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
 // PlaceholderImage 改用 public/logo.svg
 const PlaceholderImage = '/logo.svg';
@@ -121,7 +121,7 @@ export default function Simplicity() {
 	);
 
 	// 判斷是否為新商品（根據 addedDate）
-	const isNewProduct = (addedDate, monthsToShow = 2) => {
+	const isNewProduct = (addedDate, monthsToShow = NEW_DISPLAY_MONTHS) => {
 		if (!addedDate) return false;
 
 		const added = new Date(addedDate);
@@ -165,8 +165,8 @@ export default function Simplicity() {
 	let itemsToShow = data;
 	if (!showAll) {
 		if (filterState.category === '新品項 New') {
-			// 顯示所有有 addedDate 且在 2 個月內的新商品
-			itemsToShow = data.filter((item) => isNewProduct(item.addedDate, 2));
+			// 顯示所有有 addedDate 且在指定月份內的新商品
+			itemsToShow = data.filter((item) => isNewProduct(item.addedDate, NEW_DISPLAY_MONTHS));
 		} else if (filterState.category !== '品項分類') {
 			// 只依 category 過濾
 			itemsToShow = data.filter((item) => item.category === filterState.category || item.type === filterState.category);
@@ -202,7 +202,7 @@ export default function Simplicity() {
 	};
 
 	const Item = ({ name, ename, price, desc, does, type, pic, addedDate }) => {
-		const showNew = isNewProduct(addedDate, 2); // 2 個月內顯示 NEW
+		const showNew = isNewProduct(addedDate, NEW_DISPLAY_MONTHS); // 根據設定月份顯示 NEW
 
 		return (
 			<div className='item'>
@@ -387,7 +387,7 @@ export default function Simplicity() {
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
-								window.location.href = 'https://tinyurl.com/22ap3wxv';
+								window.location.href = 'https://srt.tw/GkXnzU';
 								// window.open('https://tinyurl.com/22ap3wxv', '_blank');
 							}}
 						>
@@ -399,7 +399,7 @@ export default function Simplicity() {
 							className='point'
 							onClick={(e) => {
 								e.preventDefault();
-								window.location.href = 'https://tinyurl.com/22ap3wxv';
+								window.location.href = 'https://srt.tw/GkXnzU';
 								// window.open('https://tinyurl.com/22ap3wxv', '_blank');
 							}}
 						>
