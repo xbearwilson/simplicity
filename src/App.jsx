@@ -334,7 +334,7 @@ export default function Simplicity() {
 
 				<div
 					className='main'
-					style={{ marginTop: topHeight > 0 ? `${topHeight}px` : undefined }}
+					style={{ marginTop: topHeight > 0 ? `${topHeight + 2}px` : undefined }}
 				>
 					{/* 首頁預設顯示所有商品 */}
 					<div className='flex'>

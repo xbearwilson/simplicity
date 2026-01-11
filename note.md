@@ -104,3 +104,5 @@ gacm '[20251229]Remove logo.svga a# tag & add alt & title'
 1.所以我覺得奇怪，雖然 src/inventory.js 第 11 行定義了 NEW_DISPLAY_MONTHS = 6，但目前 src/App.jsx 內部的邏輯，並沒有引入 src/inventory.js 中的 NEW_DISPLAY_MONTHS 變數，而是硬編碼 (Hardcoded) 為 2 個月。 2.我希望日後由 src/inventory.js 第 11 行定義了 NEW_DISPLAY_MONTHS = 6 統一修改，將 App.jsx 中的 2 改為引用該變數。
 
 gacm '[20260109]1.改縮網址：srt.tw 2.同步新品項顯示期限邏輯，改由 inventory.js 統一控制'
+
+gacm '[20260111]1.src/App.jsx:337 +2px 2.mxw(xs) .top, .logo, .view-all'

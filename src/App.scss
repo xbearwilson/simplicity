@@ -149,6 +149,9 @@ html {
 	@include mxw(sm) {
 		padding: 0 1rem 1rem 1rem;
 	}
+	@include mxw(xs) {
+		padding: 0.5rem;
+	}
 	@include mxw(2xs) {
 		padding-top: unset;
 		padding-bottom: unset;
@@ -226,6 +229,9 @@ html {
 		@include mxw(md) {
 			width: 5.5rem;
 		}
+		@include mxw(xs) {
+			margin-bottom: 0.6rem;
+		}
 		@include mxw(2xs) {
 			top: 0.4rem;
 			width: 3.5rem;
@@ -284,17 +290,18 @@ html {
 	.view-all {
 		position: relative;
 		outline: none;
-		background: #fff;
-		border: 1px solid var(--thi-color);
+		background: var(--first-color);
+		border: 1px solid var(--first-color);
+		color: #fff;
 		cursor: pointer;
 		padding: 0.5rem 1rem;
 		border-radius: 4px;
 		font-size: var(--normal-font-size);
 		transition: all 0.3s;
 		&:hover,
-		&:active {
-			background: var(--first-color);
-			color: #fff;
+		&:focus-within &:focus-visible {
+			background: #fff;
+			color: var(--first-color);
 			border: 1px solid var(--first-color);
 		}
 		@include mxw(sm) {
