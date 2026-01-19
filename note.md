@@ -106,3 +106,7 @@ gacm '[20251229]Remove logo.svga a# tag & add alt & title'
 gacm '[20260109]1.改縮網址：srt.tw 2.同步新品項顯示期限邏輯，改由 inventory.js 統一控制'
 
 gacm '[20260111]1.src/App.jsx:337 +2px 2.mxw(xs) .top, .logo, .view-all'
+
+## 20260119
+
+gacm '[20260119] 建立 Senior 執行協議並更新 GSAP 2025 規範'
