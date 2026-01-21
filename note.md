@@ -110,3 +110,46 @@ gacm '[20260111]1.src/App.jsx:337 +2px 2.mxw(xs) .top, .logo, .view-all'
 ## 20260119
 
 gacm '[20260119] 建立 Senior 執行協議並更新 GSAP 2025 規範'
+
+<!--  -->
+
+## 20260121
+
+@.agent/workflows/gacm.md /gacm 指令主要是請你幫我建立我和你的階段性任務的git commit，我想加入執行步驟：1.在步驟4.時，請你另外先偵測這個開發環境下，是否已經存在遠端的git repository，如果存在遠端的git repository，請在步驟7.執行完成後，詢問我是否需要執行 y/n 步驟8."將目前已完成的 git commit push 到遠端 git repository"。2.在步驟4.時，偵測這個開發環境下，沒有已經存在遠端的git repository，請在步驟7.執行完成後，直接忽略取消 步驟8."將目前已完成的 git commit push 到遠端 git repository" (因為這個開發環境下，沒有已經存在遠端的git repository)。3.我需要給妳什麼資訊，來新增這個邏輯?
+
+但是我在 @.agent/workflows/gacm.md 沒有看見
+更新內容：
+步驟 4 (偵測環境)：新增了偵測遠端 git repository 的邏輯（透過執行 git remote）。
+步驟 8 (條件式 Push)：
+如果在步驟 4 有偵測到遠端倉庫，在完成 commit 後會詢問您是否執行 push。
+如果沒有偵測到遠端倉庫，則會自動忽略並取消此步驟。
+
+了解，因為在 @.agent/workflows/gacm.md 沒有看見這些邏輯或git指令，所以才會詢問你
+你確定新增了這個遠端git repository邏輯就好，你真棒
+
+所以，我將 @.agent/workflows/gacm.md 複製到其他開發環境下，你也會執行「偵測遠端倉庫」的動作，並且在詢問 commit 後，是否會接著問我「是否需要 push 到遠端」?
+
+我重新開啟了IDE，還是一樣，我在和你的對話框中，輸入 / ，並沒有顯示能執行的指令集合(顯示 No results)，而且無法執行 /gacm 指令
+
+我測試了其他開發環境下，我在和你的對話框中，輸入 / ，卻能顯示能執行的指令集合，而且能呼叫執行 /gacm 指令，唯獨這個開發環境下，卻無法顯示能執行的指令集合，無法呼叫執行 /gacm 指令
+
+嘗試「觸發重新索引」 (最推薦)會有檔案丟失的風險嗎? 你執行後能回復正常嗎?
+你確定能100%回復正常的狀態下，你直接幫我處理
+
+@.agent/workflows 下，甚至是 @.agent 下，完全沒有使用中文命名呀
+
+你查到是.gitignore 的 .agent/問題引起，所以你取消了.gitignore 的 .agent/，但是我加入它的用意是"我不希望 .agent/ 相關指令 被上傳到遠端"，有其他方式能達成嗎?
+
+你意思是說，從現在開始 .agent/ 將只能被本地端git 追蹤加入本本控制，但是 .agent/ 將不會再被上傳到遠端嗎?
+
+@.git/info/exclude .agent 告訴我該如何直接寫入 .gitconfig，避免每個開發環境都必須手動加入 @.git/info/exclude .agent
+
+我已在 .gitignore_global 中加入 .agent，並移除了 @.git/info/exclude .agent & .gitignore .agent
+
+## 待辦事項：
+
+1.從 max width(md) 下 開始調整，max width(xs) 下 調整 .desc max-width ch，因為字多還是會被擋。
+
+2.新增過年店休日
+
+<!--  -->
