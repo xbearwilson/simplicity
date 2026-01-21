@@ -146,6 +146,8 @@ gacm '[20260119] 建立 Senior 執行協議並更新 GSAP 2025 規範'
 
 我已在 .gitignore_global 中加入 .agent，並移除了 @.git/info/exclude .agent & .gitignore .agent
 
+剛才的推送能再執行一次嗎? 因為我忘了寫入 .gitconfig[core.excludesfile] = ~/.gitignore_global，結果遠端還是出現了 .agent
+
 ## 待辦事項：
 
 1.從 max width(md) 下 開始調整，max width(xs) 下 調整 .desc max-width ch，因為字多還是會被擋。
