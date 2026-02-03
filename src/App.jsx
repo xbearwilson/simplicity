@@ -1,3 +1,11 @@
+/**
+ * @antigravity-audit
+ * [CREATED]: 2025-01-20
+ * [MODIFIED]: 2026-02-03 12:05:00
+ * [VERSION]: 1.2.0
+ * [SUMMARY]: 修正特別店休日顯示邏輯，支援自定義純文字公告渲染。
+ * [DATE]: 2026-02-03
+ */
 import Lenis from 'lenis';
 import { useEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -278,8 +286,14 @@ export default function Simplicity() {
 									className='storeHoliday'
 									key={info.monthLabel + idx}
 								>
-									<span>{info.monthLabel}</span>
-									<span>{info.holidays.join(', ')}</span>
+									{info.isCustom ? (
+										<span>{info.monthLabel}</span>
+									) : (
+										<>
+											<span>{info.monthLabel}</span>
+											<span>{info.holidays.join(', ')}</span>
+										</>
+									)}
 								</div>
 							))}
 						{!showAll && (

@@ -199,11 +199,17 @@ html {
 		@include mxw(md) {
 			font-weight: 400;
 			padding: 0.3rem 0.4rem;
+			margin-top: 0.5rem;
 			font-size: var(--smaller-font-size);
+		}
+		@include mxw(xs) {
+			transform-origin: right;
+			scale: 0.9;
+			max-width: 56ch;
 		}
 		@include mxw(2xs) {
 			text-align: center;
-			margin-top: 1rem;
+			// margin-top: 1rem;
 			font-size: 0.6rem;
 		}
 	}
@@ -535,11 +541,11 @@ html {
 				transform: scale(0.7);
 			}
 			@include mxw(xs) {
-				max-width: 22ch;
-				transform: scale(0.8);
+				max-width: 21ch;
+				transform: scale(0.7);
 			}
 			@include mxw(2xs) {
-				transform: scale(0.6) !important;
+				transform: scale(0.5) !important;
 			}
 		}
 
@@ -558,6 +564,10 @@ html {
 			}
 			@include mxw(2xl) {
 				right: 0.5rem;
+			}
+			@include mxw(xs) {
+				transform-origin: right;
+				scale: 0.85;
 			}
 
 			& span {
@@ -671,8 +681,6 @@ html {
 }
 
 @media screen and (max-width: 400px) {
-	.storeHoliday {
-	}
 	.topSelect {
 		// margin-top: unset !important;
 		// flex-direction: column;
