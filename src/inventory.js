@@ -973,7 +973,7 @@ const inventory = [
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
 		name: '鮮芒果奶酪',
 		ename: 'Mango-Filled Cream Cheese Mantou',
-		description: '夏季限定',
+		description: '[夏季限定](可可/抹茶/牛奶)',
 		price: 43,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './mangoFilledCreamCheeseMantou.webp',
