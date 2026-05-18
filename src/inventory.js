@@ -968,6 +968,18 @@ const inventory = [
 		pic: './cornCheeseFilled.webp',
 		do: '天天有',
 	},
+	{
+		id: 87,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '鮮芒果奶酪',
+		ename: 'Mango-Filled Cream Cheese Mantou',
+		description: '夏季限定',
+		price: 45,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './mangoFilledCreamCheeseMantou.webp',
+		do: '天天有',
+		addedDate: '2026-05-18',
+	}
 ];
 
 // inventory = _.uniqBy(inventory, 'name')

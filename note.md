@@ -195,3 +195,31 @@ gacm '[20260423] 新增5/2 店休日期'
 
 ## 2026-05-14
 gacm '[20260514] 新增 7行銷圖片web化-3'
+	*[特色簡介]*
+	https://simplicity-coral.vercel.app/post.webp
+	*[新品項]*
+	https://simplicity-coral.vercel.app/newItem.webp
+	*[簡實新村|新店村]*
+	https://simplicity-coral.vercel.app
+	*[加熱方式]*
+	https://simplicity-coral.vercel.app/hot.webp
+	*[菜單]*
+	https://simplicity-coral.vercel.app/A3_1.webp
+	https://simplicity-coral.vercel.app/A3_2.webp
+	https://simplicity-coral.vercel.app/A3_3.webp
+	https://simplicity-coral.vercel.app/A3_4.webp
+
+## 2026-05-18
+gacm '[20260518] 新增 芒果 id: 87 夏季限定'
+	{
+		id: 87,
+		category: '(甜)有內餡 Mantou with Sweet Fillings',
+		name: '鮮芒果奶酪',
+		ename: 'Mango-Filled Cream Cheese Mantou',
+		description: '夏季限定',
+		price: 45,
+		type: '奶素 Lacto-Vegetarian',
+		pic: './mangoFilledCreamCheeseMantou.webp',
+		do: '天天有',
+		addedDate: '2026-05-18',
+	}
