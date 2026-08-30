@@ -17,8 +17,10 @@
 	"type": "module",
 	"scripts": {
 		"d": "vite --host --open",
-		"b": "rm -rf dist && vite build",
-		"p": "rm -rf dist && vite build && vite preview --open"
+		"build": "node scripts/clean-dist.mjs && vite build && node scripts/generate-static.mjs",
+		"b": "pnpm run build",
+		"v": "node scripts/verify-static.mjs",
+		"p": "pnpm run build && vite preview --open"
 	},
 	"dependencies": {
 		"lenis": "^1.3.8",
@@ -55,6 +57,9 @@
 	},
 	"engines": {
 		"node": "22.x"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": ["@parcel/watcher", "esbuild", "sharp"]
 	},
 	"eslintConfig": {
 		"extends": [

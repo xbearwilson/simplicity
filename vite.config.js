@@ -39,7 +39,7 @@ const generateWebp = () => {
 					} else {
 						// Include GIF and existing WebP files in the conversion process
 						// BUT exclude watermark.webp and logo files from being processed
-						if (/\.(png|jpe?g|gif|webp)$/i.test(entry.name)) {
+						if (/\.(png|jpe?g|gif)$/i.test(entry.name)) {
 							// Skip watermark and logo files
 							if (!/^(watermark|logo)/i.test(entry.name)) {
 								imagesToProcess.push(fullPath);

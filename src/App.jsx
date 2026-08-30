@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './App.scss';
 import inventory, { categories, NEW_DISPLAY_MONTHS } from './inventory.js';
+import { getProductPath, getPublicPrice } from './catalog.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
 // PlaceholderImage 改用 public/logo.svg
 const PlaceholderImage = '/logo.svg';
@@ -209,11 +210,11 @@ export default function Simplicity() {
 		);
 	};
 
-	const Item = ({ name, ename, price, desc, does, type, pic, addedDate }) => {
+	const Item = ({ id, slug, name, ename, price, desc, does, type, pic, addedDate }) => {
 		const showNew = isNewProduct(addedDate, NEW_DISPLAY_MONTHS); // 根據設定月份顯示 NEW
 
 		return (
-			<div className='item'>
+			<a className='item' href={getProductPath({ id, name, ename, slug })}>
 				<LazyLoadImage
 					placeholderSrc={PlaceholderImage}
 					className='img'
@@ -232,8 +233,8 @@ export default function Simplicity() {
 				</h3>
 				{desc.length > 0 && <p className='desc'>{desc}</p>}
 				{does.length > 0 && <p className='does'>{does}</p>}
-				<Price value={price + 2} />
-			</div>
+				<Price value={getPublicPrice({ price })} />
+			</a>
 		);
 	};
 
@@ -356,6 +357,8 @@ export default function Simplicity() {
 							itemsToShow.map((t) => (
 								<Item
 									key={t.id}
+									id={t.id}
+									slug={`${t.id}-${(t.ename || t.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`}
 									name={t.name}
 									ename={t.ename}
 									price={t.price}
