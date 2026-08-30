@@ -108,7 +108,7 @@ const index = await readFile(join(dist, 'index.html'), 'utf8');
 const styleMatch = index.match(/<link[^>]+href="(\/assets\/[^\"]+\.css)"/);
 const styles = styleMatch?.[1] || '';
 const staticCatalog = `<main class="static-catalog" aria-label="簡實新村商品型錄"><h1>簡實新村老麵饅頭商品型錄</h1><p>新北市新店區簡實新村官方商品資料。</p><section>${catalog.map(renderCard).join('')}</section></main>`;
-const home = index.replace('<div id="root"></div>', staticCatalog);
+const home = index.replace('<div id="root"></div>', `<div id="root">${staticCatalog}</div>`);
 await write(join(dist, 'index.html'), home);
 
 for (const item of catalog) {
