@@ -1,17 +1,17 @@
 /**
  * @antigravity-audit
  * [CREATED]: 2025-01-20
- * [MODIFIED]: 2026-02-03 12:05:00
- * [VERSION]: 1.2.0
- * [SUMMARY]: 修正特別店休日顯示邏輯，支援自定義純文字公告渲染。
- * [DATE]: 2026-02-03
+ * [MODIFIED]: 2026-09-04
+ * [VERSION]: 1.3.0
+ * [SUMMARY]: 商品卡改為非點擊展示，商品獨立頁仍由靜態機器資料層提供。
+ * [DATE]: 2026-09-04
  */
 import Lenis from 'lenis';
 import { useEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './App.scss';
 import inventory, { categories, NEW_DISPLAY_MONTHS } from './inventory.js';
-import { getProductPath, getPublicPrice } from './catalog.js';
+import { getPublicPrice } from './catalog.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
 // PlaceholderImage 改用 public/logo.svg
 const PlaceholderImage = '/logo.svg';
@@ -214,7 +214,7 @@ export default function Simplicity() {
 		const showNew = isNewProduct(addedDate, NEW_DISPLAY_MONTHS); // 根據設定月份顯示 NEW
 
 		return (
-			<a className='item' href={getProductPath({ id, name, ename, slug })}>
+			<div className='item'>
 				<LazyLoadImage
 					placeholderSrc={PlaceholderImage}
 					className='img'
@@ -234,7 +234,7 @@ export default function Simplicity() {
 				{desc.length > 0 && <p className='desc'>{desc}</p>}
 				{does.length > 0 && <p className='does'>{does}</p>}
 				<Price value={getPublicPrice({ price })} />
-			</a>
+			</div>
 		);
 	};
 

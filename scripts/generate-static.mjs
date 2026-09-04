@@ -48,7 +48,7 @@ const baseSchema = {
 };
 
 const renderCard = (item) => `<article class="catalog-item">
-<a href="${getProductPath(item)}">
+<a href="${getProductPath(item)}" aria-disabled="true" tabindex="-1" style="cursor:default;pointer-events:none">
 <img src="${esc(item.image)}" alt="${esc(item.image_alt)}" loading="lazy">
 <h2>${esc(item.name_zh)} <span>${esc(item.name_en)}</span></h2>
 <p>${esc(item.type)}</p>
