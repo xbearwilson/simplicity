@@ -58,9 +58,6 @@
 	"engines": {
 		"node": "22.x"
 	},
-	"pnpm": {
-		"onlyBuiltDependencies": ["@parcel/watcher", "esbuild", "sharp"]
-	},
 	"eslintConfig": {
 		"extends": [
 			"react-app",
