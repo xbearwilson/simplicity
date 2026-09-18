@@ -24,6 +24,7 @@
 export const storeHolidays = {
 	// '2026-08': [{ date: '2026-08-17', label: '8/17(一)' }],
 	'2026-09': [
+		{ date: '2026-09-25', label: '9/25(五) 正常營業', open: true },
 		{ date: '2026-09-26', label: '9/26(六)' },
 		{ date: '2026-09-28', label: '9/28(一)' },
 	],
@@ -75,27 +76,30 @@ export function getCurrentHolidayInfo(now = new Date()) {
 		.sort();
 
 	for (const key of allKeys) {
-		const holidays = storeHolidays[key];
-		if (!holidays || holidays.length === 0) continue;
+		const items = storeHolidays[key];
+		if (!items || items.length === 0) continue;
 
-		const holidayDates = holidays.map((h) => new Date(h.date));
+		const itemDates = items.map((h) => new Date(h.date));
 		const firstDay = new Date(key + '-01T00:00:00');
 		const showStart = new Date(firstDay);
 		showStart.setMonth(showStart.getMonth() - 1);
 		showStart.setDate(1);
 
-		const maxDate = new Date(Math.max(...holidayDates.map((d) => d.getTime())));
+		const maxDate = new Date(Math.max(...itemDates.map((d) => d.getTime())));
 		const showEnd = new Date(maxDate);
 		showEnd.setHours(23, 59, 59, 999);
 
-		const validHolidays = holidays.filter((h) => now <= new Date(h.date + 'T23:59:59'));
+		const validItems = items.filter((h) => now <= new Date(h.date + 'T23:59:59'));
+		const validHolidays = validItems.filter((h) => !h.open);
+		const validOpenNotes = validItems.filter((h) => h.open);
 
-		if (now >= showStart && now <= showEnd && validHolidays.length > 0) {
+		if (now >= showStart && now <= showEnd && validItems.length > 0) {
 			const monthLabel = key.split('-')[1].replace(/^0/, '') + '月特別店休日：';
 			results.push({
 				isCustom: false,
 				monthLabel,
 				holidays: validHolidays.map((h) => h.label),
+				openNotes: validOpenNotes.map((h) => h.label),
 			});
 		}
 	}

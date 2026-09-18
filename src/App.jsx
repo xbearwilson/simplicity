@@ -291,6 +291,9 @@ export default function Simplicity() {
 										<span>{info.monthLabel}</span>
 									) : (
 										<>
+											{info.openNotes?.length > 0 && (
+												<span className='openNote'>{info.openNotes.join(', ')} </span>
+											)}
 											<span>{info.monthLabel}</span>
 											<span>{info.holidays.join(', ')}</span>
 										</>

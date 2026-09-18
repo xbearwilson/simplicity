@@ -179,6 +179,12 @@ html {
 			margin-left: 0.5rem;
 		}
 
+		.openNote {
+			color: #ffe600;
+			font-weight: 700;
+			margin-left: 0.5rem;
+		}
+
 		&:nth-child(1) {
 			@include mxw(xs) {
 				bottom: 0rem;
