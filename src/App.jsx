@@ -282,11 +282,23 @@ export default function Simplicity() {
 					<div className='topSelect'>
 						{/* 特別店休日區塊 */}
 						{holidayInfos &&
-							holidayInfos.map((info, idx) => (
-								<div
-									className='storeHoliday'
-									key={info.monthLabel + idx}
-								>
+							holidayInfos.map((info, idx) => {
+								const holidayText = [
+									info.monthLabel,
+									...(info.openNotes ?? []),
+									...(info.holidays ?? []),
+								].join('');
+								const holidayFontSize = Math.max(
+									0.68,
+									Math.min(1, 1.08 - Math.max(0, holidayText.length - 12) * 0.008),
+								);
+
+								return (
+									<div
+										className='storeHoliday'
+										key={info.monthLabel + idx}
+										style={{ '--holiday-font-size': `${holidayFontSize}rem` }}
+									>
 									{info.isCustom ? (
 										<span>{info.monthLabel}</span>
 									) : (
@@ -298,8 +310,9 @@ export default function Simplicity() {
 											<span>{info.holidays.join(', ')}</span>
 										</>
 									)}
-								</div>
-							))}
+									</div>
+								);
+							})}
 						{!showAll && (
 							<button
 								className='view-all'

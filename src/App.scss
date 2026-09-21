@@ -163,20 +163,34 @@ html {
 	.storeHoliday {
 		position: relative;
 		display: flex;
+		flex: 0 1 auto;
+		flex-wrap: wrap;
 		align-items: center;
+		align-content: center;
+		justify-content: center;
+		min-width: 0;
+		box-sizing: border-box;
 		font-weight: 600;
 		color: #fff;
 		background: var(--first-color);
 		padding: 0.7rem 1.2rem;
 		border-radius: 0.4rem;
-		font-size: var(--normal-font-size);
+		font-size: min(var(--holiday-font-size, var(--normal-font-size)), var(--normal-font-size));
 		line-height: 1;
 		box-shadow: 0 2px 8px rgba(216, 79, 79, 0.08);
-		white-space: pre-line;
+		white-space: normal;
+		width: fit-content;
+		column-gap: 0.5rem;
+		row-gap: 0.15rem;
+
+		span {
+			min-width: 0;
+			white-space: nowrap;
+		}
 
 		span:last-child {
 			font-weight: 400;
-			margin-left: 0.5rem;
+			margin-left: 0;
 		}
 
 		.openNote {
@@ -206,17 +220,23 @@ html {
 			font-weight: 400;
 			padding: 0.3rem 0.4rem;
 			margin-top: 0.5rem;
-			font-size: var(--smaller-font-size);
+			font-size: min(var(--holiday-font-size, var(--small-font-size)), var(--small-font-size));
 		}
 		@include mxw(xs) {
+			flex-basis: 100%;
+			width: 100% !important;
 			transform-origin: right;
-			scale: 0.9;
+			scale: 1;
 			max-width: 56ch;
+			font-size: min(var(--holiday-font-size, var(--small-font-size)), clamp(0.68rem, 2vw + 0.25rem, var(--small-font-size)));
 		}
 		@include mxw(2xs) {
 			text-align: center;
-			// margin-top: 1rem;
-			font-size: 0.6rem;
+			font-size: min(var(--holiday-font-size, 0.68rem), clamp(0.64rem, 2.1vw, 0.72rem));
+
+			span:last-child {
+				flex-basis: 100%;
+			}
 		}
 	}
 
@@ -253,8 +273,10 @@ html {
 	.topSelect {
 		position: relative;
 		display: flex;
-		justify-content: center;
+		flex: 1 1 auto;
+		justify-content: right;
 		align-items: center;
+		min-width: 0;
 		gap: 0.5rem;
 
 		@include mxw(sm) {
