@@ -20,6 +20,12 @@ const generateWebp = () => {
 
 			const imagesToProcess = [];
 			const filesToUpdate = [];
+			const watermarkWebpFiles = new Set(
+				(process.env.WATERMARK_WEBP_FILES || '')
+					.split(',')
+					.map((name) => name.trim())
+					.filter(Boolean)
+			);
 
 			// Watermark setup
 			const watermarkPath = path.resolve('public/watermark.webp');
@@ -39,7 +45,8 @@ const generateWebp = () => {
 					} else {
 						// Include GIF and existing WebP files in the conversion process
 						// BUT exclude watermark.webp and logo files from being processed
-						if (/\.(png|jpe?g|gif)$/i.test(entry.name)) {
+						const isWebp = /\.webp$/i.test(entry.name);
+						if (/\.(png|jpe?g|gif|webp)$/i.test(entry.name) && (!isWebp || watermarkWebpFiles.has(entry.name))) {
 							// Skip watermark and logo files
 							if (!/^(watermark|logo)/i.test(entry.name)) {
 								imagesToProcess.push(fullPath);
@@ -74,7 +81,8 @@ const generateWebp = () => {
 						try {
 							const metadata = await pipeline.metadata();
 							if (metadata.width) {
-								const watermarkWidth = Math.round(metadata.width * 0.1); // 35% of image width
+								const watermarkScale = 0.08 + Math.random() * 0.06;
+								const watermarkWidth = Math.round(metadata.width * watermarkScale);
 								const padding = Math.round(metadata.width * 0.03); // 3% padding
 
 								if (watermarkWidth > 20) {

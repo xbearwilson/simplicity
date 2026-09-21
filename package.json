@@ -17,8 +17,12 @@
 	"type": "module",
 	"scripts": {
 		"d": "vite --host --open",
-		"build": "node scripts/clean-dist.mjs && vite build && node scripts/generate-static.mjs",
+		"build": "pnpm run watermark:check && node scripts/clean-dist.mjs && vite build && node scripts/generate-static.mjs",
 		"b": "pnpm run build",
+		"watermark": "node scripts/apply-watermark.mjs",
+		"watermark:audit": "node scripts/audit-watermarks.mjs",
+		"watermark:check": "node scripts/audit-watermarks.mjs --counts-only",
+		"watermark:mark-verified": "node scripts/mark-verified-watermark.mjs",
 		"v": "node scripts/verify-static.mjs",
 		"p": "pnpm run build && vite preview --open"
 	},
