@@ -24,7 +24,7 @@
 export const storeHolidays = {
 	// '2026-08': [{ date: '2026-08-17', label: '8/17(一)' }],
 	'2026-10': [
-		{ date: '2026-10-9', label: '10/9(五) 正常營業', open: true },
+		{ date: '2026-10-09', label: '10/9(五) 正常營業', open: true },
 		{ date: '2026-10-10', label: '10/10(六)' },
 		{ date: '2026-10-26', label: '10/26(一)' },
 	],
