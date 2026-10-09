@@ -6,6 +6,7 @@
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import { isWatermarkExcluded } from './scripts/watermark-exclusions.mjs';
 
 // Custom Plugin to generate WebP images and update references
 const generateWebp = () => {
@@ -43,15 +44,13 @@ const generateWebp = () => {
 					if (entry.isDirectory()) {
 						processDirectory(fullPath);
 					} else {
-						// Include GIF and existing WebP files in the conversion process
-						// BUT exclude watermark.webp and logo files from being processed
-						const isWebp = /\.webp$/i.test(entry.name);
-						if (/\.(png|jpe?g|gif|webp)$/i.test(entry.name) && (!isWebp || watermarkWebpFiles.has(entry.name))) {
-							// Skip watermark and logo files
-							if (!/^(watermark|logo)/i.test(entry.name)) {
-								imagesToProcess.push(fullPath);
-							} else {
+						// Include GIF and selected WebP files while leaving excluded brand assets untouched.
+						if (/\.(png|jpe?g|gif|webp)$/i.test(entry.name)) {
+							const isWebp = /\.webp$/i.test(entry.name);
+							if (isWatermarkExcluded(entry.name) || /^(watermark|logo)/i.test(entry.name)) {
 								console.log(`Skipping watermark/logo file: ${entry.name}`);
+							} else if (!isWebp || watermarkWebpFiles.has(entry.name)) {
+								imagesToProcess.push(fullPath);
 							}
 						} else if (/\.(html|css|js|json)$/i.test(entry.name)) {
 							filesToUpdate.push(fullPath);

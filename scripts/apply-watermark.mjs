@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
+import { isWatermarkExcluded } from './watermark-exclusions.mjs';
 import { hasWatermarkMarker, inspectWatermark, WATERMARK_MARKER } from './watermark-utils.mjs';
 
 const projectRoot = process.cwd();
@@ -21,7 +22,11 @@ const watermarkBuffer = await fs.readFile(watermarkPath);
 
 for (const inputName of inputNames) {
 	const fileName = path.basename(inputName);
-	if (fileName.toLowerCase() === 'watermark.webp' || !/\.webp$/i.test(fileName)) {
+	if (isWatermarkExcluded(fileName)) {
+		console.log(`watermark_skipped ${fileName} reason=excluded`);
+		continue;
+	}
+	if (!/\.webp$/i.test(fileName)) {
 		throw new Error(`Only target WebP files are accepted: ${inputName}`);
 	}
 
