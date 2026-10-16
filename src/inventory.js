@@ -955,7 +955,7 @@ const inventory = [
 		price: 36,
 		type: '奶素 Lacto-Vegetarian',
 		pic: './cranberryCreamyMilkButterFilledMatchaMantou.webp',
-		do: '天天有',
+		do: '製作日：2, 5',
 	},
 	{
 		id: 86,
