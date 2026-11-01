@@ -1,6 +1,10 @@
 packages:
   - '.'
 
+overrides:
+  browserslist: 4.28.7
+  filelist>minimatch: ^11.0.3
+
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
