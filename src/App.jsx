@@ -304,7 +304,6 @@ export default function Simplicity() {
 					ref={topRef}
 					className='top'
 				>
-					<button className='language-switch' type='button' onClick={() => changeLanguage(ja ? 'zh' : 'ja')} lang={ja ? 'zh-Hant' : 'ja'}>{ja ? '繁中' : '日本語'}</button>
 					<img
 						onClick={scrollToTop}
 						className='logo'
@@ -313,6 +312,7 @@ export default function Simplicity() {
 						title='簡實新村|新店村|Simplicity & Honesty Xindian Village Mantou Menu'
 					/>
 					<div className='topSelect'>
+						<button className='language-switch' type='button' onClick={() => changeLanguage(ja ? 'zh' : 'ja')} lang={ja ? 'zh-Hant' : 'ja'}>{ja ? '繁中' : '日本語'}</button>
 						{/* 特別店休日區塊 */}
 						{holidayInfos &&
 							holidayInfos.map((info, idx) => {

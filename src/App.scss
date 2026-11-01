@@ -176,7 +176,13 @@ html {
 		@include mxw(xs) {
 			top: 1.3rem;
 			right: .3rem;
-			scale: .9;
+			scale: 1;
+		}
+		@include mxw(2xs) {
+			position: relative;
+			top: .3rem;
+			right: -.4rem;
+			scale: .8;
 		}
 	}
 	.topSelect { padding-top: 3.5rem; }
@@ -184,7 +190,10 @@ html {
 	@media (width > 90rem) and (width <= 105rem) { .topSelect { padding-top: 5.5rem; } }
 	@media (width > 105rem) and (width <= 120rem) { .topSelect { padding-top: 6.75rem; } }
 	@include mxw(md) { .topSelect { padding-top: 4rem; } }
-	@include mxw(xs) { .topSelect { padding-top: 3.5rem; } }
+	@include mxw(xs) {
+		.topSelect { padding-top: 0; }
+		.language-switch { position: static; }
+	}
 
 	@include miw(4xl) {
 		width: 90%;
@@ -209,10 +218,11 @@ html {
 	}
 	@include mxw(xs) {
 		padding: 0.5rem;
+		align-items: flex-start;
 	}
 	@include mxw(2xs) {
 		padding-top: unset;
-		padding-bottom: unset;
+		padding-bottom: 4px;
 		padding-inline: 0.5rem;
 		gap: 2.5rem;
 		// height: 160px;
@@ -287,6 +297,7 @@ html {
 			scale: 1;
 			max-width: 56ch;
 			font-size: min(var(--holiday-font-size, var(--small-font-size)), clamp(0.68rem, 2vw + 0.25rem, var(--small-font-size)));
+			span { white-space: normal; overflow-wrap: anywhere; }
 		}
 		@include mxw(2xs) {
 			text-align: center;
@@ -329,7 +340,7 @@ html {
 	}
 
 	.topSelect {
-		position: relative;
+		position: static;
 		display: flex;
 		flex: 1 1 auto;
 		justify-content: right;
@@ -342,11 +353,13 @@ html {
 			align-items: flex-end;
 			margin: 0;
 		}
+		@include mxw(xs) { flex: 1 1 0; }
 		@include mxw(2xs) {
-			top: -2rem;
+			position: relative;
+			top: 0;
 			margin-top: unset !important;
 			flex-direction: column;
-			width: 100%;
+			width: auto;
 		}
 		@include mxw(lg) {
 			align-self: end;
