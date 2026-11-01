@@ -387,7 +387,7 @@ export default function Simplicity() {
 							onChange={(e) => handleSelectChange('category', e.target.value)}
 						>
 							<option value='品項分類'>{ja ? '===== 商品カテゴリー =====' : '===== 品項分類 ====='}</option>
-							<option value='新品項 New'>{ja ? '🌟 新商品 New' : '🌟 新品項 New'}</option>
+							{data.some(item => isNewProduct(item.addedDate, NEW_DISPLAY_MONTHS)) && <option value='新品項 New'>{ja ? '🌟 新商品 New' : '🌟 新品項 New'}</option>}
 							{list.map(MakeSelect)}
 						</select>
 
