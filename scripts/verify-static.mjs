@@ -16,7 +16,7 @@ if (productJson.length !== 87) throw new Error(`Expected 87 products, got ${prod
 if (faqJson.length === 0) throw new Error('Expected machine FAQ entries');
 if ((sitemap.match(/<loc>/g) || []).length !== 95) throw new Error('Unexpected sitemap URL count');
 if (!home.includes('<div id="root">') || !home.includes('static-catalog') || !home.includes('白饅頭')) throw new Error('Homepage is not pre-rendered inside root');
-if (!sample.includes('"@type": "Product"') || !sample.includes(`${productJson[0].price} TWD`)) throw new Error('Product page is incomplete');
+if (!sample.includes('"@type": "Product"') || !sample.includes(`<small>NT$</small>${productJson[0].price}`)) throw new Error('Product page is incomplete');
 if (sample.includes('FAQPage') || sample.includes('尚未提供') || sample.includes('請訂購前確認')) throw new Error('Forbidden FAQ or unknown-data copy found');
 for (const path of ['about/index.html', 'visit/index.html', 'catalog.json', 'products.json', 'categories.json', 'faq.json', 'llms.txt', 'sitemap.xml']) await access(join(dist, path));
 console.log(`static_verify_ok products=${productJson.length} faq=${faqJson.length} sitemap_urls=95`);

@@ -7,16 +7,46 @@
  * [DATE]: 2026-09-04
  */
 import Lenis from 'lenis';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './App.scss';
 import inventory, { categories, NEW_DISPLAY_MONTHS } from './inventory.js';
 import { getPublicPrice } from './catalog.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
+import { japaneseProducts, translateProduction, translateCategory, translateHoliday } from './japanese.js';
 // PlaceholderImage 改用 public/logo.svg
 const PlaceholderImage = '/logo.svg';
 
 export default function Simplicity() {
+	const [language, setLanguage] = useState(() => {
+		try { return sessionStorage.getItem('simplicity_language') === 'ja' ? 'ja' : 'zh'; } catch { return 'zh'; }
+	});
+	const anchorRef = useRef(null);
+	const ja = language === 'ja';
+	const changeLanguage = (next) => {
+		if (next === language) return;
+		const header = topRef.current?.getBoundingClientRect().bottom || 0;
+		const anchor = [...document.querySelectorAll('[data-product-id], .foot')].find(el => el.getBoundingClientRect().bottom > header);
+		anchorRef.current = anchor ? { id: anchor.dataset.productId, footer: anchor.classList.contains('foot'), top: anchor.getBoundingClientRect().top } : null;
+		try { sessionStorage.setItem('simplicity_language', next); } catch { /* session storage is optional */ }
+		setLanguage(next);
+	};
+	useLayoutEffect(() => {
+		document.documentElement.lang = ja ? 'ja' : 'zh-Hant';
+		document.title = ja ? '簡實新村|新店村|商品カタログ Simplicity & Honesty Xindian Village' : '簡實新村|新店村|Simplicity & Honesty Xindian Village';
+		const saved = anchorRef.current;
+		if (!saved) return;
+		const restore = () => {
+			const element = saved.footer ? document.querySelector('.foot') : document.querySelector(`[data-product-id="${saved.id}"]`);
+			if (!element) return;
+			const target = window.scrollY + element.getBoundingClientRect().top - saved.top;
+			if (lenisRef.current) lenisRef.current.scrollTo(target, { immediate: true, force: true });
+			else window.scrollTo(0, target);
+		};
+		requestAnimationFrame(restore);
+		const timer = setTimeout(() => { restore(); anchorRef.current = null; }, 350);
+		return () => clearTimeout(timer);
+	}, [language]);
 	// 製作日分類狀態，預設 '天天有 Every day'
 	const [makeDay, setMakeDay] = useState('天天有 Every day');
 	// 使用 ResizeObserver 監聽 top 高度
@@ -125,7 +155,7 @@ export default function Simplicity() {
 			key={X}
 			value={X}
 		>
-			{X}
+			{ja ? translateCategory(X) : X}
 		</option>
 	);
 
@@ -204,7 +234,7 @@ export default function Simplicity() {
 
 		return (
 			<p className='price'>
-				<span>$&nbsp;</span>
+				<span>NT$</span>
 				{value}
 			</p>
 		);
@@ -212,27 +242,29 @@ export default function Simplicity() {
 
 	const Item = ({ id, slug, name, ename, price, desc, does, type, pic, addedDate }) => {
 		const showNew = isNewProduct(addedDate, NEW_DISPLAY_MONTHS); // 根據設定月份顯示 NEW
+		const displayName = ja ? (japaneseProducts[id]?.name || name) : name;
+		const displayDesc = ja ? (japaneseProducts[id]?.description || desc) : desc;
 
 		return (
-			<div className='item'>
+			<div className='item' data-product-id={id}>
 				<LazyLoadImage
 					placeholderSrc={PlaceholderImage}
 					className='img'
 					src={pic}
-					alt={`簡實新村|新店村::${name} ${ename}`}
-					title={`簡實新村|新店村::${name} ${ename}`}
+					alt={`簡實新村|新店村::${displayName} ${ename}`}
+					title={`簡實新村|新店村::${displayName} ${ename}`}
 					loading='lazy'
 				/>
 				{/* NEW 標籤 */}
-				{showNew && <div className='new-badge'>新 NEW</div>}
+				{showNew && <div className='new-badge'>{ja ? '新商品 NEW' : '新 NEW'}</div>}
 
-				{type.length > 0 && <p className='type'>{type}</p>}
+				{type.length > 0 && <p className='type'>{ja ? translateCategory(type) : type}</p>}
 				<h3>
-					{name}
+					{displayName}
 					<div className='ename'>{ename}</div>
 				</h3>
-				{desc.length > 0 && <p className='desc'>{desc}</p>}
-				{does.length > 0 && <p className='does'>{does}</p>}
+				{displayDesc.length > 0 && <p className='desc'>{displayDesc}</p>}
+				{does.length > 0 && <p className='does'>{ja ? translateProduction(does) : does}</p>}
 				<Price value={getPublicPrice({ price })} />
 			</div>
 		);
@@ -260,7 +292,7 @@ export default function Simplicity() {
 		}, []);
 
 		// 修正：在 Main 內部取得 holidayInfo
-		const holidayInfos = getCurrentHolidayInfo();
+		const holidayInfos = getCurrentHolidayInfo()?.map(info => ja ? translateHoliday(info) : info);
 
 		return (
 			<div
@@ -272,6 +304,7 @@ export default function Simplicity() {
 					ref={topRef}
 					className='top'
 				>
+					<button className='language-switch' type='button' onClick={() => changeLanguage(ja ? 'zh' : 'ja')} lang={ja ? 'zh-Hant' : 'ja'}>{ja ? '繁中' : '日本語'}</button>
 					<img
 						onClick={scrollToTop}
 						className='logo'
@@ -324,16 +357,17 @@ export default function Simplicity() {
 									setTimeout(updateTopHeight, 0);
 								}}
 							>
-								所有品項
+								{ja ? 'すべての商品' : '所有品項'}
 							</button>
 						)}
 
 						{/* 製作日分類下拉選單 */}
 						<select
+							aria-label={ja ? '製造日' : '製作日分類'}
 							value={makeDay}
 							onChange={(e) => handleSelectChange('makeDay', e.target.value)}
 						>
-							<option value='製作日分類'>===== 製作日分類 =====</option>
+							<option value='製作日分類'>{ja ? '===== 製造日 =====' : '===== 製作日分類 ====='}</option>
 							{allDoOptions
 								.filter((opt) => opt !== '')
 								.map((opt) => (
@@ -341,24 +375,25 @@ export default function Simplicity() {
 										key={opt}
 										value={opt}
 									>
-										{opt}
+										{ja ? translateProduction(opt) : opt}
 									</option>
 								))}
 						</select>
 
 						{/* 品項分類下拉選單 */}
 						<select
+							aria-label={ja ? '商品カテゴリー' : '品項分類'}
 							value={filterState.category}
 							onChange={(e) => handleSelectChange('category', e.target.value)}
 						>
-							<option value='品項分類'>===== 品項分類 =====</option>
-							<option value='新品項 New'>🌟 新品項 New</option>
+							<option value='品項分類'>{ja ? '===== 商品カテゴリー =====' : '===== 品項分類 ====='}</option>
+							<option value='新品項 New'>{ja ? '🌟 新商品 New' : '🌟 新品項 New'}</option>
 							{list.map(MakeSelect)}
 						</select>
 
 						{/* 若分類不是全部但無 do 選項，顯示提示 */}
 						{filterState.category !== '品項分類' && filterState.category !== '新品項 New' && doOptions.length === 0 && (
-							<span style={{ color: '#888', marginLeft: '1rem' }}>目前暫無品項</span>
+							<span style={{ color: '#888', marginLeft: '1rem' }}>{ja ? '現在商品はありません' : '目前暫無品項'}</span>
 						)}
 					</div>
 				</div>
@@ -386,7 +421,7 @@ export default function Simplicity() {
 								/>
 							))
 						) : (
-							<span style={{ color: '#888', fontSize: '1.2rem' }}>目前暫無品項</span>
+							<span style={{ color: '#888', fontSize: '1.2rem' }}>{ja ? '現在商品はありません' : '目前暫無品項'}</span>
 						)}
 					</div>
 				</div>
@@ -404,16 +439,16 @@ export default function Simplicity() {
 					</div>
 					<div>
 						<div>簡實新村|新店村|Simplicity & Honesty Xindian Village</div>
-						<div>營業時間：Business Hours:</div>
-						<div>週一~週三，週五~週六：12am-19pm</div>
+						<div>{ja ? '営業時間：' : '營業時間：'}Business Hours:</div>
+						<div>{ja ? '月〜水、金〜土：12am-19pm' : '週一~週三，週五~週六：12am-19pm'}</div>
 						<div>Mon-Wed, Fri-Sat: 12am-19pm</div>
-						<div>假日：11:30am-18pm</div>
+						<div>{ja ? '休日：11:30am-18pm' : '假日：11:30am-18pm'}</div>
 						<div>Holiday: 11:30am-18pm</div>
-						<div className='m point'>預約請於下午來電 (須提前 2 ~ 3 日)</div>
-						<div className='m point'>固定店休日：每週 四、日 (如遇特別店休日將提前公告之)</div>
+						<div className='m point'>{ja ? 'ご予約は午後にお電話ください（2〜3日前まで）' : '預約請於下午來電 (須提前 2 ~ 3 日)'}</div>
+						<div className='m point'>{ja ? '定休日：毎週木・日曜日（特別休業日は事前にお知らせします）' : '固定店休日：每週 四、日 (如遇特別店休日將提前公告之)'}</div>
 					</div>
 					<div>
-						<div>地址：Address:</div>
+						<div>{ja ? '住所：' : '地址：'}Address:</div>
 						<div
 							alt='簡實新村|新店村|地址'
 							title='簡實新村|新店村|地址'
@@ -424,7 +459,7 @@ export default function Simplicity() {
 								// window.open('https://tinyurl.com/22ap3wxv', '_blank');
 							}}
 						>
-							23142 新北市新店區大豐路61號
+							{ja ? '23142 新北市新店区大豊路61号' : '23142 新北市新店區大豐路61號'}
 						</div>
 						<div
 							alt='Simplicity & Honesty Xindian Village Address'
@@ -440,7 +475,7 @@ export default function Simplicity() {
 						</div>
 					</div>
 					<div>
-						<div>訂購專線：TEL:</div>
+						<div>{ja ? 'ご注文電話：' : '訂購專線：'}TEL:</div>
 						<div
 							alt='簡實新村|新店村|訂購專線|TEL'
 							title='簡實新村|新店村|訂購專線|TEL'
@@ -481,7 +516,8 @@ export default function Simplicity() {
 					type='button'
 					onClick={scrollToTop}
 					className='scroll-top'
-					title='回上方 TOP'
+					title={ja ? 'ページ上部へ TOP' : '回上方 TOP'}
+					aria-label={ja ? 'ページ上部へ' : '回上方'}
 				>
 					<span
 						role='img'
@@ -538,7 +574,7 @@ export default function Simplicity() {
 						src='./logo.svg'
 						alt=''
 					/>
-					<span>載入中 Loading</span>
+					<span>{ja ? '読み込み中 Loading' : '載入中 Loading'}</span>
 				</div>
 			</div>
 		);
@@ -546,7 +582,8 @@ export default function Simplicity() {
 
 	useEffect(() => {
 		// 1. 檢查 sessionStorage - 是否在同一個瀏覽階段已經載入過
-		const hasLoadedInSession = sessionStorage.getItem('simplicity_loaded');
+		let hasLoadedInSession = false;
+		try { hasLoadedInSession = sessionStorage.getItem('simplicity_loaded'); } catch { /* session storage is optional */ }
 
 		if (hasLoadedInSession) {
 			// 同一瀏覽階段，直接跳過 loading，不顯示任何畫面
@@ -576,7 +613,7 @@ export default function Simplicity() {
 						clearTimeout(timeoutId);
 						setTimeout(() => {
 							setLoading(0); // 隱藏 Preloader，顯示主內容
-							sessionStorage.setItem('simplicity_loaded', 'true');
+							try { sessionStorage.setItem('simplicity_loaded', 'true'); } catch { /* session storage is optional */ }
 						}, 300); // 延遲 300ms 讓用戶看到 100% 完成
 					}
 				};
@@ -591,7 +628,7 @@ export default function Simplicity() {
 						clearTimeout(timeoutId);
 						setTimeout(() => {
 							setLoading(0);
-							sessionStorage.setItem('simplicity_loaded', 'true');
+							try { sessionStorage.setItem('simplicity_loaded', 'true'); } catch { /* session storage is optional */ }
 						}, 300);
 					}
 				};
@@ -605,7 +642,7 @@ export default function Simplicity() {
 			if (loadedCount < totalImages) {
 				console.warn(`載入超時：已載入 ${loadedCount}/${totalImages} 張圖片`);
 				setLoading(0);
-				sessionStorage.setItem('simplicity_loaded', 'true');
+				try { sessionStorage.setItem('simplicity_loaded', 'true'); } catch { /* session storage is optional */ }
 			}
 		}, 10000);
 

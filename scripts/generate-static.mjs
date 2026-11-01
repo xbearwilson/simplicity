@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { japaneseProducts, translateCategory, translateProduction } from '../src/japanese.js';
 import catalog, {
 	CATALOG_LAST_UPDATED,
 	catalogCategories,
@@ -15,7 +16,7 @@ const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&':
 const json = (value) => JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
 const absolute = (path) => `${SITE_URL}${path}`;
 
-const htmlShell = ({ title, description, canonical, body, schema, styles = '' }) => `<!doctype html>
+const htmlShell = ({ title, titleJa = title, description, canonical, body, bodyJa, schema, styles = '' }) => `<!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
@@ -25,10 +26,13 @@ const htmlShell = ({ title, description, canonical, body, schema, styles = '' })
 <link rel="canonical" href="${esc(canonical)}">
 <link rel="icon" type="image/svg+xml" href="/logoF.svg">
 ${styles ? `<link rel="stylesheet" href="${styles}">` : ''}
+<style>.static-language-switch{position:absolute;top:1rem;right:1rem;padding:.5rem 1rem;border:1px solid var(--first-color);border-radius:4px;background:var(--first-color);color:#fff;cursor:pointer}.static-language-switch:hover{background:#fff;color:var(--first-color)}.static-language-switch:focus-visible{outline:2px solid #222;outline-offset:2px}</style>
 <title>${esc(title)}</title>
 ${schema ? `<script type="application/ld+json">${json(schema)}</script>` : ''}
 </head>
-<body>${body}</body>
+<body><button type="button" class="static-language-switch" id="language-switch" lang="ja">日本語</button><div id="content-zh">${body}</div><div id="content-ja" hidden>${bodyJa}</div><script>
+(()=>{const zh=document.getElementById('content-zh'),ja=document.getElementById('content-ja'),button=document.getElementById('language-switch'),titles={zh:${json(title)},ja:${json(titleJa)}};let language='zh';try{language=sessionStorage.getItem('simplicity_language')==='ja'?'ja':'zh'}catch{};function show(next){language=next;zh.hidden=next==='ja';ja.hidden=next!=='ja';document.documentElement.lang=next==='ja'?'ja':'zh-Hant';document.title=titles[next];button.textContent=next==='ja'?'繁中':'日本語';button.lang=next==='ja'?'zh-Hant':'ja';try{sessionStorage.setItem('simplicity_language',next)}catch{}}button.onclick=()=>show(language==='ja'?'zh':'ja');show(language)})();
+</script></body>
 </html>`;
 
 const baseSchema = {
@@ -47,13 +51,13 @@ const baseSchema = {
 	},
 };
 
-const renderCard = (item) => `<article class="catalog-item">
+const renderCard = (item, ja = false) => `<article class="catalog-item">
 <a href="${getProductPath(item)}" aria-disabled="true" tabindex="-1" style="cursor:default;pointer-events:none">
-<img src="${esc(item.image)}" alt="${esc(item.image_alt)}" loading="lazy">
-<h2>${esc(item.name_zh)} <span>${esc(item.name_en)}</span></h2>
-<p>${esc(item.type)}</p>
-${item.description ? `<p>${esc(item.description)}</p>` : ''}
-<p>${esc(item.production_label)}｜$ ${item.price} TWD</p>
+<img src="${esc(item.image)}" alt="${esc(ja ? `${japaneseProducts[item.id].name} ${item.name_en}` : item.image_alt)}" loading="lazy">
+<h2>${esc(ja ? japaneseProducts[item.id].name : item.name_zh)} <span>${esc(item.name_en)}</span></h2>
+<p>${esc(ja ? translateCategory(item.type) : item.type)}</p>
+${item.description ? `<p>${esc(ja ? japaneseProducts[item.id].description : item.description)}</p>` : ''}
+<p>${esc(ja ? translateProduction(item.do || item.production_label) : item.production_label)}｜<small>NT$</small>${item.price}</p>
 </a>
 </article>`;
 
@@ -78,6 +82,7 @@ const renderProduct = (item, styles) => {
 	const description = item.description || `${item.name_zh}｜${item.name_en}`;
 	return htmlShell({
 		title: `${item.name_zh}｜${item.name_en}｜簡實新村`,
+		titleJa: `${japaneseProducts[item.id].name}｜${item.name_en}｜簡實新村`,
 		description,
 		canonical: absolute(getProductPath(item)),
 		styles,
@@ -88,13 +93,14 @@ const renderProduct = (item, styles) => {
 <img src="${esc(item.image)}" alt="${esc(item.image_alt)}">
 <h1>${esc(item.name_zh)}</h1>
 <p>${esc(item.name_en)}</p>
-<p>價格：$ ${item.price} ${item.currency}</p>
+<p>價格：<small>NT$</small>${item.price}</p>
 <p>飲食分類：${esc(item.type)}</p>
 ${item.description ? `<p>商品說明：${esc(item.description)}</p>` : ''}
 <p>製作安排：${esc(item.production_label)}</p>
 <p>訂購方式：${esc(item.order_method)}</p>
 </article>
 </main>`,
+		bodyJa: `<main class="product-page"><nav><a href="/">簡實新村 商品カタログ</a></nav><article><img src="${esc(item.image)}" alt="${esc(japaneseProducts[item.id].name)} ${esc(item.name_en)}"><h1>${esc(japaneseProducts[item.id].name)}</h1><p>${esc(item.name_en)}</p><p>価格：<small>NT$</small>${item.price}</p><p>食事区分：${esc(translateCategory(item.type))}</p>${item.description ? `<p>商品説明：${esc(japaneseProducts[item.id].description)}</p>` : ''}<p>製造予定：${esc(translateProduction(item.do || item.production_label))}</p><p>ご注文方法：ウェブサイトの案内に従い、お電話または店舗指定の方法でご注文ください。</p></article></main>`,
 	});
 };
 
@@ -107,7 +113,7 @@ const result = validateCatalog();
 const index = await readFile(join(dist, 'index.html'), 'utf8');
 const styleMatch = index.match(/<link[^>]+href="(\/assets\/[^\"]+\.css)"/);
 const styles = styleMatch?.[1] || '';
-const staticCatalog = `<main class="static-catalog" aria-label="簡實新村商品型錄"><h1>簡實新村老麵饅頭商品型錄</h1><p>新北市新店區簡實新村官方商品資料。</p><section>${catalog.map(renderCard).join('')}</section></main>`;
+const staticCatalog = `<main class="static-catalog" aria-label="簡實新村商品型錄"><h1>簡實新村老麵饅頭商品型錄</h1><p>新北市新店區簡實新村官方商品資料。</p><section>${catalog.map(item => renderCard(item)).join('')}</section></main>`;
 const home = index.replace('<div id="root"></div>', `<div id="root">${staticCatalog}</div>`);
 await write(join(dist, 'index.html'), home);
 
@@ -128,30 +134,36 @@ for (const category of catalogCategories) {
 	};
 	await write(join(dist, path, 'index.html'), htmlShell({
 		title: `${category}｜簡實新村`,
+		titleJa: `${translateCategory(category)}｜簡實新村`,
 		description: `簡實新村${category}商品型錄。`,
 		canonical: absolute(path),
 		styles,
 		schema,
-		body: `<main class="category-page"><nav><a href="/">簡實新村商品型錄</a></nav><h1>${esc(category)}</h1><section>${items.map(renderCard).join('')}</section></main>`,
+		body: `<main class="category-page"><nav><a href="/">簡實新村商品型錄</a></nav><h1>${esc(category)}</h1><section>${items.map(item => renderCard(item)).join('')}</section></main>`,
+		bodyJa: `<main class="category-page"><nav><a href="/">簡實新村 商品カタログ</a></nav><h1>${esc(translateCategory(category))}</h1><section>${items.map(item => renderCard(item, true)).join('')}</section></main>`,
 	}));
 }
 
 await write(join(dist, 'about', 'index.html'), htmlShell({
 	title: '關於簡實新村｜簡實新村',
+	titleJa: '簡實新村について｜簡實新村',
 	description: '簡實新村 Simplicity & Honesty 的官方介紹。',
 	canonical: absolute('/about'),
 	styles,
 	schema: { ...baseSchema, '@type': 'AboutPage', mainEntity: baseSchema },
 	body: '<main class="about-page"><nav><a href="/">簡實新村商品型錄</a></nav><h1>關於簡實新村</h1><p>簡實新村提供新北市新店區的老麵饅頭商品型錄。</p></main>',
+	bodyJa: '<main class="about-page"><nav><a href="/">簡實新村 商品カタログ</a></nav><h1>簡實新村について</h1><p>簡實新村は新北市新店区の老麺まんじゅうの商品カタログをご案内しています。</p></main>',
 }));
 
 await write(join(dist, 'visit', 'index.html'), htmlShell({
 	title: '前往簡實新村｜簡實新村',
+	titleJa: '簡實新村へのアクセス｜簡實新村',
 	description: '簡實新村地址、電話與營業資訊。',
 	canonical: absolute('/visit'),
 	styles,
 	schema: { ...baseSchema, '@type': 'Bakery', mainEntityOfPage: absolute('/visit') },
 	body: '<main class="visit-page"><nav><a href="/">簡實新村商品型錄</a></nav><h1>前往簡實新村</h1><p>地址：新北市新店區大豐路61號</p><p>電話：02-2918-9345</p><p>營業資訊請以網站公告與店家提供資訊為準。</p></main>',
+	bodyJa: '<main class="visit-page"><nav><a href="/">簡實新村 商品カタログ</a></nav><h1>簡實新村へのアクセス</h1><p>住所：新北市新店区大豊路61号</p><p>電話：02-2918-9345</p><p>営業時間はウェブサイトの案内および店舗の情報をご確認ください。</p></main>',
 }));
 
 const productJson = catalog.map((item) => ({

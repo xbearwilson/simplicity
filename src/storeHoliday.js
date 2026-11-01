@@ -70,6 +70,7 @@ export function getCurrentHolidayInfo(now = new Date()) {
 				results.push({
 					isCustom: true,
 					monthLabel: item.text,
+					japaneseText: item.textJa,
 					holidays: [],
 				});
 			}
@@ -106,6 +107,8 @@ export function getCurrentHolidayInfo(now = new Date()) {
 				monthLabel,
 				holidays: validHolidays.map((h) => h.label),
 				openNotes: validOpenNotes.map((h) => h.label),
+				holidaysJa: validHolidays.map((h) => h.labelJa || null),
+				openNotesJa: validOpenNotes.map((h) => h.labelJa || null),
 			});
 		}
 	}
