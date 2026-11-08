@@ -15,6 +15,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"packageManager": "pnpm@12.14.0",
 	"scripts": {
 		"d": "vite --host --open",
 		"build": "node scripts/protected-assets.mjs && node scripts/audit-watermarks.mjs --counts-only && node scripts/clean-dist.mjs && vite build && node scripts/generate-static.mjs",
