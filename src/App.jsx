@@ -7,6 +7,7 @@
  * [DATE]: 2026-09-04
  */
 import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './App.scss';
@@ -93,8 +94,12 @@ export default function Simplicity() {
 
 	// 強制初始狀態（component mount）
 	// 伺服器與本地皆能即時偵測 top 高度
+	// Preloader 結束（Main 出現）後才有 topRef / 才建立 Lenis；以 loading 是否結束為依賴
+	const mainVisible = loading === 0;
 	useEffect(() => {
-		setTimeout(() => updateTopHeight(), 0); // mount 時立即偵測
+		if (!mainVisible) return;
+		setTimeout(() => updateTopHeight(), 0); // Main 掛載時立即偵測
+		const timers = [setTimeout(() => updateTopHeight(), 100), setTimeout(() => updateTopHeight(), 300)];
 		let observer;
 		if (topRef.current && window.ResizeObserver) {
 			observer = new window.ResizeObserver(() => {
@@ -103,11 +108,27 @@ export default function Simplicity() {
 			observer.observe(topRef.current);
 		}
 		window.addEventListener('resize', updateTopHeight);
-		return () => {
-			window.removeEventListener('resize', updateTopHeight);
-			if (observer && topRef.current) observer.unobserve(topRef.current);
+
+		// Lenis：整個 Main 顯示期間只建立一次
+		// respectReducedMotion:false → 即使 OS 關閉動畫（Windows「顯示動畫」關）仍啟用平滑捲動
+		const lenis = new Lenis({ respectReducedMotion: false });
+		lenisRef.current = lenis;
+		let rafId;
+		const raf = (time) => {
+			lenis.raf(time);
+			rafId = requestAnimationFrame(raf);
 		};
-	}, []);
+		rafId = requestAnimationFrame(raf);
+
+		return () => {
+			timers.forEach(clearTimeout);
+			window.removeEventListener('resize', updateTopHeight);
+			if (observer) observer.disconnect();
+			cancelAnimationFrame(rafId);
+			lenis.destroy();
+			lenisRef.current = null;
+		};
+	}, [mainVisible]);
 
 	useEffect(() => {
 		// 動態偵測top高度
@@ -128,6 +149,7 @@ export default function Simplicity() {
 
 	useEffect(() => {
 		const scrollY = () => {
+			if (!scrollBtnRef.current) return; // Preloader 期間按鈕尚未掛載
 			if (window.scrollY > 300) {
 				scrollBtnRef.current.style.visibility = 'visible';
 				scrollBtnRef.current.style.bottom = '25px';
@@ -246,7 +268,7 @@ export default function Simplicity() {
 		const displayDesc = ja ? (japaneseProducts[id]?.description || desc) : desc;
 
 		return (
-			<div className='item' data-product-id={id}>
+			<div className='item' key={id} data-product-id={id}>
 				<LazyLoadImage
 					placeholderSrc={PlaceholderImage}
 					className='img'
@@ -265,32 +287,14 @@ export default function Simplicity() {
 				</h3>
 				{displayDesc.length > 0 && <p className='desc'>{displayDesc}</p>}
 				{does.length > 0 && <p className='does'>{ja ? translateProduction(does) : does}</p>}
-				<Price value={getPublicPrice({ price })} />
+				{Price({ value: getPublicPrice({ price }) })}
 			</div>
 		);
 	};
 
+	// 注意：Main/Item/Price/Preloader 以函式呼叫（非 <Component />）渲染。
+	// 它們定義在 Simplicity 內，若當元件用，每次 re-render 型別都變 → 整頁卸載重掛，Lenis 也跟著被銷毀。
 	const Main = () => {
-		useEffect(() => {
-			// 立即偵測一次高度（在 Main 組件掛載時）
-			setTimeout(() => updateTopHeight(), 0);
-			// 延遲再偵測一次，確保所有內容都已渲染
-			setTimeout(() => updateTopHeight(), 100);
-			setTimeout(() => updateTopHeight(), 300);
-
-			const lenis = new Lenis();
-			lenisRef.current = lenis;
-			function raf(time) {
-				lenis.raf(time);
-				requestAnimationFrame(raf);
-			}
-			requestAnimationFrame(raf);
-			return () => {
-				lenis.destroy();
-				lenisRef.current = null;
-			};
-		}, []);
-
 		// 修正：在 Main 內部取得 holidayInfo
 		const holidayInfos = getCurrentHolidayInfo()?.map(info => ja ? translateHoliday(info) : info);
 
@@ -405,21 +409,20 @@ export default function Simplicity() {
 					{/* 首頁預設顯示所有商品 */}
 					<div className='flex'>
 						{itemsToShow.length > 0 ? (
-							itemsToShow.map((t) => (
-								<Item
-									key={t.id}
-									id={t.id}
-									slug={`${t.id}-${(t.ename || t.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`}
-									name={t.name}
-									ename={t.ename}
-									price={t.price}
-									desc={t.description}
-									type={t.type}
-									pic={t.pic}
-									does={t.do}
-									addedDate={t.addedDate}
-								/>
-							))
+							itemsToShow.map((t) =>
+								Item({
+									id: t.id,
+									slug: `${t.id}-${(t.ename || t.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
+									name: t.name,
+									ename: t.ename,
+									price: t.price,
+									desc: t.description,
+									type: t.type,
+									pic: t.pic,
+									does: t.do,
+									addedDate: t.addedDate,
+								})
+							)
 						) : (
 							<span style={{ color: '#888', fontSize: '1.2rem' }}>{ja ? '現在商品はありません' : '目前暫無品項'}</span>
 						)}
@@ -657,5 +660,5 @@ export default function Simplicity() {
 		};
 	}, [data]);
 
-	return <>{loading > 0 ? <Preloader progress={loading} /> : <Main />}</>;
+	return <>{loading > 0 ? Preloader({ progress: loading }) : Main()}</>;
 }
