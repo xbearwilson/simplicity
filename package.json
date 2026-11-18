@@ -20,6 +20,7 @@
 		"d": "vite --host --open",
 		"build": "node scripts/protected-assets.mjs && node scripts/audit-watermarks.mjs --counts-only && node scripts/clean-dist.mjs && vite build && node scripts/generate-static.mjs",
 		"b": "pnpm run build",
+		"test": "node --test src/order.test.js",
 		"watermark": "node scripts/apply-watermark.mjs",
 		"watermark:audit": "node scripts/audit-watermarks.mjs",
 		"watermark:check": "node scripts/audit-watermarks.mjs --counts-only",

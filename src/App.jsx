@@ -15,8 +15,85 @@ import inventory, { categories, NEW_DISPLAY_MONTHS } from './inventory.js';
 import { getPublicPrice } from './catalog.js';
 import { getCurrentHolidayInfo } from './storeHoliday.js';
 import { japaneseProducts, translateProduction, translateCategory, translateHoliday } from './japanese.js';
+import {
+	EMPTY_CUSTOMER,
+	MAX_QTY,
+	buildOrderText,
+	buildOrderTsv,
+	clampQty,
+	missingFields,
+	needsAddress,
+	resolveCart,
+	sanitizeCart,
+	sanitizeCustomer,
+	setCartQty,
+	summarize,
+} from './order.js';
 // PlaceholderImage 改用 public/logo.svg
 const PlaceholderImage = '/logo.svg';
+
+// 選品清單：存本機 localStorage，不上傳
+const CART_KEY = 'simplicity_cart';
+const CUSTOMER_KEY = 'simplicity_customer';
+const readStored = (key) => {
+	try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+};
+const writeStored = (key, value) => {
+	try {
+		if (value === null) localStorage.removeItem(key);
+		else localStorage.setItem(key, JSON.stringify(value));
+	} catch { /* local storage is optional */ }
+};
+const priceOfProduct = (p) => getPublicPrice({ price: p.price });
+const todayISO = () => {
+	const d = new Date();
+	return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+const copyToClipboard = async (text) => {
+	try {
+		await navigator.clipboard.writeText(text);
+		return true;
+	} catch {
+		const area = document.createElement('textarea');
+		area.value = text;
+		area.setAttribute('readonly', '');
+		area.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+		document.body.appendChild(area);
+		area.select();
+		let ok = false;
+		try { ok = document.execCommand('copy'); } catch { ok = false; }
+		area.remove();
+		return ok;
+	}
+};
+const ORDER_UI = {
+	zh: {
+		add: '+ 加入', dec: '減少', inc: '增加', qty: '數量', remove: '移除',
+		bar: (s) => `已選 ${s.count} 項 · ${s.qty} 顆 · NT$${s.total}`, open: '查看清單 ▸',
+		title: '我的選品', close: '關閉', total: (s) => `合計 ${s.qty} 顆 · NT$${s.total}`,
+		method: '取貨方式', methods: { pickup: '自取', delivery: '宅配', frozen: '冷凍' },
+		fields: { name: '姓名', phone: '電話', date: '取貨日', address: '地址', note: '備註' },
+		required: '必填', optional: '選填', missing: '缺：', sep: '、',
+		clearData: '清除我的資料', privacy: '資料僅儲存在您的裝置，不會上傳。',
+		confirmClearData: '確定清除已填寫的個人資料？',
+		preview: '預覽', copyText: '複製文字', copyTsv: '複製表格',
+		copied: '已複製 ✓', copyFail: '複製失敗，請手動選取預覽文字',
+		clearCart: '清空購物車', confirmClearCart: '確定清空所有選品？',
+	},
+	ja: {
+		add: '+ 追加', dec: '減らす', inc: '増やす', qty: '数量', remove: '削除',
+		bar: (s) => `${s.count} 品目 · ${s.qty} 粒 · NT$${s.total}`, open: 'リストを見る ▸',
+		title: '選んだ商品', close: '閉じる', total: (s) => `合計 ${s.qty} 粒 · NT$${s.total}`,
+		method: '受取方法', methods: { pickup: '店頭受取', delivery: '宅配', frozen: '冷凍便' },
+		fields: { name: 'お名前', phone: '電話番号', date: '受取日', address: '住所', note: '備考' },
+		required: '必須', optional: '任意', missing: '未入力：', sep: '、',
+		clearData: '入力情報を削除', privacy: '情報はお使いの端末にのみ保存され、送信されません。',
+		confirmClearData: '入力した個人情報を削除しますか？',
+		preview: 'プレビュー（中国語で出力）', copyText: 'テキストをコピー', copyTsv: '表をコピー',
+		copied: 'コピーしました ✓', copyFail: 'コピーできませんでした。プレビューを手動で選択してください',
+		clearCart: 'すべて削除', confirmClearCart: '選んだ商品をすべて削除しますか？',
+	},
+};
 
 export default function Simplicity() {
 	const [language, setLanguage] = useState(() => {
@@ -61,6 +138,46 @@ export default function Simplicity() {
 	});
 
 	const [data] = useState(inventory);
+
+	// 選品清單（非購物流程）：cart = { [id]: qty }
+	const [cart, setCart] = useState(() => sanitizeCart(readStored(CART_KEY), inventory.map((p) => p.id)));
+	const [customer, setCustomer] = useState(() => sanitizeCustomer(readStored(CUSTOMER_KEY)));
+	const [panelOpen, setPanelOpen] = useState(false);
+	const [copied, setCopied] = useState(null); // 'text' | 'tsv' | 'fail' | null
+	const copiedTimer = useRef();
+	const ui = ORDER_UI[ja ? 'ja' : 'zh'];
+	const cartLines = resolveCart(cart, data, priceOfProduct);
+	const cartSummary = summarize(cartLines);
+	const missing = missingFields(customer);
+	const panelVisible = panelOpen && cartLines.length > 0;
+	const updateQty = (id, qty) => setCart((prev) => setCartQty(prev, id, qty));
+	const updateCustomer = (key, value) => setCustomer((prev) => ({ ...prev, [key]: value }));
+	const clearCart = () => {
+		if (!window.confirm(ui.confirmClearCart)) return;
+		setCart({});
+		setPanelOpen(false);
+	};
+	const clearCustomer = () => {
+		if (!window.confirm(ui.confirmClearData)) return;
+		setCustomer(EMPTY_CUSTOMER);
+	};
+	const copyOrder = async (kind) => {
+		if (missing.length > 0) return;
+		const text = kind === 'tsv' ? buildOrderTsv(cartLines, customer) : buildOrderText(cartLines, customer);
+		const ok = await copyToClipboard(text);
+		setCopied(ok ? kind : 'fail');
+		clearTimeout(copiedTimer.current);
+		copiedTimer.current = setTimeout(() => setCopied(null), 2000);
+	};
+	useEffect(() => writeStored(CART_KEY, Object.keys(cart).length ? cart : null), [cart]);
+	useEffect(() => {
+		const isEmpty = Object.keys(EMPTY_CUSTOMER).every((k) => customer[k] === EMPTY_CUSTOMER[k]);
+		writeStored(CUSTOMER_KEY, isEmpty ? null : customer);
+	}, [customer]);
+	useEffect(() => () => clearTimeout(copiedTimer.current), []);
+	useEffect(() => {
+		if (cartLines.length === 0 && panelOpen) setPanelOpen(false);
+	}, [cartLines.length, panelOpen]);
 	// 取得所有 do 選項（去重、排序，空字串顯示「天天有 Every day」）
 	const allDoOptions = Array.from(new Set(data.map((item) => item.do)));
 	allDoOptions.sort((a, b) => {
@@ -129,6 +246,18 @@ export default function Simplicity() {
 			lenisRef.current = null;
 		};
 	}, [mainVisible]);
+
+	// 清單面板開啟時停止背景平滑捲動；Esc 關閉
+	useEffect(() => {
+		if (!panelVisible) return;
+		lenisRef.current?.stop();
+		const onKey = (e) => { if (e.key === 'Escape') setPanelOpen(false); };
+		document.addEventListener('keydown', onKey);
+		return () => {
+			document.removeEventListener('keydown', onKey);
+			lenisRef.current?.start();
+		};
+	}, [panelVisible]);
 
 	useEffect(() => {
 		// 動態偵測top高度
@@ -262,13 +391,35 @@ export default function Simplicity() {
 		);
 	};
 
+	// 數量步進器（卡片與清單面板共用）；數字可直接輸入，減到 0 即移除
+	const QtyStepper = (id, qty, label) => (
+		<div className='stepper'>
+			<button type='button' aria-label={`${ui.dec} ${label}`} onClick={() => updateQty(id, qty - 1)}>−</button>
+			<input
+				type='number'
+				inputMode='numeric'
+				min='1'
+				max={MAX_QTY}
+				value={qty}
+				aria-label={`${ui.qty} ${label}`}
+				onFocus={(e) => e.target.select()}
+				onChange={(e) => {
+					const n = clampQty(e.target.value);
+					if (n > 0) updateQty(id, n);
+				}}
+			/>
+			<button type='button' aria-label={`${ui.inc} ${label}`} onClick={() => updateQty(id, qty + 1)}>+</button>
+		</div>
+	);
+
 	const Item = ({ id, slug, name, ename, price, desc, does, type, pic, addedDate }) => {
 		const showNew = isNewProduct(addedDate, NEW_DISPLAY_MONTHS); // 根據設定月份顯示 NEW
 		const displayName = ja ? (japaneseProducts[id]?.name || name) : name;
 		const displayDesc = ja ? (japaneseProducts[id]?.description || desc) : desc;
+		const qty = cart[id] || 0;
 
 		return (
-			<div className='item' key={id} data-product-id={id}>
+			<div className={qty > 0 ? 'item selected' : 'item'} key={id} data-product-id={id}>
 				<LazyLoadImage
 					placeholderSrc={PlaceholderImage}
 					className='img'
@@ -288,6 +439,136 @@ export default function Simplicity() {
 				{displayDesc.length > 0 && <p className='desc'>{displayDesc}</p>}
 				{does.length > 0 && <p className='does'>{ja ? translateProduction(does) : does}</p>}
 				{Price({ value: getPublicPrice({ price }) })}
+				<div className='order-ctrl'>
+					{qty > 0 ? (
+						QtyStepper(id, qty, displayName)
+					) : (
+						<button type='button' className='order-add' onClick={() => updateQty(id, 1)}>{ui.add}</button>
+					)}
+				</div>
+			</div>
+		);
+	};
+
+	const methodNeedsAddress = needsAddress(customer.method);
+	const orderFields = ['name', 'phone', 'date', ...(methodNeedsAddress ? ['address'] : []), 'note'];
+	const fieldInputProps = {
+		name: { type: 'text', autoComplete: 'name' },
+		phone: { type: 'tel', autoComplete: 'tel', inputMode: 'tel' },
+		date: { type: 'date', min: todayISO() },
+		address: { type: 'text', autoComplete: 'street-address' },
+		note: { type: 'text' },
+	};
+
+	// 浮動清單列：購物車有品項才滑出，清空即隱藏
+	const CartBar = () => {
+		const show = cartLines.length > 0;
+		return (
+			<div className={show ? 'cart-bar show' : 'cart-bar'} aria-hidden={!show}>
+				<span className='cart-bar-summary'>{ui.bar(cartSummary)}</span>
+				<button type='button' tabIndex={show ? 0 : -1} onClick={() => setPanelOpen(true)}>{ui.open}</button>
+			</div>
+		);
+	};
+
+	const OrderPanel = () => {
+		if (!panelVisible) return null;
+		const preview = missing.length === 0 ? buildOrderText(cartLines, customer) : null;
+		const copyLabel = (kind, label) => (copied === kind ? ui.copied : label);
+		return (
+			<div className='order-overlay' onClick={() => setPanelOpen(false)}>
+				<aside
+					className='order-panel'
+					role='dialog'
+					aria-modal='true'
+					aria-label={ui.title}
+					data-lenis-prevent
+					onClick={(e) => e.stopPropagation()}
+				>
+					<div className='order-head'>
+						<h2>{ui.title}</h2>
+						<button type='button' className='order-close' aria-label={ui.close} onClick={() => setPanelOpen(false)}>✕</button>
+					</div>
+
+					<ul className='order-lines'>
+						{cartLines.map((line) => {
+							const label = ja ? (japaneseProducts[line.id]?.name || line.name) : line.name;
+							return (
+								<li key={line.id}>
+									<span className='order-name'>{label}</span>
+									{QtyStepper(line.id, line.qty, label)}
+									<span className='order-subtotal'>NT${line.subtotal}</span>
+									<button type='button' className='order-remove' aria-label={`${ui.remove} ${label}`} onClick={() => updateQty(line.id, 0)}>🗑</button>
+								</li>
+							);
+						})}
+					</ul>
+					<p className='order-total'>{ui.total(cartSummary)}</p>
+
+					<fieldset className='order-method'>
+						<legend>{ui.method}</legend>
+						{Object.keys(ui.methods).map((key) => (
+							<label key={key}>
+								<input
+									type='radio'
+									name='order-method'
+									value={key}
+									checked={customer.method === key}
+									onChange={() => updateCustomer('method', key)}
+								/>
+								{ui.methods[key]}
+							</label>
+						))}
+					</fieldset>
+
+					<div className='order-fields'>
+						{orderFields.map((key) => {
+							const required = key !== 'note';
+							const invalid = missing.includes(key);
+							return (
+								<label key={key} className={invalid ? 'invalid' : undefined}>
+									<span>
+										{ui.fields[key]}
+										<small>{required ? `*${ui.required}` : ui.optional}</small>
+									</span>
+									<input
+										{...fieldInputProps[key]}
+										value={customer[key]}
+										aria-invalid={invalid}
+										onChange={(e) => updateCustomer(key, e.target.value)}
+									/>
+								</label>
+							);
+						})}
+					</div>
+					<div className='order-privacy'>
+						<span>{ui.privacy}</span>
+						<button type='button' onClick={clearCustomer}>{ui.clearData}</button>
+					</div>
+
+					{preview ? (
+						<>
+							<p className='order-preview-title'>{ui.preview}</p>
+							<pre className='order-preview'>{preview}</pre>
+						</>
+					) : (
+						<p className='order-missing' role='status'>
+							{ui.missing}
+							{missing.map((key) => ui.fields[key]).join(ui.sep)}
+						</p>
+					)}
+					{copied === 'fail' && <p className='order-missing' role='alert'>{ui.copyFail}</p>}
+
+					<div className='order-actions'>
+						<button type='button' className='primary' disabled={missing.length > 0} onClick={() => copyOrder('text')}>
+							{copyLabel('text', ui.copyText)}
+						</button>
+						<button type='button' className='primary' disabled={missing.length > 0} onClick={() => copyOrder('tsv')}>
+							{copyLabel('tsv', ui.copyTsv)}
+						</button>
+					</div>
+					<button type='button' className='order-clear' onClick={clearCart}>{ui.clearCart}</button>
+				</aside>
 			</div>
 		);
 	};
@@ -302,7 +583,7 @@ export default function Simplicity() {
 			<div
 				id='top'
 				ref={AppRef}
-				className='App'
+				className={cartLines.length > 0 ? 'App has-cart' : 'App'}
 			>
 				<div
 					ref={topRef}
@@ -529,6 +810,8 @@ export default function Simplicity() {
 						☝️
 					</span>
 				</button>
+				{CartBar()}
+				{OrderPanel()}
 			</div>
 		);
 	};
