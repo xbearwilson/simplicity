@@ -25,7 +25,6 @@ const deliveryCustomer = {
 	method: 'delivery',
 	name: '王小明',
 	phone: '0912-345-678',
-	date: '2026-11-22',
 	address: '台北市信義路1號',
 	note: '請下午送',
 };
@@ -70,8 +69,8 @@ test('sanitizeCustomer 補齊欄位並拒絕無效方式', () => {
 });
 
 test('missingFields：自取不需地址，宅配/冷凍需要地址，備註永不必填', () => {
-	assert.deepEqual(missingFields(EMPTY_CUSTOMER), ['name', 'phone', 'date']);
-	assert.deepEqual(missingFields({ ...EMPTY_CUSTOMER, method: 'frozen' }), ['name', 'phone', 'date', 'address']);
+	assert.deepEqual(missingFields(EMPTY_CUSTOMER), ['name', 'phone']);
+	assert.deepEqual(missingFields({ ...EMPTY_CUSTOMER, method: 'frozen' }), ['name', 'phone', 'address']);
 	assert.deepEqual(missingFields({ ...deliveryCustomer, name: '   ' }), ['name']);
 	assert.deepEqual(missingFields(deliveryCustomer), []);
 });
@@ -85,15 +84,13 @@ test('buildOrderText 宅配格式', () => {
 			'方式：宅配',
 			'姓名：王小明',
 			'電話：0912-345-678',
-			'取貨日：2026-11-22',
 			'地址：台北市信義路1號',
 			'---',
 			'芝麻包 x3　NT$81',
 			'黑糖饅頭 x2　NT$54',
 			'---',
-			'合計 5 件　NT$135',
+			'合計 5 顆　NT$135',
 			'備註：請下午送',
-			'（價格僅供參考，以店家確認為準）',
 		].join('\n'),
 	);
 });
@@ -112,8 +109,8 @@ test('buildOrderTsv 客戶列＋品項表，並移除欄位內的 Tab/換行', (
 	assert.equal(
 		tsv,
 		[
-			'方式\t姓名\t電話\t取貨日\t地址\t備註',
-			'冷凍\t王小明\t0912-345-678\t2026-11-22\t台北市信義路1號\t第一行 第二 行',
+			'方式\t姓名\t電話\t地址\t備註',
+			'冷凍\t王小明\t0912-345-678\t台北市信義路1號\t第一行 第二 行',
 			'',
 			'品名\t數量\t單價\t小計',
 			'芝麻包\t3\t27\t81',
@@ -126,5 +123,5 @@ test('buildOrderTsv 客戶列＋品項表，並移除欄位內的 Tab/換行', (
 test('buildOrderTsv 自取時地址欄留空', () => {
 	const lines = resolveCart({ 1: 1 }, products, priceOf);
 	const row = buildOrderTsv(lines, { ...deliveryCustomer, method: 'pickup', note: '' }).split('\n')[1];
-	assert.equal(row, '自取\t王小明\t0912-345-678\t2026-11-22\t\t');
+	assert.equal(row, '自取\t王小明\t0912-345-678\t\t');
 });

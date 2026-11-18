@@ -5,9 +5,9 @@ export const MAX_QTY = 999;
 
 export const METHODS = { pickup: '自取', delivery: '宅配', frozen: '冷凍' };
 
-export const FIELD_LABELS = { name: '姓名', phone: '電話', date: '取貨日', address: '地址', note: '備註' };
+export const FIELD_LABELS = { name: '姓名', phone: '電話', address: '地址', note: '備註' };
 
-export const EMPTY_CUSTOMER = { method: 'pickup', name: '', phone: '', date: '', address: '', note: '' };
+export const EMPTY_CUSTOMER = { method: 'pickup', name: '', phone: '', address: '', note: '' };
 
 export const clampQty = (value) => {
 	const n = Math.trunc(Number(value));
@@ -42,7 +42,7 @@ export const summarize = (lines) => ({
 export const needsAddress = (method) => method === 'delivery' || method === 'frozen';
 
 export const missingFields = (customer) => {
-	const required = ['name', 'phone', 'date', ...(needsAddress(customer.method) ? ['address'] : [])];
+	const required = ['name', 'phone', ...(needsAddress(customer.method) ? ['address'] : [])];
 	return required.filter((key) => !String(customer[key] ?? '').trim());
 };
 
@@ -75,7 +75,6 @@ export const buildOrderText = (lines, customer) => {
 		`方式：${METHODS[customer.method]}`,
 		`姓名：${customer.name.trim()}`,
 		`電話：${customer.phone.trim()}`,
-		`取貨日：${customer.date}`,
 		...(needsAddress(customer.method) ? [`地址：${customer.address.trim()}`] : []),
 		'---',
 		...lines.map((l) => `${l.name} x${l.qty}　NT$${l.subtotal}`),
@@ -92,8 +91,8 @@ export const buildOrderTsv = (lines, customer) => {
 	const { qty, total } = summarize(lines);
 	const address = needsAddress(customer.method) ? customer.address : '';
 	return [
-		['方式', '姓名', '電話', '取貨日', '地址', '備註'],
-		[METHODS[customer.method], customer.name, customer.phone, customer.date, address, customer.note].map(cell),
+		['方式', '姓名', '電話', '地址', '備註'],
+		[METHODS[customer.method], customer.name, customer.phone, address, customer.note].map(cell),
 		[],
 		['品名', '數量', '單價', '小計'],
 		...lines.map((l) => [cell(l.name), l.qty, l.price, l.subtotal]),

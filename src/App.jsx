@@ -45,10 +45,6 @@ const writeStored = (key, value) => {
 	} catch { /* local storage is optional */ }
 };
 const priceOfProduct = (p) => getPublicPrice({ price: p.price });
-const todayISO = () => {
-	const d = new Date();
-	return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-};
 const copyToClipboard = async (text) => {
 	try {
 		await navigator.clipboard.writeText(text);
@@ -71,21 +67,21 @@ const ORDER_UI = {
 		add: '+ 加入', dec: '減少', inc: '增加', qty: '數量', remove: '移除',
 		bar: (s) => `已選 ${s.count} 項 · ${s.qty} 顆 · NT$${s.total}`, open: '查看清單 ▸',
 		title: '我的選品', close: '關閉', total: (s) => `合計 ${s.qty} 顆 · NT$${s.total}`,
-		method: '取貨方式', methods: { pickup: '自取', delivery: '宅配', frozen: '冷凍' },
-		fields: { name: '姓名', phone: '電話', date: '取貨日', address: '地址', note: '備註' },
+		method: '取貨方式', methods: { pickup: '自取', delivery: '宅配' },
+		fields: { name: '姓名', phone: '電話', address: '地址', note: '備註' },
 		required: '必填', optional: '選填', missing: '缺：', sep: '、',
 		clearData: '清除我的資料', privacy: '資料僅儲存在您的裝置，不會上傳。',
 		confirmClearData: '確定清除已填寫的個人資料？',
 		preview: '預覽', copyText: '複製文字', copyTsv: '複製表格',
 		copied: '已複製 ✓', copyFail: '複製失敗，請手動選取預覽文字',
-		clearCart: '清空購物車', confirmClearCart: '確定清空所有選品？',
+		clearCart: '清空', confirmClearCart: '確定清空所有選品？',
 	},
 	ja: {
 		add: '+ 追加', dec: '減らす', inc: '増やす', qty: '数量', remove: '削除',
 		bar: (s) => `${s.count} 品目 · ${s.qty} 粒 · NT$${s.total}`, open: 'リストを見る ▸',
 		title: '選んだ商品', close: '閉じる', total: (s) => `合計 ${s.qty} 粒 · NT$${s.total}`,
-		method: '受取方法', methods: { pickup: '店頭受取', delivery: '宅配', frozen: '冷凍便' },
-		fields: { name: 'お名前', phone: '電話番号', date: '受取日', address: '住所', note: '備考' },
+		method: '受取方法', methods: { pickup: '店頭受取', delivery: '宅配' },
+		fields: { name: 'お名前', phone: '電話番号', address: '住所', note: '備考' },
 		required: '必須', optional: '任意', missing: '未入力：', sep: '、',
 		clearData: '入力情報を削除', privacy: '情報はお使いの端末にのみ保存され、送信されません。',
 		confirmClearData: '入力した個人情報を削除しますか？',
@@ -451,11 +447,10 @@ export default function Simplicity() {
 	};
 
 	const methodNeedsAddress = needsAddress(customer.method);
-	const orderFields = ['name', 'phone', 'date', ...(methodNeedsAddress ? ['address'] : []), 'note'];
+	const orderFields = ['name', 'phone', ...(methodNeedsAddress ? ['address'] : []), 'note'];
 	const fieldInputProps = {
 		name: { type: 'text', autoComplete: 'name' },
 		phone: { type: 'tel', autoComplete: 'tel', inputMode: 'tel' },
-		date: { type: 'date', min: todayISO() },
 		address: { type: 'text', autoComplete: 'street-address' },
 		note: { type: 'text' },
 	};
