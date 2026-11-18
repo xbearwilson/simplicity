@@ -270,7 +270,7 @@ const inventory = [
 	{
 		id: 24,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋頭奶紅豆',
+		name: '芋頭紅豆(奶)',
 		ename: 'Taro & Red Bean-Filled Mantou',
 		description: '',
 		price: 32,
@@ -281,7 +281,7 @@ const inventory = [
 	{
 		id: 25,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋頭素紅豆',
+		name: '芋頭紅豆(素)',
 		ename: 'Taro & Red Bean-Filled Mantou',
 		description: '',
 		price: 32,
@@ -938,7 +938,7 @@ const inventory = [
 	{
 		id: 84,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋泥鳳梨',
+		name: '芋泥鳳梨(素)',
 		ename: 'Mashed Taro & Pineapple-Filled Mantou',
 		description: '',
 		price: 36,
@@ -949,7 +949,7 @@ const inventory = [
 	{
 		id: 85,
 		category: '(甜)有內餡 Mantou with Sweet Fillings',
-		name: '芋泥鳳梨',
+		name: '芋泥鳳梨(奶)',
 		ename: 'Mashed Taro & Pineapple-Filled Mantou',
 		description: '',
 		price: 36,
